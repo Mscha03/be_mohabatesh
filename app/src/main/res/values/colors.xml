@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="icon">#000000</color>
+    <color name="button_background">#883F51B5</color>
+    <color name="screen_background">#FFFFFF</color>
+    <color name="box_background">#223F51B5</color>
+    <color name="text">#000000</color>
+    <color name="button_text">#FFFFFF</color>
+    <color name="Separator">#000000</color>
+</resources>

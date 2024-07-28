@@ -1,0 +1,16 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+
+    <color name="icon">#FFFFFF</color>
+    <color name="button_background">#883F51B5</color>
+    <color name="screen_background">#000000</color>
+    <color name="box_background">#223F51B5</color>
+    <color name="text">#FFFFFF</color>
+    <color name="button_text">#FFFFFF</color>
+    <color name="Separator">#FFFFFF</color>
+
+    <style name="Base.Theme.MyApplication" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your dark theme here. -->
+        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+    </style>
+</resources>

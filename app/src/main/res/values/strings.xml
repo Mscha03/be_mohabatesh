@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Be mohabatesh</string>
+    <string name="today_text">Today</string>
+    <string name="this_week_text">This Week</string>
+    <string name="this_month_text">This Month</string>
+    <string name="fab_button" translatable="false">fab button</string>
+    <string name="fab_text" translatable="false">add</string>
+    <string name="title_activity_add_new_task">AddNewTask</string>
+    <string name="add_new_task_title">Add new task</string>
+    <string name="task_name">name</string>
+    <string name="choose_period_error">Choose one option</string>
+    <string name="choose_period_drop_down_title">Choose Period</string>
+    <string name="add_successfully">Successfully added</string>
+    <string name="edit_successfully">Successfully edited</string>
+    <string name="new_task_title_hint">title</string>
+    <string name="new_task_description_hint">description</string>
+    <string name="add_new_task_button_txt">Add</string>
+    <string name="edit_task_button_txt">Edit</string>
+    <string name="add_new_task_dropdown_title">Choose Period</string>
+    <string name="edit_task_title">Task Detail</string>
+    <string name="dialog_title_delete_item">Delete task?</string>
+    <string name="dialog_massage_delete_item">Deleting task from your task list but it will stay in your history.</string>
+    <string name="delete_task_toast">Deleted.</string>
+
+    <string name="period_daily">daily</string>
+    <string name="period_weekly">weekly</string>
+    <string name="period_monthly">monthly</string>
+
+    <string-array name="period">
+        <item>daily</item>
+        <item>weekly</item>
+        <item>monthly</item>
+    </string-array>
+
+
+</resources>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">به محبتش</string>
+    <string name="today_text">امروز</string>
+    <string name="this_week_text">این هفته</string>
+    <string name="this_month_text">این ماه</string>
+    <string name="title_activity_add_new_task">اضافه کردن فعالیت جدید</string>
+    <string name="add_new_task_title">اضافه کردن فعالیت جدید</string>
+    <string name="task_name">نام</string>
+    <string name="choose_period_error">یک مورد را انتخاب کنید</string>
+    <string name="choose_period_drop_down_title">یک دوره را انتخاب کنید</string>
+    <string name="add_successfully">با موفقیت اضافه شد</string>
+    <string name="edit_successfully">با موفقیت ویرایش شد</string>
+    <string name="new_task_title_hint">موضوع</string>
+    <string name="new_task_description_hint">توضیحات</string>
+    <string name="add_new_task_button_txt">اضافه کردن</string>
+    <string name="edit_task_button_txt">ویرایش</string>
+    <string name="add_new_task_dropdown_title">یک دوره را انتخاب کنید</string>
+    <string name="edit_task_title">جزئیات فعالیت</string>
+    <string name="dialog_title_delete_item">فعالیت را پاک می کنید؟</string>
+    <string name="dialog_massage_delete_item">فعالیت از لیست کارهای درحال انجام پاک می شود اما در تاریخچه فعالیت ها باقی می ماند.</string>
+    <string name="delete_task_toast">حذف شد</string>
+
+    <string name="period_daily">روزانه</string>
+    <string name="period_weekly">هفتگی</string>
+    <string name="period_monthly">ماهانه</string>
+
+    <string-array name="period">
+        <item>روزانه</item>
+        <item>هفتگی</item>
+        <item>ماهانه</item>
+    </string-array>
+
+</resources>
