@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item android:title="@string/app_name">
+            <menu>
+                <item android:id="@+id/main_nav_periodic_task"
+                android:icon="@drawable/baseline_task_alt_24"
+                android:title="@string/main_nav_task_title"/>
+
+                <item android:id="@+id/main_nav_history"
+                    android:icon="@drawable/baseline_insert_chart_24"
+                    android:title="@string/main_nav_history_title"/>
+            </menu>
+        </item>
+    </group>
+
+    <group android:checkableBehavior="single">
+        <item android:title="@string/main_nav_drawer_communicate_title">
+            <menu>
+                <item android:id="@+id/main_nav_about_us"
+                    android:icon="@drawable/baseline_person_pin_24"
+                    android:title="@string/main_nav_about_title" />
+
+                <item android:id="@+id/main_contact_us"
+                    android:icon="@drawable/baseline_phone_24"
+                    android:title="@string/main_nav_contact_title"/>
+            </menu>
+        </item>
+    </group>
+</menu>

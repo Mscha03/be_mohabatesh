@@ -5,13 +5,22 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.MenuItem;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
+import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,6 +29,7 @@ import com.example.myapplication.recadapter.DailyAdapter;
 import com.example.myapplication.recyclerview.PeriodicModel;
 import com.example.myapplication.time.CheckBoxReset;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 
@@ -31,6 +41,14 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<PeriodicModel> dailyTasks;
     ArrayList<PeriodicModel> weeklyTasks;
     ArrayList<PeriodicModel> monthlyTasks;
+
+    DrawerLayout drawerLayout;
+    NavigationView navigationView;
+    ActionBarDrawerToggle drawerToggle;
+
+    ImageButton drawerMenu;
+
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -44,6 +62,43 @@ public class MainActivity extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+
+        //navigation drawer
+        drawerLayout = findViewById(R.id.main_nav_drawer);
+        navigationView = findViewById(R.id.main_nav_view);
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.main_nav_open, R.string.main_nav_close);
+        drawerLayout.addDrawerListener(drawerToggle);
+        drawerToggle.syncState();;
+        navigationView.bringToFront();
+
+        navigationView.setNavigationItemSelectedListener(item -> {
+
+            if (item.getItemId() == R.id.main_nav_periodic_task) {
+                Toast.makeText(MainActivity.this, "periodic", Toast.LENGTH_SHORT).show();
+            } else if (item.getItemId() == R.id.main_nav_history) {
+                Toast.makeText(MainActivity.this, "chart", Toast.LENGTH_SHORT).show();
+            }
+            return false;
+        });
+
+
+        drawerMenu = findViewById(R.id.main_nav_drawer_button);
+        drawerMenu.setOnClickListener(v -> {
+            drawerLayout.open();
+        });
+
+        getOnBackPressedDispatcher().addCallback(new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if (drawerLayout.isDrawerOpen(GravityCompat.START)){
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                } else {
+                    if (isEnabled()) {
+                        setEnabled(false);
+                        handleOnBackPressed();
+                    }                }
+            }
         });
 
         //database
@@ -77,16 +132,13 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (dbPeriod){
                     case "daily":
-                    case "روزانه":
                         dailyTasks.add(new PeriodicModel(checkBox, description, Period.daily, id, dbChangeDay, dbChangeWeek, dbChangeMonth));
                         break;
 
                     case "weekly":
-                    case "هفتگی":
                         weeklyTasks.add(new PeriodicModel(checkBox, description, Period.weekly, id, dbChangeDay, dbChangeWeek, dbChangeMonth));
                         break;
                     case "monthly":
-                    case "ماهانه":
                         monthlyTasks.add(new PeriodicModel(checkBox, description, Period.monthly, id, dbChangeDay, dbChangeWeek, dbChangeMonth));
                         break;
                     default:
@@ -143,6 +195,27 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             this.finish();
         });
+
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (drawerToggle.onOptionsItemSelected(item)){
+
+            int itemId = item.getItemId();
+            if (itemId == R.id.main_nav_periodic_task) {
+                Toast.makeText(MainActivity.this, "periodic", Toast.LENGTH_SHORT).show();
+            } else if (itemId == R.id.main_nav_history) {
+                Toast.makeText(MainActivity.this, "chart", Toast.LENGTH_SHORT).show();
+            } else if (itemId == R.id.main_nav_about_us) {
+                Toast.makeText(MainActivity.this, "about us", Toast.LENGTH_SHORT).show();
+            } else if (itemId == R.id.main_contact_us) {
+                Toast.makeText(MainActivity.this, "contact us", Toast.LENGTH_SHORT).show();
+            }
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }
