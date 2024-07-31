@@ -18,16 +18,16 @@ import com.example.myapplication.recyclerview.PeriodicModel;
 
 import java.util.Calendar;
 
-public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.ViewHolder> {
-    private static final String TAG = "DailyAdapter";
+public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.ViewHolder> {
+    private static final String TAG = "PeriodAdapter";
 
     private PeriodicModel[] listdata;
     private RoutineDB db;
 
-    public DailyAdapter(PeriodicModel[] listdata, RoutineDB db) {
+    public PeriodAdapter(PeriodicModel[] listdata, RoutineDB db) {
         this.listdata = listdata;
         this.db = db;
-        Log.d(TAG, "DailyAdapter: Adapter created with " + listdata.length + " items");
+        Log.d(TAG, "PeriodAdapter: Adapter created with " + listdata.length + " items");
     }
 
     @NonNull

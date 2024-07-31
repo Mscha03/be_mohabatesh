@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedCallback;
@@ -21,7 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.database.RoutineDB;
-import com.example.myapplication.recadapter.DailyAdapter;
+import com.example.myapplication.recadapter.PeriodAdapter;
 import com.example.myapplication.recyclerview.PeriodicModel;
 import com.example.myapplication.time.CheckBoxReset;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -189,21 +188,21 @@ public class PeriodicTasksActivity extends AppCompatActivity {
         }
 
         RecyclerView dailyRecyclerView = findViewById(R.id.today_recycler_view);
-        DailyAdapter dailyAdapter = new DailyAdapter(dailyModels, db);
+        PeriodAdapter dailyAdapter = new PeriodAdapter(dailyModels, db);
         dailyRecyclerView.setHasFixedSize(true);
         dailyRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         dailyRecyclerView.setAdapter(dailyAdapter);
         Log.d(TAG, "onCreate: daily tasks recycler view set up");
 
         RecyclerView weeklyRecyclerView = findViewById(R.id.this_week_recycler_view);
-        DailyAdapter weeklyAdapter = new DailyAdapter(weeklyModels, db);
+        PeriodAdapter weeklyAdapter = new PeriodAdapter(weeklyModels, db);
         weeklyRecyclerView.setHasFixedSize(true);
         weeklyRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         weeklyRecyclerView.setAdapter(weeklyAdapter);
         Log.d(TAG, "onCreate: weekly tasks recycler view set up");
 
         RecyclerView monthlyRecyclerView = findViewById(R.id.this_month_recycler_view);
-        DailyAdapter monthlyAdapter = new DailyAdapter(monthlyModels, db);
+        PeriodAdapter monthlyAdapter = new PeriodAdapter(monthlyModels, db);
         monthlyRecyclerView.setHasFixedSize(true);
         monthlyRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         monthlyRecyclerView.setAdapter(monthlyAdapter);
