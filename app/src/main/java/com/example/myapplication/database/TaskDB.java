@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
-public class taskDB extends SQLiteOpenHelper {
+public class TaskDB extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "activity_db";
     private static final int DB_VERSION = 1;
@@ -18,10 +18,9 @@ public class taskDB extends SQLiteOpenHelper {
     private static final String DESCRIPTION_COL = "description";
     private static final String ISDONE_COL = "isdone";
     private static final String DEADDAY = "deadday";
-    private static final String DEADWeek = "deadweek";
     private static final String DEADMONTH = "deadmonth";
 
-    public taskDB(@Nullable Context context) {
+    public TaskDB(@Nullable Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 
@@ -34,7 +33,6 @@ public class taskDB extends SQLiteOpenHelper {
                         + DESCRIPTION_COL + " TEXT, "
                         + ISDONE_COL + " int, "
                         + DEADDAY + " int, "
-                        + DEADWeek + " int, "
                         + DEADMONTH + " int)";
         db.execSQL(createTable);
     }
@@ -48,15 +46,14 @@ public class taskDB extends SQLiteOpenHelper {
     // Create
     public long insertRecord(
             String name, String description, String period,
-            int isDone, int changeDay, int changeWeek, int changeMonth) {
+            int isDone, int deadDay, int deadMonth) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(NAME_COL, name);
         values.put(DESCRIPTION_COL, description);
         values.put(ISDONE_COL, isDone);
-        values.put(DEADDAY, changeDay);
-        values.put(DEADWeek, changeWeek);
-        values.put(DEADMONTH, changeMonth);
+        values.put(DEADDAY, deadDay);
+        values.put(DEADMONTH, deadMonth);
         return db.insert(TABLE_NAME, null, values);
     }
 
@@ -79,16 +76,15 @@ public class taskDB extends SQLiteOpenHelper {
 
     // Update
     public void updateRecord(
-            int id, String name, String description, String period,
-            int isDone, int changeDay, int changeWeek, int changeMonth){
+            int id, String name, String description,
+            int isDone, int deadDay, int deadMonth){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(NAME_COL, name);
         values.put(DESCRIPTION_COL, description);
         values.put(ISDONE_COL, isDone);
-        values.put(DEADDAY, changeDay);
-        values.put(DEADWeek, changeWeek);
-        values.put(DEADMONTH, changeMonth);
+        values.put(DEADDAY, deadDay);
+        values.put(DEADMONTH, deadMonth);
         db.update(TABLE_NAME, values, ID_COL + " = ?", new String[]{String.valueOf(id)});
         db.close();
     }
