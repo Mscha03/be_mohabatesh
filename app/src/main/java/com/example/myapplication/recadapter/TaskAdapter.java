@@ -10,21 +10,18 @@ import android.widget.CheckBox;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ali.uneversaldatetools.date.JalaliDateTime;
 import com.example.myapplication.PeriodicTaskDetailActivity;
 import com.example.myapplication.R;
-import com.example.myapplication.database.RoutineDB;
-import com.example.myapplication.model.PeriodicModel;
+import com.example.myapplication.database.TaskDB;
+import com.example.myapplication.model.TaskModel;
 
-import java.util.Calendar;
+public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
+    private static final String TAG = "TaskAdapter";
 
-public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.ViewHolder> {
-    private static final String TAG = "PeriodAdapter";
+    private TaskModel[] listdata;
+    private TaskDB db;
 
-    private PeriodicModel[] listdata;
-    private RoutineDB db;
-
-    public PeriodAdapter(PeriodicModel[] listdata, RoutineDB db) {
+    public TaskAdapter(TaskModel[] listdata, TaskDB db) {
         this.listdata = listdata;
         this.db = db;
         Log.d(TAG, "PeriodAdapter: Adapter created with " + listdata.length + " items");
@@ -43,15 +40,7 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.ViewHolder
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder: binding view holder at position " + position);
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setFirstDayOfWeek(Calendar.SATURDAY);
-        JalaliDateTime jalaliDateTime = JalaliDateTime.Now();
-
-        int day = jalaliDateTime.getDay();
-        int week = calendar.get(Calendar.WEEK_OF_YEAR);
-        int month = jalaliDateTime.getMonth();
-
-        PeriodicModel model = listdata[position];
+        TaskModel model = listdata[position];
         Log.d(TAG, "onBindViewHolder: model ID " + model.getId() + ", description: " + model.getDescription());
 
         holder.checkBox.setOnCheckedChangeListener(null);
@@ -67,11 +56,9 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.ViewHolder
                     model.getId(),
                     model.getCheckBox().getText().toString(),
                     model.getDescription(),
-                    model.getPeriod().toString(),
                     model.getCheckBox().isChecked() ? 1 : 0,
-                    day,
-                    week,
-                    month);
+                    model.getDeadDay(),
+                    model.getDeadMonth());
             Log.d(TAG, "onCheckedChanged: updated record in database for ID " + model.getId());
         });
 

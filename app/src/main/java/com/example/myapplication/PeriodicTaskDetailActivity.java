@@ -21,9 +21,9 @@ import com.example.myapplication.bottomsheet.EditTaskBottomSheet;
 import com.example.myapplication.database.RoutineDB;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-public class EditDelete extends AppCompatActivity {
+public class PeriodicTaskDetailActivity extends AppCompatActivity {
 
-    private static final String TAG = "EditDelete";
+    private static final String TAG = "PeriodicTaskDetailActivity";
 
     private ImageButton edit, delete;
     private TextView title, description, period;
@@ -36,7 +36,7 @@ public class EditDelete extends AppCompatActivity {
         Log.d(TAG, "onCreate: started");
 
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_edit_delete);
+        setContentView(R.layout.activity_periodic_task_detail);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.edit_delete_layout), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -115,7 +115,7 @@ public class EditDelete extends AppCompatActivity {
             @Override
             public void handleOnBackPressed() {
                 Log.d(TAG, "handleOnBackPressed: back pressed, navigating to PeriodicTaskActivity");
-                Intent intent = new Intent(EditDelete.this, PeriodicTasksActivity.class);
+                Intent intent = new Intent(PeriodicTaskDetailActivity.this, PeriodicTasksActivity.class);
                 startActivity(intent);
                 finish();
             }

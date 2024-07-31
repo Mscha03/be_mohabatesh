@@ -21,7 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.database.RoutineDB;
 import com.example.myapplication.recadapter.PeriodAdapter;
-import com.example.myapplication.recyclerview.PeriodicModel;
+import com.example.myapplication.model.PeriodicModel;
 import com.example.myapplication.time.CheckBoxReset;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;

@@ -35,20 +35,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".EditDelete"
+            android:name=".PeriodicTaskDetailActivity"
             android:exported="false"
             android:noHistory="true" />
         <activity
             android:name=".AddTask"
             android:exported="false"
             android:noHistory="true" />
-        <!--
- <activity
-            android:name=".ui.login.AddNewTask"
-            android:exported="false"
-            android:label="@string/title_activity_add_new_task"
-            android:noHistory="true" />
-        -->
         <activity
             android:name=".PeriodicTasksActivity"
             android:exported="false"
