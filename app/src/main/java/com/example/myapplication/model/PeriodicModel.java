@@ -1,4 +1,4 @@
-package com.example.myapplication.recyclerview;
+package com.example.myapplication.model;
 
 import android.widget.CheckBox;
 
