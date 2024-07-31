@@ -13,8 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
-import com.example.myapplication.MainActivity;
 import com.example.myapplication.Period;
+import com.example.myapplication.PeriodicTasksActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.database.RoutineDB;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -110,9 +110,9 @@ public class EditTaskBottomSheet extends BottomSheetDialogFragment {
             Log.i(TAG, "onClick: edit successful");
 
 
-            Intent intent = new Intent(v.getContext(), MainActivity.class);
+            Intent intent = new Intent(v.getContext(), PeriodicTasksActivity.class);
             startActivity(intent);
-            Log.d(TAG, "onClick: navigating to MainActivity");
+            Log.d(TAG, "onClick: navigating to PeriodicTaskActivity");
 
         });
 

@@ -26,13 +26,15 @@
     <string name="period_weekly">weekly</string>
     <string name="period_monthly">monthly</string>
 
-    <string name="main_nav_task_title">tasks</string>
+    <string name="main_nav_periodic_task_title">periodic tasks</string>
+    <string name="main_nav_normal_task_title">normal tasks</string>
     <string name="main_nav_history_title">history</string>
     <string name="main_nav_open">open navigation drawer</string>
     <string name="main_nav_close">close navigation drawer</string>
     <string name="main_nav_drawer_communicate_title">communicate</string>
     <string name="main_nav_about_title">about us</string>
     <string name="main_nav_contact_title">contact us</string>
+    <string name="main_nav_drawer_home_title">Home</string>
 
     <string-array name="period">
         <item>daily</item>

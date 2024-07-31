@@ -96,10 +96,10 @@ public class AddTask extends AppCompatActivity {
                 Toast.makeText(AddTask.this, getString(R.string.add_successfully), Toast.LENGTH_LONG).show();
                 Log.i(TAG, "onClick: task added successfully");
 
-                Intent intent = new Intent(this, MainActivity.class);
+                Intent intent = new Intent(this, PeriodicTasksActivity.class);
                 startActivity(intent);
                 finish();
-                Log.d(TAG, "onClick: navigating to MainActivity");
+                Log.d(TAG, "onClick: navigating to PeriodicTaskActivity");
 
             } else {
                 Toast.makeText(AddTask.this, getString(R.string.choose_period_error), Toast.LENGTH_LONG).show();
@@ -110,8 +110,8 @@ public class AddTask extends AppCompatActivity {
         getOnBackPressedDispatcher().addCallback(new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                Log.d(TAG, "handleOnBackPressed: back pressed, navigating to MainActivity");
-                Intent intent = new Intent(AddTask.this, MainActivity.class);
+                Log.d(TAG, "handleOnBackPressed: back pressed, navigating to PeriodicTaskActivity");
+                Intent intent = new Intent(AddTask.this, PeriodicTasksActivity.class);
                 startActivity(intent);
                 finish();
             }

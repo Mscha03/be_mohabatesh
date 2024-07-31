@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -88,10 +87,10 @@ public class EditDelete extends AppCompatActivity {
                         Toast.makeText(this, R.string.delete_task_toast, Toast.LENGTH_SHORT).show();
                         Log.i(TAG, "onClick: task deleted");
 
-                        Intent intent = new Intent(this, MainActivity.class);
+                        Intent intent = new Intent(this, PeriodicTasksActivity.class);
                         startActivity(intent);
                         finish();
-                        Log.d(TAG, "onClick: navigating to MainActivity");
+                        Log.d(TAG, "onClick: navigating to PeriodicTaskActivity");
                     })
                     .setNegativeButton("cancel", null)
                     .create()
@@ -115,8 +114,8 @@ public class EditDelete extends AppCompatActivity {
         getOnBackPressedDispatcher().addCallback(new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                Log.d(TAG, "handleOnBackPressed: back pressed, navigating to MainActivity");
-                Intent intent = new Intent(EditDelete.this, MainActivity.class);
+                Log.d(TAG, "handleOnBackPressed: back pressed, navigating to PeriodicTaskActivity");
+                Intent intent = new Intent(EditDelete.this, PeriodicTasksActivity.class);
                 startActivity(intent);
                 finish();
             }
