@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 
 public class RoutineDB extends SQLiteOpenHelper {
 
-    private static final String DB_NAME = "activity_db";
+    private static final String DB_NAME = "routine_db";
     private static final int DB_VERSION = 1;
     private static final String TABLE_NAME = "routine";
     private static final String ID_COL = "id";

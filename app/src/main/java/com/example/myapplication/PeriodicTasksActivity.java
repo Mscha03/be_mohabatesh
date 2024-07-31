@@ -22,11 +22,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.database.RoutineDB;
 import com.example.myapplication.recadapter.PeriodAdapter;
 import com.example.myapplication.model.PeriodicModel;
-import com.example.myapplication.time.CheckBoxReset;
+import com.example.myapplication.time.PeriodicCheckBoxReset;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
+
+
+
+
+
 
 public class PeriodicTasksActivity extends AppCompatActivity {
 
@@ -43,7 +48,6 @@ public class PeriodicTasksActivity extends AppCompatActivity {
 
     ImageButton drawerMenu;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +58,6 @@ public class PeriodicTasksActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
 
         //navigation button
         drawerMenu = findViewById(R.id.periodic_task_nav_drawer_button);
@@ -149,7 +152,7 @@ public class PeriodicTasksActivity extends AppCompatActivity {
 
                 CheckBox checkBox = new CheckBox(this);
                 checkBox.setText(title);
-                checkBox.setChecked(CheckBoxReset.checkDay(isDone, dbChangeDay, dbChangeWeek, dbChangeMonth, dbPeriod));
+                checkBox.setChecked(PeriodicCheckBoxReset.checkDay(isDone, dbChangeDay, dbChangeWeek, dbChangeMonth, dbPeriod));
 
                 switch (dbPeriod){
                     case "daily":

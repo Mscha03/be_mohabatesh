@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 
 public class TaskDB extends SQLiteOpenHelper {
 
-    private static final String DB_NAME = "activity_db";
+    private static final String DB_NAME = "task_db";
     private static final int DB_VERSION = 1;
     private static final String TABLE_NAME = "task";
     private static final String ID_COL = "id";
@@ -19,6 +19,7 @@ public class TaskDB extends SQLiteOpenHelper {
     private static final String ISDONE_COL = "isdone";
     private static final String DEADDAY = "deadday";
     private static final String DEADMONTH = "deadmonth";
+    private static final String DEADYEAR = "deadyear";
 
     public TaskDB(@Nullable Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -33,7 +34,8 @@ public class TaskDB extends SQLiteOpenHelper {
                         + DESCRIPTION_COL + " TEXT, "
                         + ISDONE_COL + " int, "
                         + DEADDAY + " int, "
-                        + DEADMONTH + " int)";
+                        + DEADMONTH + " int, "
+                        + DEADYEAR + " int )";
         db.execSQL(createTable);
     }
 
@@ -46,7 +48,7 @@ public class TaskDB extends SQLiteOpenHelper {
     // Create
     public long insertRecord(
             String name, String description, String period,
-            int isDone, int deadDay, int deadMonth) {
+            int isDone, int deadDay, int deadMonth, int deadYear) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(NAME_COL, name);
@@ -54,6 +56,7 @@ public class TaskDB extends SQLiteOpenHelper {
         values.put(ISDONE_COL, isDone);
         values.put(DEADDAY, deadDay);
         values.put(DEADMONTH, deadMonth);
+        values.put(DEADYEAR, deadYear);
         return db.insert(TABLE_NAME, null, values);
     }
 
@@ -77,7 +80,7 @@ public class TaskDB extends SQLiteOpenHelper {
     // Update
     public void updateRecord(
             int id, String name, String description,
-            int isDone, int deadDay, int deadMonth){
+            int isDone, int deadDay, int deadMonth, int deadYear){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(NAME_COL, name);
@@ -85,6 +88,7 @@ public class TaskDB extends SQLiteOpenHelper {
         values.put(ISDONE_COL, isDone);
         values.put(DEADDAY, deadDay);
         values.put(DEADMONTH, deadMonth);
+        values.put(DEADYEAR, deadYear);
         db.update(TABLE_NAME, values, ID_COL + " = ?", new String[]{String.valueOf(id)});
         db.close();
     }

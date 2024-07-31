@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Be mohabatesh</string>
     <string name="today_text">Today</string>
+    <string name="future_text">Future</string>
+    <string name="past_text">Past</string>
     <string name="this_week_text">This Week</string>
     <string name="this_month_text">This Month</string>
     <string name="fab_button" translatable="false">fab button</string>

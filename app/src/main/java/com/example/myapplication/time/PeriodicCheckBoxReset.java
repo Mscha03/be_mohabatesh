@@ -1,11 +1,10 @@
 package com.example.myapplication.time;
 
 import com.ali.uneversaldatetools.date.JalaliDateTime;
-import com.example.myapplication.Period;
 
 import java.util.Calendar;
 
-public class CheckBoxReset {
+public class PeriodicCheckBoxReset {
     static Calendar calendar = Calendar.getInstance();
     static JalaliDateTime jalaliDateTime = JalaliDateTime.Now();
     static int day = jalaliDateTime.getDay();

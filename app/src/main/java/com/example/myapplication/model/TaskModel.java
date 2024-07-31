@@ -10,17 +10,17 @@ public class TaskModel {
     private int id = 0;
     private boolean isDone = false;
     private int deadDay;
-    private int deadWeek;
     private int deadMonth;
+    private int deadYear;
 
-    public TaskModel(CheckBox checkBox, String description, Period period, int id, int deadDay, int deadWeek, int deadMonth) {
+    public TaskModel(CheckBox checkBox, String description, int id, int deadDay, int deadMonth, int deadYear) {
         this.checkBox = checkBox;
         this.description = description;
         this.id = id;
         isDone = checkBox.isChecked();
         this.deadDay = deadDay;
-        this.deadWeek = deadWeek;
         this.deadMonth = deadMonth;
+        this.deadYear = deadYear;
     }
 
     public CheckBox getCheckBox() {
@@ -67,16 +67,15 @@ public class TaskModel {
         return deadMonth;
     }
 
-    public int getDeadWeek() {
-        return deadWeek;
-    }
-
-    public void setDeadWeek(int deadWeek) {
-        this.deadWeek = deadWeek;
-    }
-
     public void setDeadMonth(int deadMonth) {
         this.deadMonth = deadMonth;
     }
 
+    public int getDeadYear() {
+        return deadYear;
+    }
+
+    public void setDeadYear(int deadYear) {
+        this.deadYear = deadYear;
+    }
 }

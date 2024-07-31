@@ -58,7 +58,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
                     model.getDescription(),
                     model.getCheckBox().isChecked() ? 1 : 0,
                     model.getDeadDay(),
-                    model.getDeadMonth());
+                    model.getDeadMonth(),
+                    model.getDeadYear());
             Log.d(TAG, "onCheckedChanged: updated record in database for ID " + model.getId());
         });
 

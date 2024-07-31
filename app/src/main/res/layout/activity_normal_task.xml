@@ -39,6 +39,7 @@
                     android:orientation="horizontal">
 
                     <ImageButton
+                        android:id="@+id/normal_task_nav_drawer_button"
                         android:layout_width="24dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="15sp"
@@ -113,9 +114,14 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/today_layout2"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                            android:id="@+id/future_layout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_margin="15dp"
                             android:background="@drawable/box_background_shape"
                             android:elevation="2dp"
@@ -123,16 +129,16 @@
                             android:padding="20dp">
 
                             <TextView
-                                android:id="@+id/today_text2"
+                                android:id="@+id/future_text"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="7sp"
-                                android:text="@string/today_text"
+                                android:text="@string/future_text"
                                 android:textColor="@color/text"
                                 android:textSize="25sp" />
 
                             <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/today_recycler_view2"
+                                android:id="@+id/future_recycler_view"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent">
 
@@ -140,6 +146,36 @@
 
                         </LinearLayout>
 
+                            <LinearLayout
+                                android:id="@+id/past_layout"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="15dp"
+                                android:background="@drawable/box_background_shape"
+                                android:elevation="2dp"
+                                android:orientation="vertical"
+                                android:padding="20dp">
+
+                                <TextView
+                                    android:id="@+id/past_text"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="7sp"
+                                    android:text="@string/past_text"
+                                    android:textColor="@color/text"
+                                    android:textSize="25sp" />
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/past_recycler_view"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
+                                </androidx.recyclerview.widget.RecyclerView>
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
