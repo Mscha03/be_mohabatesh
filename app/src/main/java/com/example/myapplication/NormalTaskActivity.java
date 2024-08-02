@@ -4,13 +4,11 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedCallback;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -20,21 +18,14 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.ali.uneversaldatetools.date.JalaliDateTime;
 import com.example.myapplication.changer.BoolInt;
-import com.example.myapplication.database.RoutineDB;
 import com.example.myapplication.database.TaskDB;
 import com.example.myapplication.databinding.ActivityMainBinding;
-import com.example.myapplication.model.PeriodicModel;
 import com.example.myapplication.model.TaskModel;
-import com.example.myapplication.recadapter.PeriodAdapter;
-import com.example.myapplication.recadapter.TaskAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
@@ -235,8 +226,8 @@ public class NormalTaskActivity extends AppCompatActivity {
         //fab
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(v -> {
-            Log.d(TAG, "onClick: FAB clicked, navigating to AddTask");
-            Intent intent = new Intent(this, AddTask.class);
+            Log.d(TAG, "onClick: FAB clicked, navigating to AddPeriodTask");
+            Intent intent = new Intent(this, AddPeriodTask.class);
             startActivity(intent);
             this.finish();
         });

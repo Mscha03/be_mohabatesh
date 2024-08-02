@@ -21,9 +21,9 @@ import com.example.myapplication.database.RoutineDB;
 
 import java.util.Calendar;
 
-public class AddTask extends AppCompatActivity {
+public class AddPeriodTask extends AppCompatActivity {
 
-    private static final String TAG = "AddTask";
+    private static final String TAG = "AddPeriodTask";
 
     private RoutineDB db;
     private EditText addTitle, addDescription;
@@ -93,7 +93,7 @@ public class AddTask extends AppCompatActivity {
                 db.insertRecord(title, description, period, isDone, day, week, month);
                 Log.d(TAG, "onClick: record inserted into database");
 
-                Toast.makeText(AddTask.this, getString(R.string.add_successfully), Toast.LENGTH_LONG).show();
+                Toast.makeText(AddPeriodTask.this, getString(R.string.add_successfully), Toast.LENGTH_LONG).show();
                 Log.i(TAG, "onClick: task added successfully");
 
                 Intent intent = new Intent(this, PeriodicTasksActivity.class);
@@ -102,7 +102,7 @@ public class AddTask extends AppCompatActivity {
                 Log.d(TAG, "onClick: navigating to PeriodicTaskActivity");
 
             } else {
-                Toast.makeText(AddTask.this, getString(R.string.choose_period_error), Toast.LENGTH_LONG).show();
+                Toast.makeText(AddPeriodTask.this, getString(R.string.choose_period_error), Toast.LENGTH_LONG).show();
                 Log.w(TAG, "onClick: period not chosen, showing error toast");
             }
         });
@@ -111,7 +111,7 @@ public class AddTask extends AppCompatActivity {
             @Override
             public void handleOnBackPressed() {
                 Log.d(TAG, "handleOnBackPressed: back pressed, navigating to PeriodicTaskActivity");
-                Intent intent = new Intent(AddTask.this, PeriodicTasksActivity.class);
+                Intent intent = new Intent(AddPeriodTask.this, PeriodicTasksActivity.class);
                 startActivity(intent);
                 finish();
             }

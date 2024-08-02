@@ -217,8 +217,8 @@ public class PeriodicTasksActivity extends AppCompatActivity {
         //fab
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(v -> {
-            Log.d(TAG, "onClick: FAB clicked, navigating to AddTask");
-            Intent intent = new Intent(this, AddTask.class);
+            Log.d(TAG, "onClick: FAB clicked, navigating to AddPeriodTask");
+            Intent intent = new Intent(this, AddPeriodTask.class);
             startActivity(intent);
             this.finish();
         });

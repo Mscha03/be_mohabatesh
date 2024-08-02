@@ -39,7 +39,7 @@
             android:exported="false"
             android:noHistory="true" />
         <activity
-            android:name=".AddTask"
+            android:name=".AddPeriodTask"
             android:exported="false"
             android:noHistory="true" />
         <activity
