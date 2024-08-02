@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -16,6 +18,8 @@ import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,11 +27,14 @@ import com.ali.uneversaldatetools.date.JalaliDateTime;
 import com.example.myapplication.changer.BoolInt;
 import com.example.myapplication.database.RoutineDB;
 import com.example.myapplication.database.TaskDB;
+import com.example.myapplication.databinding.ActivityMainBinding;
 import com.example.myapplication.model.PeriodicModel;
 import com.example.myapplication.model.TaskModel;
 import com.example.myapplication.recadapter.PeriodAdapter;
 import com.example.myapplication.recadapter.TaskAdapter;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
@@ -45,8 +52,10 @@ public class NormalTaskActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ActionBarDrawerToggle drawerToggle;
-
     ImageButton drawerMenu;
+
+    BottomNavigationView bottomNavigationView;
+    ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,6 +129,28 @@ public class NormalTaskActivity extends AppCompatActivity {
 
 
 
+        // fragment
+
+            bottomNavigationView = findViewById(R.id.normal_task_navigation);
+        // Set the initial fragment
+        if (savedInstanceState == null) {
+            loadFragment(new NormalTaskTodayFragment());
+        }
+
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            Fragment selectedFragment = null;
+            int itemId = item.getItemId();
+            if (itemId == R.id.normal_bottom_today) {
+                selectedFragment = new NormalTaskTodayFragment();
+            } else if (itemId == R.id.normal_bottom_future) {
+                selectedFragment = new NormalTaskFutureFragment();
+            } else if (itemId == R.id.normal_bottom_past) {
+                selectedFragment = new NormalTaskPastFragment();
+            }
+            return loadFragment(selectedFragment);
+        }
+        );
+
 
 
 
@@ -137,8 +168,6 @@ public class NormalTaskActivity extends AppCompatActivity {
             Log.d(TAG, "onCreate: fetching tasks from database");
 
             do {
-
-
 
                 CheckBox checkBox = new CheckBox(this);
                 checkBox.setText(cursor.getString(cursor.getColumnIndexOrThrow("name")));
@@ -199,26 +228,8 @@ public class NormalTaskActivity extends AppCompatActivity {
             pastModels[i] = pastTasks.get(i);
         }
 
-        RecyclerView todayRecyclerView = findViewById(R.id.today_recycler_view);
-        TaskAdapter todayAdapter = new TaskAdapter(todayModels, db);
-        todayRecyclerView.setHasFixedSize(true);
-        todayRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        todayRecyclerView.setAdapter(todayAdapter);
-        Log.d(TAG, "onCreate: today tasks recycler view set up");
 
-        RecyclerView futureRecyclerView = findViewById(R.id.today_recycler_view);
-        TaskAdapter futureAdapter = new TaskAdapter(todayModels, db);
-        futureRecyclerView.setHasFixedSize(true);
-        futureRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        futureRecyclerView.setAdapter(futureAdapter);
-        Log.d(TAG, "onCreate: future tasks recycler view set up");
 
-        RecyclerView pastRecyclerView = findViewById(R.id.today_recycler_view);
-        TaskAdapter pastAdapter = new TaskAdapter(todayModels, db);
-        pastRecyclerView.setHasFixedSize(true);
-        pastRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        pastRecyclerView.setAdapter(pastAdapter);
-        Log.d(TAG, "onCreate: past tasks recycler view set up");
 
 
         //fab
@@ -237,5 +248,15 @@ public class NormalTaskActivity extends AppCompatActivity {
 
 
 
+    }
+
+    private boolean loadFragment(Fragment fragment) {
+        if (fragment != null) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.normal_frame_layout, fragment);
+            transaction.commit();
+            return true;
+        }
+        return false;
     }
 }
