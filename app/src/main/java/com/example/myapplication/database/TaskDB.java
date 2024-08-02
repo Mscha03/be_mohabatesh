@@ -47,7 +47,7 @@ public class TaskDB extends SQLiteOpenHelper {
 
     // Create
     public long insertRecord(
-            String name, String description, String period,
+            String name, String description,
             int isDone, int deadDay, int deadMonth, int deadYear) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();

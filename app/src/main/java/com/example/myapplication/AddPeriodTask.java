@@ -36,7 +36,7 @@ public class AddPeriodTask extends AppCompatActivity {
         Log.d(TAG, "onCreate: started");
 
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_add_task);
+        setContentView(R.layout.activity_add_period_task);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.root), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);

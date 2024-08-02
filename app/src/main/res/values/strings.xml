@@ -37,13 +37,20 @@
     <string name="main_nav_about_title">about us</string>
     <string name="main_nav_contact_title">contact us</string>
     <string name="main_nav_drawer_home_title">Home</string>
+    <string name="choose_date_button">Choose date</string>
+
+    <string name="choose_date_ok_text">OK</string>
+    <string name="choose_date_cancel_text">Cancel</string>
+    <string name="choose_date_today_text">Today</string>
+    <string name="choose_date_error">No date has been added yet</string>
+
+
 
     <string-array name="period">
         <item>daily</item>
         <item>weekly</item>
         <item>monthly</item>
     </string-array>
-
 
 
 </resources>

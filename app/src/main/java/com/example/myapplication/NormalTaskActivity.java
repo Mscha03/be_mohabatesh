@@ -227,7 +227,7 @@ public class NormalTaskActivity extends AppCompatActivity {
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(v -> {
             Log.d(TAG, "onClick: FAB clicked, navigating to AddPeriodTask");
-            Intent intent = new Intent(this, AddPeriodTask.class);
+            Intent intent = new Intent(this, AddNormalTask.class);
             startActivity(intent);
             this.finish();
         });
