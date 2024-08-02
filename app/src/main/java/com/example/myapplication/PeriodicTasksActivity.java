@@ -121,10 +121,6 @@ public class PeriodicTasksActivity extends AppCompatActivity {
 
 
 
-
-
-
-
         //database
         db = new RoutineDB(this);
         Log.d(TAG, "onCreate: database initialized");

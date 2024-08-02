@@ -35,11 +35,6 @@ public class NormalTaskActivity extends AppCompatActivity {
 
     private static final String TAG = "NormalTaskActivity";
 
-    public static TaskDB db;
-    ArrayList<TaskModel> todayTasks;
-    ArrayList<TaskModel> futureTasks;
-    ArrayList<TaskModel> pastTasks;
-
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ActionBarDrawerToggle drawerToggle;
@@ -121,106 +116,26 @@ public class NormalTaskActivity extends AppCompatActivity {
 
 
         // fragment
-
-            bottomNavigationView = findViewById(R.id.normal_task_navigation);
+        bottomNavigationView = findViewById(R.id.normal_task_navigation);
         // Set the initial fragment
         if (savedInstanceState == null) {
             loadFragment(new NormalTaskTodayFragment());
         }
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
-            Fragment selectedFragment = null;
-            int itemId = item.getItemId();
-            if (itemId == R.id.normal_bottom_today) {
-                selectedFragment = new NormalTaskTodayFragment();
-            } else if (itemId == R.id.normal_bottom_future) {
-                selectedFragment = new NormalTaskFutureFragment();
-            } else if (itemId == R.id.normal_bottom_past) {
-                selectedFragment = new NormalTaskPastFragment();
-            }
-            return loadFragment(selectedFragment);
-        }
-        );
-
-
-
-
-
-
-        //database
-        db = new TaskDB(this);
-        Log.d(TAG, "onCreate: database initialized");
-        todayTasks = new ArrayList<>();
-        futureTasks = new ArrayList<>();
-        pastTasks = new ArrayList<>();
-
-        Cursor cursor = db.getAllRecords();
-        if (cursor.moveToFirst()) {
-            Log.d(TAG, "onCreate: fetching tasks from database");
-
-            do {
-
-                CheckBox checkBox = new CheckBox(this);
-                checkBox.setText(cursor.getString(cursor.getColumnIndexOrThrow("name")));
-                checkBox.setChecked(BoolInt.intToBool(cursor.getInt(cursor.getColumnIndexOrThrow("isdone"))));
-
-                TaskModel taskModel = new TaskModel(
-                        checkBox,
-                        cursor.getString(cursor.getColumnIndexOrThrow("description")),
-                        cursor.getInt(cursor.getColumnIndexOrThrow("id")),
-                        cursor.getInt(cursor.getColumnIndexOrThrow("deadday")),
-                        cursor.getInt(cursor.getColumnIndexOrThrow("deadmonth")),
-                        cursor.getInt(cursor.getColumnIndexOrThrow("deadyear"))
-                );
-
-                Calendar calendar = Calendar.getInstance();
-                calendar.setFirstDayOfWeek(Calendar.SATURDAY);
-                JalaliDateTime jalaliDateTime = JalaliDateTime.Now();
-
-                int today = jalaliDateTime.getDay();
-                int thisMonth = jalaliDateTime.getMonth();
-                int thisYear = jalaliDateTime.getYear();
-                Log.d(TAG, "onClick: current date - day: " + today +  ", month: " + thisMonth);
-
-                int deadDay = taskModel.getDeadDay();
-                int deadMonth = taskModel.getDeadMonth();
-                int deadYear = taskModel.getDeadYear();
-                Log.d(TAG, "onClick: deadline date - day: " + deadDay +  ", month: " + deadMonth);
-
-
-
-                if ((deadDay == today) && (deadMonth == thisMonth) && (deadYear == thisYear)){
-                    todayTasks.add(taskModel);
-                } else if ( (deadYear > thisYear) || ((deadYear == thisYear) && (deadMonth > thisMonth)) || ((deadYear == thisYear) && (deadMonth == thisMonth) && (deadDay > today))) {
-                    futureTasks.add(taskModel);
-                } else {
-                    pastTasks.add(taskModel);
+                    Fragment selectedFragment = null;
+                    int itemId = item.getItemId();
+                    if (itemId == R.id.normal_bottom_today) {
+                        selectedFragment = new NormalTaskTodayFragment();
+                        Bundle bundle = new Bundle();
+                    } else if (itemId == R.id.normal_bottom_future) {
+                        selectedFragment = new NormalTaskFutureFragment();
+                    } else if (itemId == R.id.normal_bottom_past) {
+                        selectedFragment = new NormalTaskPastFragment();
+                    }
+                    return loadFragment(selectedFragment);
                 }
-
-            }while (cursor.moveToNext());
-            Log.d(TAG, "noCreate: tasks loaded from database");
-
-        } else {
-            Log.d(TAG, "onCreate: no tasks found in database");
-        }
-        cursor.close();
-
-        TaskModel[] todayModels = new TaskModel[todayTasks.size()];
-        TaskModel[] futureModels = new TaskModel[futureTasks.size()];
-        TaskModel[] pastModels = new TaskModel[pastTasks.size()];
-
-        for (int i = 0; i < todayTasks.size(); i++) {
-            todayModels[i] = todayTasks.get(i);
-        }
-        for (int i = 0; i < futureTasks.size(); i++) {
-            futureModels[i] = futureTasks.get(i);
-        }
-        for (int i = 0; i < pastTasks.size(); i++) {
-            pastModels[i] = pastTasks.get(i);
-        }
-
-
-
+        );
 
 
         //fab
@@ -231,13 +146,6 @@ public class NormalTaskActivity extends AppCompatActivity {
             startActivity(intent);
             this.finish();
         });
-
-
-
-
-
-
-
 
     }
 
