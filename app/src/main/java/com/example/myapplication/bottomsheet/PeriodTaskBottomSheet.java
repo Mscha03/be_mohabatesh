@@ -20,9 +20,9 @@ import com.example.myapplication.database.RoutineDB;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 
-public class EditTaskBottomSheet extends BottomSheetDialogFragment {
+public class PeriodTaskBottomSheet extends BottomSheetDialogFragment {
 
-    private static final String TAG = "EditTaskBottomSheet";
+    private static final String TAG = "PeriodTaskBottomSheet";
 
 
     private RoutineDB db;
@@ -35,7 +35,7 @@ public class EditTaskBottomSheet extends BottomSheetDialogFragment {
     ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView: started");
 
-        View v = inflater.inflate(R.layout.edit_task_bottom_sheet, container, false);
+        View v = inflater.inflate(R.layout.period_task_bottom_sheet, container, false);
 
         editTitle = v.findViewById(R.id.edit_task_title_edit_text);
         editDescription = v.findViewById(R.id.edit_task_description_edit_text);

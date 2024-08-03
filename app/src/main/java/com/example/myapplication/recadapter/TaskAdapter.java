@@ -10,6 +10,7 @@ import android.widget.CheckBox;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.NormalTaskDetailActivity;
 import com.example.myapplication.PeriodicTaskDetailActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.database.TaskDB;
@@ -65,7 +66,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
         holder.itemView.setOnClickListener(v -> {
             Log.d(TAG, "onClick: item clicked with ID " + model.getId());
-            Intent intent = new Intent(v.getContext(), PeriodicTaskDetailActivity.class);
+            Intent intent = new Intent(v.getContext(), NormalTaskDetailActivity.class);
             intent.putExtra("task", model.getId());
             v.getContext().startActivity(intent);
             Log.d(TAG, "onClick: started PeriodicTaskDetailActivity activity for ID " + model.getId());

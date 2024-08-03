@@ -17,18 +17,20 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.myapplication.bottomsheet.NormalTaskBottomSheet;
 import com.example.myapplication.bottomsheet.PeriodTaskBottomSheet;
-import com.example.myapplication.database.RoutineDB;
+import com.example.myapplication.database.TaskDB;
+import com.example.myapplication.time.ShamsiMonth;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-public class PeriodicTaskDetailActivity extends AppCompatActivity {
+public class NormalTaskDetailActivity extends AppCompatActivity {
 
-    private static final String TAG = "PeriodicTaskDetailActivity";
+    private static final String TAG = "NormalTaskDetailActivity";
 
     private ImageButton edit, delete;
-    private TextView title, description, period;
+    private TextView title, description, date;
     private LinearLayout layout;
-    private RoutineDB db;
+    private TaskDB db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,45 +38,49 @@ public class PeriodicTaskDetailActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: started");
 
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_periodic_task_detail);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.edit_delete_layout), (v, insets) -> {
+        setContentView(R.layout.activity_normal_task_detail);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
         // initials
-        layout = findViewById(R.id.edit_delete_layout);
+        layout = findViewById(R.id.main);
         edit = findViewById(R.id.edit_button_edit_activity);
         delete = findViewById(R.id.delete_button_edit_activity);
         title = findViewById(R.id.task_title_edit_activity);
         description = findViewById(R.id.task_description_edit_activity);
-        period = findViewById(R.id.period_text_edit_activity);
-        db = new RoutineDB(this);
+        date = findViewById(R.id.date_text_edit_activity);
+        db = new TaskDB(this);
         Log.d(TAG, "onCreate: views initialized");
 
         int id = getIntent().getIntExtra("task", 0);
         Log.d(TAG, "onCreate: received task ID: " + id);
 
         Cursor cursor = db.getRecord(id);
-        String[] detail = new String[4];
-        detail[0] = cursor.getString(1);
-        detail[1] = cursor.getString(2);
-        detail[2] = cursor.getString(3);
-        detail[3] = String.valueOf(id);
+        String[] detail = new String[7];
+        detail[0] = String.valueOf(id);
+        detail[1] = cursor.getString(1);
+        detail[2] = cursor.getString(2);
+        detail[3] = String.valueOf(cursor.getInt(4));
+        detail[4] = String.valueOf(cursor.getInt(5));
+        detail[5] = String.valueOf(cursor.getInt(6));
 
-        title.setText(detail[0]);
-        description.setText(detail[1]);
-        String period = "";
-        if (detail[2].equals(Period.daily.toString())){
-            period = getString(R.string.period_daily);
-        }else if (detail[2].equals(Period.weekly.toString())){
-            period = getString(R.string.period_weekly);
-        }else if (detail[2].equals(Period.monthly.toString())){
-            period = getString(R.string.period_monthly);
-        }
-        this.period.setText(period);
-        Log.d(TAG, "onCreate: task details set - Title: " + detail[0] + ", Description: " + detail[1] + ", Period: " + detail[2]);
+        Log.d(TAG, "onCreate: received data:" +
+                " id:" + detail[0] +
+                " title:" + detail[1] +
+                " description:" + detail[2] +
+                " dead day:" + detail[3] +
+                " dead month:" + detail[4] +
+                " dead year:" + detail[5]);
+
+        title.setText(detail[1]);
+        description.setText(detail[2]);
+        String s = detail[3] + " " + ShamsiMonth.getMonthName(Integer.parseInt(detail[4]),this) + " " + detail[5];
+        date.setText(s);
+
+        Log.d(TAG, "onCreate: task details set");
 
         delete.setOnClickListener(v -> {
             Log.d(TAG, "onClick: delete button clicked");
@@ -87,7 +93,7 @@ public class PeriodicTaskDetailActivity extends AppCompatActivity {
                         Toast.makeText(this, R.string.delete_task_toast, Toast.LENGTH_SHORT).show();
                         Log.i(TAG, "onClick: task deleted");
 
-                        Intent intent = new Intent(this, PeriodicTasksActivity.class);
+                        Intent intent = new Intent(this, NormalTaskDetailActivity.class);
                         startActivity(intent);
                         finish();
                         Log.d(TAG, "onClick: navigating to PeriodicTaskActivity");
@@ -105,20 +111,22 @@ public class PeriodicTaskDetailActivity extends AppCompatActivity {
             Fragment fragment = new Fragment();
             fragment.setArguments(bundle);
 
-            PeriodTaskBottomSheet periodTaskBottomSheet = new PeriodTaskBottomSheet();
-            periodTaskBottomSheet.setArguments(bundle);
-            periodTaskBottomSheet.show(getSupportFragmentManager(), "ModalBottomSheet");
+            NormalTaskBottomSheet normalTaskBottomSheet = new NormalTaskBottomSheet();
+            normalTaskBottomSheet.setArguments(bundle);
+            normalTaskBottomSheet.show(getSupportFragmentManager(), "ModalBottomSheet");
             Log.d(TAG, "onClick: showing PeriodTaskBottomSheet");
+
         });
 
         getOnBackPressedDispatcher().addCallback(new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
                 Log.d(TAG, "handleOnBackPressed: back pressed, navigating to PeriodicTaskActivity");
-                Intent intent = new Intent(PeriodicTaskDetailActivity.this, PeriodicTasksActivity.class);
+                Intent intent = new Intent(NormalTaskDetailActivity.this, NormalTaskActivity.class);
                 startActivity(intent);
                 finish();
             }
         });
+
     }
 }

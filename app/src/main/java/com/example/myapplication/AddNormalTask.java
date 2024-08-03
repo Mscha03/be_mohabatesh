@@ -21,6 +21,7 @@ import com.ali.uneversaldatetools.date.JalaliDateTime;
 import com.example.myapplication.database.RoutineDB;
 import com.example.myapplication.database.TaskDB;
 import com.example.myapplication.model.TaskModel;
+import com.example.myapplication.time.ShamsiMonth;
 
 import java.util.Calendar;
 
@@ -86,9 +87,9 @@ public class AddNormalTask extends AppCompatActivity {
                             deadMonth = persianPickerDate.getPersianMonth();
                             deadYear = persianPickerDate.getPersianYear();
                             dateChoosed = true;
-                            String s = "  " + persianPickerDate.getPersianDay() + "  " +
-                                    persianPickerDate.getPersianMonthName() + "  " +
-                                    persianPickerDate.getPersianYear() + "  ";
+                            String s = "  " + deadDay + "  " +
+                                    ShamsiMonth.getMonthName(deadMonth, AddNormalTask.this) + "  " +
+                                    deadYear + "  ";
                             addDate.setText(s);
                             Log.d(TAG, "date = " + persianPickerDate.getPersianDay() + "/" +
                                 persianPickerDate.getPersianMonth() + "/" +
