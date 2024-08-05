@@ -1,6 +1,9 @@
 package com.example.myapplication;
 
+import static com.example.myapplication.interfaces.drawerNavigation.drawerNavigationHandler;
+
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,7 +19,15 @@ import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.database.GetAllTask;
+import com.example.myapplication.database.GetUndoneTask;
+import com.example.myapplication.database.RoutineDB;
+import com.example.myapplication.database.TaskDB;
+import com.example.myapplication.recadapter.PeriodAdapter;
+import com.example.myapplication.recadapter.TaskAdapter;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,8 +38,11 @@ public class MainActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ActionBarDrawerToggle drawerToggle;
-
     ImageButton drawerMenu;
+
+    RecyclerView timedRecyclerView, periodicRecyclerView;
+    TaskDB taskDB;
+    RoutineDB routineDB;
 
 
     @SuppressLint("MissingInflatedId")
@@ -59,6 +73,28 @@ public class MainActivity extends AppCompatActivity {
         drawerToggle.syncState();;
         navigationView.bringToFront();
 
+        //
+        taskDB = new TaskDB(this);
+        timedRecyclerView = findViewById(R.id.timed_activities_recycler);
+        TaskAdapter timedAdapter = new TaskAdapter(GetUndoneTask.todayTasks(this), taskDB);
+        timedRecyclerView.setHasFixedSize(true);
+        timedRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        timedRecyclerView.setAdapter(timedAdapter);
+        Log.d(TAG, "onViewCreated: timed tasks recycler view set up");
+
+        routineDB = new RoutineDB(this);
+        periodicRecyclerView = findViewById(R.id.periodic_activities_recycler);
+        PeriodAdapter periodAdapter = new PeriodAdapter(GetUndoneTask.allRoutineTasks(this), routineDB);
+        periodicRecyclerView.setHasFixedSize(true);
+        periodicRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        periodicRecyclerView.setAdapter(periodAdapter);
+        Log.d(TAG, "onViewCreated: timed tasks recycler view set up");
+
+
+
+
+
+
         getOnBackPressedDispatcher().addCallback(new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -77,30 +113,8 @@ public class MainActivity extends AppCompatActivity {
 
             int itemId =  item.getItemId();
 
-            if (itemId == R.id.main_nav_home){
-                drawerLayout.closeDrawer(GravityCompat.START);
+            drawerNavigationHandler(itemId, MainActivity.this, R.id.main_nav_home, drawerLayout);
 
-            } else if (itemId == R.id.main_nav_periodic_task) {
-                Intent intent = new Intent(MainActivity.this, PeriodicTasksActivity.class);
-                startActivity(intent);
-
-            } else if (itemId == R.id.main_nav_normal_task) {
-                Intent intent = new Intent(MainActivity.this, NormalTaskActivity.class);
-                startActivity(intent);
-
-            } else if (itemId == R.id.main_nav_history) {
-                Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
-                startActivity(intent);
-
-            }else if (itemId == R.id.main_nav_about_us) {
-                Intent intent = new Intent(MainActivity.this, AboutUsActivity.class);
-                startActivity(intent);
-
-            } else if (itemId == R.id.main_contact_us) {
-                Intent intent = new Intent(MainActivity.this, ContactUsActivity.class);
-                startActivity(intent);
-
-            }
             return false;
         });
 

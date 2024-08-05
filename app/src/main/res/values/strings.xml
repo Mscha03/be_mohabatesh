@@ -29,7 +29,7 @@
     <string name="period_monthly">monthly</string>
 
     <string name="main_nav_periodic_task_title">periodic tasks</string>
-    <string name="main_nav_normal_task_title">normal tasks</string>
+    <string name="main_nav_normal_task_title">timed tasks</string>
     <string name="main_nav_history_title">history</string>
     <string name="main_nav_open">open navigation drawer</string>
     <string name="main_nav_close">close navigation drawer</string>
@@ -43,6 +43,8 @@
     <string name="choose_date_cancel_text">Cancel</string>
     <string name="choose_date_today_text">Today</string>
     <string name="choose_date_error">No date has been added yet</string>
+    <string name="main_nav_simple_task_title">simple task</string>
+    <string name="main_activity_title">Undone work</string>
 
 
     <string-array name="period">

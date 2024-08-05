@@ -93,7 +93,7 @@ public class NormalTaskDetailActivity extends AppCompatActivity {
                         Toast.makeText(this, R.string.delete_task_toast, Toast.LENGTH_SHORT).show();
                         Log.i(TAG, "onClick: task deleted");
 
-                        Intent intent = new Intent(this, NormalTaskDetailActivity.class);
+                        Intent intent = new Intent(this, NormalTaskActivity.class);
                         startActivity(intent);
                         finish();
                         Log.d(TAG, "onClick: navigating to PeriodicTaskActivity");

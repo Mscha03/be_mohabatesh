@@ -10,67 +10,104 @@ import com.example.myapplication.Period;
 import com.example.myapplication.changer.BoolInt;
 import com.example.myapplication.model.PeriodicModel;
 import com.example.myapplication.model.TaskModel;
-import com.example.myapplication.time.PeriodicCheckBoxReset;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class GetAllTask {
+public class GetUndoneTask {
 
     private static String TAG = "GetAllTask";
 
-    // normal task
-    static TaskDB taskDB;
+    static TaskDB db;
     static ArrayList<TaskModel> today;
     static ArrayList<TaskModel> future;
     static ArrayList<TaskModel> past;
+
     static TaskModel[] todayModels;
     static TaskModel[] futureModels;
     static TaskModel[] pastModels;
 
     // periodic task
-    static RoutineDB routineDB ;
+    static RoutineDB routineDB;
     static ArrayList<PeriodicModel> dailyTasks;
     static ArrayList<PeriodicModel> weeklyTasks;
     static ArrayList<PeriodicModel> monthlyTasks;
     static PeriodicModel[] dailyModels;
     static PeriodicModel[] weeklyModels;
     static PeriodicModel[] monthlyModels;
+    static PeriodicModel[] allRoutineModels;
 
-    public static TaskModel[] todayTasks(Context context){
+    public static TaskModel[] todayTasks(Context context) {
         getNormalTasks(context);
         return todayModels;
     }
-    public static TaskModel[] futureTasks(Context context){
+
+    public static TaskModel[] futureTasks(Context context) {
         getNormalTasks(context);
         return futureModels;
     }
-    public static TaskModel[] pastTasks(Context context){
+
+    public static TaskModel[] pastTasks(Context context) {
         getNormalTasks(context);
         return pastModels;
     }
 
-
-    public static PeriodicModel[] dailyTasks(Context context){
+    public static PeriodicModel[] dailyTasks(Context context) {
         getPeriodicTasks(context);
         return dailyModels;
     }
-    public static PeriodicModel[] weeklyTasks(Context context){
+
+    public static PeriodicModel[] weeklyTasks(Context context) {
         getPeriodicTasks(context);
         return weeklyModels;
     }
-    public static PeriodicModel[] monthlyTasks(Context context){
+
+    public static PeriodicModel[] monthlyTasks(Context context) {
         getPeriodicTasks(context);
         return monthlyModels;
     }
 
+    public static PeriodicModel[] allRoutineTasks(Context context) {
+        getPeriodicTasks(context);
+        allRoutineModels = new PeriodicModel[dailyModels.length + weeklyModels.length + monthlyModels.length];
+
+        for (int i = 0; i < dailyModels.length + weeklyModels.length + monthlyModels.length; i++) {
+            if (i < dailyModels.length) {
+                for (PeriodicModel dailyModel : dailyModels) {
+                    allRoutineModels[i] = dailyModel;
+                }
+            } else if (i < dailyModels.length + weeklyModels.length) {
+                for (PeriodicModel weeklyModel : weeklyModels) {
+                    allRoutineModels[i] = weeklyModel;
+                }
+            } else {
+                for (PeriodicModel monthlyModel : monthlyModels) {
+                    allRoutineModels[i] = monthlyModel;
+                }
+            }
+        }
+
+
+        for (int i = 0; i < dailyTasks.size(); i++) {
+            allRoutineModels[i] = dailyTasks.get(i);
+        }
+        for (int i = dailyTasks.size(); i < weeklyTasks.size(); i++) {
+            allRoutineModels[i] = weeklyTasks.get(i);
+        }
+        for (int i = weeklyTasks.size(); i < monthlyTasks.size(); i++) {
+            allRoutineModels[i] = monthlyTasks.get(i);
+        }
+        return allRoutineModels;
+    }
+
+
     private static void getNormalTasks(Context context) {
-        taskDB = new TaskDB(context);
+        db = new TaskDB(context);
         today = new ArrayList<>();
         future = new ArrayList<>();
-        past= new ArrayList<>();
+        past = new ArrayList<>();
 
-        Cursor cursor = taskDB.getAllRecords();
+        Cursor cursor = db.getAllRecords();
         if (cursor.moveToFirst()) {
             Log.d(TAG, "onCreate: fetching tasks from database");
 
@@ -103,12 +140,14 @@ public class GetAllTask {
                 int deadYear = taskModel.getDeadYear();
                 Log.d(TAG, "onClick: deadline date - day: " + deadDay + ", month: " + deadMonth + ", year: " + deadYear);
 
-                if ((deadDay == thisDay) && (deadMonth == thisMonth) && (deadYear == thisYear)) {
-                    today.add(taskModel);
-                } else if ((deadYear > thisYear) || ((deadYear == thisYear) && (deadMonth > thisMonth)) || ((deadYear == thisYear) && (deadMonth == thisMonth) && (deadDay > thisDay))) {
-                    future.add(taskModel);
-                } else {
-                    past.add(taskModel);
+                if (!taskModel.getCheckBox().isChecked()) {
+                    if ((deadDay == thisDay) && (deadMonth == thisMonth) && (deadYear == thisYear)) {
+                        today.add(taskModel);
+                    } else if ((deadYear > thisYear) || ((deadYear == thisYear) && (deadMonth > thisMonth)) || ((deadYear == thisYear) && (deadMonth == thisMonth) && (deadDay > thisDay))) {
+                        future.add(taskModel);
+                    } else {
+                        past.add(taskModel);
+                    }
                 }
 
             } while (cursor.moveToNext());
@@ -147,36 +186,62 @@ public class GetAllTask {
             Log.d(TAG, "onCreate: fetching tasks from database");
 
             do {
-                int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
-
-                String title = cursor.getString(cursor.getColumnIndexOrThrow("name"));
-                int isDone = cursor.getInt(cursor.getColumnIndexOrThrow("isdone"));
-
-                String description = cursor.getString(cursor.getColumnIndexOrThrow("description"));
-
-                String dbPeriod =  cursor.getString(cursor.getColumnIndexOrThrow("period"));
-
-                int dbChangeDay = cursor.getInt(cursor.getColumnIndexOrThrow("changeday"));
-                int dbChangeWeek = cursor.getInt(cursor.getColumnIndexOrThrow("changeweek"));
-                int dbChangeMonth = cursor.getInt(cursor.getColumnIndexOrThrow("changemonth"));
 
                 CheckBox checkBox = new CheckBox(context);
-                checkBox.setText(title);
-                checkBox.setChecked(PeriodicCheckBoxReset.checkDay(isDone, dbChangeDay, dbChangeWeek, dbChangeMonth, dbPeriod));
+                checkBox.setText(cursor.getString(cursor.getColumnIndexOrThrow("name")));
+                checkBox.setChecked(BoolInt.intToBool(cursor.getInt(cursor.getColumnIndexOrThrow("isdone"))));
 
-                switch (dbPeriod){
+                String dbPeriod = cursor.getString(cursor.getColumnIndexOrThrow("period"));
+                Period period = null;
+                switch (dbPeriod) {
                     case "daily":
-                        dailyTasks.add(new PeriodicModel(checkBox, description, Period.daily, id, dbChangeDay, dbChangeWeek, dbChangeMonth));
+                        period = Period.daily;
                         break;
-
                     case "weekly":
-                        weeklyTasks.add(new PeriodicModel(checkBox, description, Period.weekly, id, dbChangeDay, dbChangeWeek, dbChangeMonth));
+                        period = Period.weekly;
                         break;
                     case "monthly":
-                        monthlyTasks.add(new PeriodicModel(checkBox, description, Period.monthly, id, dbChangeDay, dbChangeWeek, dbChangeMonth));
+                        period = Period.monthly;
                         break;
                     default:
                         break;
+                }
+
+                PeriodicModel periodicModel = new PeriodicModel(
+                        checkBox,
+                        cursor.getString(cursor.getColumnIndexOrThrow("description")),
+                        period,
+                        cursor.getInt(cursor.getColumnIndexOrThrow("id")),
+                        cursor.getInt(cursor.getColumnIndexOrThrow("changeday")),
+                        cursor.getInt(cursor.getColumnIndexOrThrow("changeweek")),
+                        cursor.getInt(cursor.getColumnIndexOrThrow("changemonth"))
+                );
+
+                Log.d(TAG, "onCreate: periodicModel created:" +
+                        " title: " + periodicModel.getCheckBox().getText() +
+                        " isDone: " + periodicModel.getCheckBox().isChecked() +
+                        " descreption: " + periodicModel.getDescription() +
+                        " period: " + periodicModel.getPeriod().toString() +
+                        " id: " + periodicModel.getId() +
+                        " day: " + periodicModel.getChangeDay() +
+                        " month: " + periodicModel.getChangeMonth() +
+                        " week: " + periodicModel.getChangeWeek());
+
+                if (!periodicModel.getCheckBox().isChecked()) {
+                    switch (dbPeriod) {
+                        case "daily":
+                            dailyTasks.add(periodicModel);
+                            break;
+
+                        case "weekly":
+                            weeklyTasks.add(periodicModel);
+                            break;
+                        case "monthly":
+                            monthlyTasks.add(periodicModel);
+                            break;
+                        default:
+                            break;
+                    }
                 }
 
             } while (cursor.moveToNext());
@@ -195,10 +260,14 @@ public class GetAllTask {
         }
         for (int i = 0; i < weeklyTasks.size(); i++) {
             weeklyModels[i] = weeklyTasks.get(i);
+
         }
         for (int i = 0; i < monthlyTasks.size(); i++) {
+
             monthlyModels[i] = monthlyTasks.get(i);
+
         }
     }
+
 }
 

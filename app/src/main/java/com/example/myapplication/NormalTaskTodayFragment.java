@@ -44,6 +44,7 @@ public class NormalTaskTodayFragment extends Fragment {
         Log.d(TAG, "onViewCreated: daily tasks recycler view set up");
 
 
+
     }
 
 }

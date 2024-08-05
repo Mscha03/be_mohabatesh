@@ -1,5 +1,7 @@
 package com.example.myapplication;
 
+import static com.example.myapplication.interfaces.drawerNavigation.drawerNavigationHandler;
+
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -84,32 +86,9 @@ public class NormalTaskActivity extends AppCompatActivity {
 
         navigationView.setNavigationItemSelectedListener(item -> {
 
-            int itemId =  item.getItemId();
+            drawerNavigationHandler(
+                    item.getItemId(), NormalTaskActivity.this, R.id.main_nav_normal_task, drawerLayout );
 
-            if (itemId == R.id.main_nav_home){
-                Intent intent = new Intent(NormalTaskActivity.this, MainActivity.class);
-                startActivity(intent);
-
-            } else if (itemId == R.id.main_nav_periodic_task) {
-                Intent intent = new Intent(NormalTaskActivity.this, PeriodicTasksActivity.class);
-                startActivity(intent);
-
-            } else if (itemId == R.id.main_nav_normal_task) {
-                drawerLayout.closeDrawer(GravityCompat.START);
-
-            } else if (itemId == R.id.main_nav_history) {
-                Intent intent = new Intent(NormalTaskActivity.this, HistoryActivity.class);
-                startActivity(intent);
-
-            }else if (itemId == R.id.main_nav_about_us) {
-                Intent intent = new Intent(NormalTaskActivity.this, AboutUsActivity.class);
-                startActivity(intent);
-
-            } else if (itemId == R.id.main_contact_us) {
-                Intent intent = new Intent(NormalTaskActivity.this, ContactUsActivity.class);
-                startActivity(intent);
-
-            }
             return false;
         });
 

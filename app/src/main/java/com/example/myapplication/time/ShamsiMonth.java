@@ -12,6 +12,10 @@ public class ShamsiMonth {
 
         String[] monthName = context.getResources().getStringArray(R.array.shamsiMonth);
 
-        return monthName[monthNumber - 1];
+        if (monthNumber > 0 && monthNumber < 13) {
+            return monthName[monthNumber - 1];
+        } else {
+            return " ";
+        }
     }
 }
