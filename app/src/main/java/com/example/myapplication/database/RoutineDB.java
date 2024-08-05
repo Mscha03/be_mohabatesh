@@ -28,7 +28,7 @@ public class RoutineDB extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-         String createTable =
+        String createTable =
                 "CREATE TABLE " + TABLE_NAME + " ( "
                         + ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                         + NAME_COL + " TEXT, "
@@ -48,7 +48,7 @@ public class RoutineDB extends SQLiteOpenHelper {
     }
 
     // Create
-    public long insertRecord(
+    public void insertRecord(
             String name, String description, String period,
             int isDone, int changeDay, int changeWeek, int changeMonth) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -60,7 +60,7 @@ public class RoutineDB extends SQLiteOpenHelper {
         values.put(CHANGEDAY, changeDay);
         values.put(CHANGEWeek, changeWeek);
         values.put(CHANGEMONTH, changeMonth);
-        return db.insert(TABLE_NAME, null, values);
+        db.insert(TABLE_NAME, null, values);
     }
 
     // Read
@@ -83,7 +83,7 @@ public class RoutineDB extends SQLiteOpenHelper {
     // Update
     public void updateRecord(
             int id, String name, String description, String period,
-            int isDone, int changeDay, int changeWeek, int changeMonth){
+            int isDone, int changeDay, int changeWeek, int changeMonth) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(NAME_COL, name);
@@ -98,15 +98,11 @@ public class RoutineDB extends SQLiteOpenHelper {
     }
 
     // Delete
-    public int deleteRecord(int id) {
+    public void deleteRecord(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_NAME, ID_COL + " = ?", new String[]{String.valueOf(id)});
+        db.delete(TABLE_NAME, ID_COL + " = ?", new String[]{String.valueOf(id)});
     }
 
-    public int deleteAllRecord(){
-        SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_NAME,null,null);
-    }
 }
 
 

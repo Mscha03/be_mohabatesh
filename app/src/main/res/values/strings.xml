@@ -44,9 +44,24 @@
     <string name="choose_date_today_text">Today</string>
     <string name="choose_date_error">No date has been added yet</string>
     <string name="main_nav_simple_task_title">simple task</string>
-    <string name="main_activity_title">Undone work</string>
+    <string name="main_activity_title">Undone works</string>
+    <string name="main_bottom_sheet_txt">Select the type of task</string>
+    <string name="timed_task_btn_txt">Timed tasks</string>
+    <string name="periodic_task_btn_txt">Periodic tasks</string>
+    <string name="simple_task_btn_txt">Simple tasks</string>
 
-
+    <string name="about_Toast">You know me. So nothing to say…</string>
+    <string name="contact_us_title">Help us to create the best for you</string>
+    <string name="contact_phone_number">Phone number: +989157476168</string>
+    <string name="contact_telegram">Telegram: t.me/mscha03</string>
+    <string name="contact_eitaa">Eitaa: eitaa.ir/mscha09</string>
+    <string name="contact_email">Email: m.saleh.sedeghi@gmail.com</string>
+    <string name="delete_btn_description">Delete the task</string>
+    <string name="edti_btn_description">Edit the task</string>
+    <string name="description_text">description</string>
+    <string name="drawer_btn_description">Drawer menu</string>
+    <string name="add_btn_description">Add task</string>
+    <string name="Tasks_title">Tasks</string>
     <string-array name="period">
         <item>daily</item>
         <item>weekly</item>

@@ -3,12 +3,9 @@ package com.example.myapplication;
 import static com.example.myapplication.interfaces.drawerNavigation.drawerNavigationHandler;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedCallback;
@@ -22,7 +19,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myapplication.database.GetAllTask;
+import com.example.myapplication.bottomsheet.MainBottomSheet;
 import com.example.myapplication.database.GetUndoneTask;
 import com.example.myapplication.database.RoutineDB;
 import com.example.myapplication.database.SimpleDB;
@@ -30,6 +27,7 @@ import com.example.myapplication.database.TaskDB;
 import com.example.myapplication.recadapter.PeriodAdapter;
 import com.example.myapplication.recadapter.SimpleAdapter;
 import com.example.myapplication.recadapter.TaskAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -74,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.main_nav_open, R.string.main_nav_close);
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
-        ;
         navigationView.bringToFront();
 
         // load undone work from data base
@@ -125,6 +122,14 @@ public class MainActivity extends AppCompatActivity {
             drawerNavigationHandler(itemId, MainActivity.this, R.id.main_nav_home, drawerLayout);
 
             return false;
+        });
+
+        //fab
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(v -> {
+            MainBottomSheet mainBottomSheet = new MainBottomSheet();
+            mainBottomSheet.show(getSupportFragmentManager(), "mainBottomSheet");
+            Log.d(TAG, "onClick: showing TaskListBottomSheet C");
         });
 
 

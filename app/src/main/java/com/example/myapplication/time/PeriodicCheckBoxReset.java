@@ -11,32 +11,32 @@ public class PeriodicCheckBoxReset {
     static int month = jalaliDateTime.getMonth();
     static int weekOfYear = calendar.get(Calendar.WEEK_OF_YEAR);
 
-    public static boolean checkDay(int isDone, int changeDay,int changeWeek, int changeMonth, String  period) {
+    public static boolean checkDay(int isDone, int changeDay, int changeWeek, int changeMonth, String period) {
 
         calendar.setFirstDayOfWeek(7);
 
 
-        switch (period){
+        switch (period) {
             case "daily":
-                if (day == changeDay){
+                if (day == changeDay) {
                     return (isDone == 1);
-                }else {
+                } else {
                     return false;
                 }
 
             case "weekly":
-                if (weekOfYear == changeWeek){
+                if (weekOfYear == changeWeek) {
                     return (isDone == 1);
-                }else {
+                } else {
                     return false;
                 }
 
 
             case "monthly":
 
-                if (month == changeMonth){
+                if (month == changeMonth) {
                     return (isDone == 1);
-                }else {
+                } else {
                     return false;
                 }
 

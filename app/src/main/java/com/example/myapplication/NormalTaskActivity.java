@@ -3,10 +3,8 @@ package com.example.myapplication;
 import static com.example.myapplication.interfaces.drawerNavigation.drawerNavigationHandler;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.CheckBox;
 import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
@@ -21,17 +19,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.ali.uneversaldatetools.date.JalaliDateTime;
-import com.example.myapplication.changer.BoolInt;
-import com.example.myapplication.database.TaskDB;
 import com.example.myapplication.databinding.ActivityMainBinding;
-import com.example.myapplication.model.TaskModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-
-import java.util.ArrayList;
-import java.util.Calendar;
 
 public class NormalTaskActivity extends AppCompatActivity {
 
@@ -43,7 +34,6 @@ public class NormalTaskActivity extends AppCompatActivity {
     ImageButton drawerMenu;
 
     BottomNavigationView bottomNavigationView;
-    ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,16 +48,14 @@ public class NormalTaskActivity extends AppCompatActivity {
 
         //navigation button
         drawerMenu = findViewById(R.id.normal_task_nav_drawer_button);
-        drawerMenu.setOnClickListener(v -> {
-            drawerLayout.open();
-        });
+        drawerMenu.setOnClickListener(v -> drawerLayout.open());
 
         //navigation drawer
         drawerLayout = findViewById(R.id.normal_task_nav_drawer);
         navigationView = findViewById(R.id.normal_task_nav_view);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.main_nav_open, R.string.main_nav_close);
         drawerLayout.addDrawerListener(drawerToggle);
-        drawerToggle.syncState();;
+        drawerToggle.syncState();
         navigationView.bringToFront();
 
         getOnBackPressedDispatcher().addCallback(new OnBackPressedCallback(true) {
@@ -96,6 +84,7 @@ public class NormalTaskActivity extends AppCompatActivity {
 
         // fragment
         bottomNavigationView = findViewById(R.id.normal_task_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.normal_bottom_today);
         // Set the initial fragment
         if (savedInstanceState == null) {
             loadFragment(new NormalTaskTodayFragment());
@@ -106,7 +95,6 @@ public class NormalTaskActivity extends AppCompatActivity {
                     int itemId = item.getItemId();
                     if (itemId == R.id.normal_bottom_today) {
                         selectedFragment = new NormalTaskTodayFragment();
-                        Bundle bundle = new Bundle();
                     } else if (itemId == R.id.normal_bottom_future) {
                         selectedFragment = new NormalTaskFutureFragment();
                     } else if (itemId == R.id.normal_bottom_past) {

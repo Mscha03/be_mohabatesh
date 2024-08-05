@@ -39,14 +39,14 @@ public class SimpleDB extends SQLiteOpenHelper {
     }
 
     // Create
-    public long insertRecord(
+    public void insertRecord(
             String name, String description, int isDone) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(NAME_COL, name);
         values.put(DESCRIPTION_COL, description);
         values.put(ISDONE_COL, isDone);
-        return db.insert(TABLE_NAME, null, values);
+        db.insert(TABLE_NAME, null, values);
     }
 
     // Read
@@ -68,7 +68,7 @@ public class SimpleDB extends SQLiteOpenHelper {
     // Update
     public void updateRecord(
             int id, String name, String description,
-            int isDone){
+            int isDone) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(NAME_COL, name);
@@ -79,13 +79,9 @@ public class SimpleDB extends SQLiteOpenHelper {
     }
 
     // Delete
-    public int deleteRecord(int id) {
+    public void deleteRecord(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_NAME, ID_COL + " = ?", new String[]{String.valueOf(id)});
+        db.delete(TABLE_NAME, ID_COL + " = ?", new String[]{String.valueOf(id)});
     }
 
-    public int deleteAllRecord(){
-        SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_NAME,null,null);
-    }
 }

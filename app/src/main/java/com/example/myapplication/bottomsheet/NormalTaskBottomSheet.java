@@ -15,13 +15,8 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import com.ali.uneversaldatetools.date.JalaliDateTime;
-import com.example.myapplication.AddNormalTask;
 import com.example.myapplication.NormalTaskActivity;
-import com.example.myapplication.Period;
-import com.example.myapplication.PeriodicTasksActivity;
 import com.example.myapplication.R;
-import com.example.myapplication.database.RoutineDB;
 import com.example.myapplication.database.TaskDB;
 import com.example.myapplication.time.ShamsiMonth;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -56,6 +51,7 @@ public class NormalTaskBottomSheet extends BottomSheetDialogFragment {
         dateButton = v.findViewById(R.id.choose_date_button);
 
         // set default value
+        assert this.getArguments() != null;
         String[] data = this.getArguments().getStringArray("data");
         if (data != null) {
             Log.d(TAG, "onCreateView: received data - " + java.util.Arrays.toString(data));
@@ -65,13 +61,12 @@ public class NormalTaskBottomSheet extends BottomSheetDialogFragment {
             deadDay = Integer.parseInt(data[3]);
             deadMonth = Integer.parseInt(data[4]);
             deadYear = Integer.parseInt(data[5]);
-            String s = deadDay + " " + ShamsiMonth.getMonthName(deadMonth,v.getContext()) + " " + deadYear;
+            String s = deadDay + " " + ShamsiMonth.getMonthName(deadMonth, v.getContext()) + " " + deadYear;
             dateText.setText(s);
 
         } else {
             Log.w(TAG, "onCreateView: no data received");
         }
-
 
 
         dateButton.setOnClickListener(m -> {
@@ -86,7 +81,7 @@ public class NormalTaskBottomSheet extends BottomSheetDialogFragment {
                     .setShowInBottomSheet(false)
                     .setListener(new PersianPickerListener() {
                         @Override
-                        public void onDateSelected( PersianPickerDate persianPickerDate) {
+                        public void onDateSelected(PersianPickerDate persianPickerDate) {
                             deadDay = persianPickerDate.getPersianDay();
                             deadMonth = persianPickerDate.getPersianMonth();
                             deadYear = persianPickerDate.getPersianYear();
@@ -117,6 +112,7 @@ public class NormalTaskBottomSheet extends BottomSheetDialogFragment {
             String description = editDescription.getText().toString();
 
 
+            assert data != null;
             int id = Integer.parseInt(data[0]);
 
             Log.d(TAG, "onClick: updating record with ID " + id);

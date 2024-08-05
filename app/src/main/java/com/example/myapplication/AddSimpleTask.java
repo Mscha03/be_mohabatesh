@@ -6,7 +6,6 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -17,11 +16,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.myapplication.database.SimpleDB;
-import com.example.myapplication.database.TaskDB;
 import com.example.myapplication.model.SimpleModel;
-import com.example.myapplication.model.TaskModel;
-
-import ir.hamsaa.persiandatepicker.PersianDatePickerDialog;
 
 public class AddSimpleTask extends AppCompatActivity {
 
@@ -30,9 +25,6 @@ public class AddSimpleTask extends AppCompatActivity {
 
     private SimpleDB db;
     private EditText addTitle, addDescription;
-    private TextView addDate;
-    private Button addButton, dateButton;
-
     private SimpleModel simpleModel;
 
     @Override
@@ -49,7 +41,7 @@ public class AddSimpleTask extends AppCompatActivity {
         // initials
         addTitle = findViewById(R.id.task_title_edit_text);
         addDescription = findViewById(R.id.task_description_edit_text);
-        addButton = findViewById(R.id.add_btn);
+        Button addButton = findViewById(R.id.add_btn);
         Log.d(TAG, "onCreate: views initialized");
 
         // database
@@ -68,7 +60,7 @@ public class AddSimpleTask extends AppCompatActivity {
             Log.d(TAG, "onClick: title: " + simpleModel.getCheckBox().getText() + ", description: " + simpleModel.getDescription());
 
 
-            db.insertRecord(simpleModel.getCheckBox().getText().toString() , simpleModel.getDescription(), 0);
+            db.insertRecord(simpleModel.getCheckBox().getText().toString(), simpleModel.getDescription(), 0);
 
             Log.d(TAG, "onClick: record inserted into database");
 

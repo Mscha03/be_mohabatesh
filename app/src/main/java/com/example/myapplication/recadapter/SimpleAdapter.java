@@ -10,21 +10,17 @@ import android.widget.CheckBox;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myapplication.NormalTaskDetailActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.SimpleTaskDetailActivity;
-import com.example.myapplication.database.RoutineDB;
 import com.example.myapplication.database.SimpleDB;
-
-import com.example.myapplication.model.PeriodicModel;
 import com.example.myapplication.model.SimpleModel;
 
 
 public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder> {
     private static final String TAG = "SimpleAdapter";
 
-    private SimpleModel[] listdata;
-    private SimpleDB db;
+    private final SimpleModel[] listdata;
+    private final SimpleDB db;
 
     public SimpleAdapter(SimpleModel[] listdata, SimpleDB db) {
         this.listdata = listdata;

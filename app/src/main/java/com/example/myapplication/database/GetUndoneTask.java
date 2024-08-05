@@ -17,7 +17,7 @@ import java.util.Calendar;
 
 public class GetUndoneTask {
 
-    private static String TAG = "GetAllTask";
+    private static final String TAG = "GetAllTask";
 
     static TaskDB db;
     static ArrayList<TaskModel> today;
@@ -47,10 +47,12 @@ public class GetUndoneTask {
         getNormalTasks(context);
         return todayModels;
     }
+
     public static TaskModel[] futureTasks(Context context) {
         getNormalTasks(context);
         return futureModels;
     }
+
     public static TaskModel[] pastTasks(Context context) {
         getNormalTasks(context);
         return pastModels;
@@ -60,14 +62,17 @@ public class GetUndoneTask {
         getPeriodicTasks(context);
         return dailyModels;
     }
+
     public static PeriodicModel[] weeklyTasks(Context context) {
         getPeriodicTasks(context);
         return weeklyModels;
     }
+
     public static PeriodicModel[] monthlyTasks(Context context) {
         getPeriodicTasks(context);
         return monthlyModels;
     }
+
     public static PeriodicModel[] allRoutineTasks(Context context) {
         getPeriodicTasks(context);
         allRoutineModels = new PeriodicModel[dailyModels.length + weeklyModels.length + monthlyModels.length];
@@ -303,7 +308,7 @@ public class GetUndoneTask {
                         " id: " + simpleModel.getId());
 
                 if (!simpleModel.getCheckBox().isChecked()) {
-                   simpleTasks.add(simpleModel);
+                    simpleTasks.add(simpleModel);
                 }
 
             } while (cursor.moveToNext());

@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.NormalTaskDetailActivity;
-import com.example.myapplication.PeriodicTaskDetailActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.database.TaskDB;
 import com.example.myapplication.model.TaskModel;
@@ -19,8 +18,8 @@ import com.example.myapplication.model.TaskModel;
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     private static final String TAG = "TaskAdapter";
 
-    private TaskModel[] listdata;
-    private TaskDB db;
+    private final TaskModel[] listdata;
+    private final TaskDB db;
 
     public TaskAdapter(TaskModel[] listdata, TaskDB db) {
         this.listdata = listdata;

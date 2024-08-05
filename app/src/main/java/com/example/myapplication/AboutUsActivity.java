@@ -10,6 +10,8 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class AboutUsActivity extends AppCompatActivity {
 
+    //ToDo : create it
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

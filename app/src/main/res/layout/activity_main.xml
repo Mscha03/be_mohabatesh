@@ -48,7 +48,8 @@
                             android:layout_width="24dp"
                             android:layout_height="match_parent"
                             android:layout_marginStart="15sp"
-                            android:background="@color/screen_background"
+                            android:background="@drawable/touchable_background"
+                            android:contentDescription="@string/drawer_btn_description"
                             android:src="@drawable/baseline_menu_24" />
 
                         <TextView
@@ -184,6 +185,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
+                android:contentDescription="@string/add_btn_description"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:srcCompat="@android:drawable/ic_input_add" />

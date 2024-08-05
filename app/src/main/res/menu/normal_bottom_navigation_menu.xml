@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/normal_bottom_past"
+        android:icon="@drawable/baseline_keyboard_double_arrow_left_24"
+        android:title="@string/past_text"/>
+    <item
         android:id="@+id/normal_bottom_today"
-        android:icon="@drawable/baseline_menu_24"
+        android:icon="@drawable/baseline_keyboard_double_arrow_up_24"
         android:title="@string/today_text"/>
     <item
         android:id="@+id/normal_bottom_future"
-        android:icon="@drawable/baseline_timer_24"
+        android:icon="@drawable/baseline_keyboard_double_arrow_right_24"
         android:title="@string/future_text"/>
-    <item
-        android:id="@+id/normal_bottom_past"
-        android:icon="@drawable/baseline_home_24"
-        android:title="@string/past_text"/>
+
 </menu>

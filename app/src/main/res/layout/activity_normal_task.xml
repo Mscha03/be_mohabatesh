@@ -19,15 +19,17 @@
             android:layout_gravity="start"
             app:menu="@menu/main_nav_menu" />
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -39,7 +41,8 @@
                         android:layout_width="24dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="15sp"
-                        android:background="@color/screen_background"
+                        android:background="@drawable/touchable_background"
+                        android:contentDescription="@string/drawer_btn_description"
                         android:src="@drawable/baseline_menu_24" />
 
                     <TextView
@@ -49,15 +52,14 @@
                         android:padding="15dp"
                         android:text="@string/app_name"
                         android:textColor="@color/text"
-                        android:textSize="25sp"
-                        />
+                        android:textSize="25sp" />
 
                 </LinearLayout>
 
                 <FrameLayout
                     android:id="@+id/normal_frame_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="fill_parent" />
 
 
             </LinearLayout>
@@ -76,22 +78,25 @@
                 android:layout_above="@+id/normal_task_navigation"
                 android:layout_alignParentEnd="true"
                 android:layout_margin="20dp"
+                android:contentDescription="@string/add_btn_description"
+                app:layout_constraintBottom_toTopOf="@+id/normal_task_navigation"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:srcCompat="@android:drawable/ic_input_add" />
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/normal_task_navigation"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
+                android:layout_margin="10sp"
                 android:background="@drawable/box_background_shape"
-                android:elevation="6dp"
-                app:menu="@menu/normal_bottom_navigation_menu"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="30dp"
+                app:itemHorizontalTranslationEnabled="false"
+                android:visibility="visible"
                 app:labelVisibilityMode="labeled"
-                />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:menu="@menu/normal_bottom_navigation_menu" />
 
-        </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.drawerlayout.widget.DrawerLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

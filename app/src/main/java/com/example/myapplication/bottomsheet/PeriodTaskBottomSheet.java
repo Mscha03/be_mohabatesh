@@ -12,7 +12,9 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import androidx.annotation.Nullable;
+
 import com.example.myapplication.Period;
 import com.example.myapplication.PeriodicTasksActivity;
 import com.example.myapplication.R;
@@ -44,6 +46,7 @@ public class PeriodTaskBottomSheet extends BottomSheetDialogFragment {
 
 
         // set default value
+        assert this.getArguments() != null;
         String[] data = this.getArguments().getStringArray("data");
         if (data != null) {
             Log.d(TAG, "onCreateView: received data - " + java.util.Arrays.toString(data));
@@ -51,11 +54,11 @@ public class PeriodTaskBottomSheet extends BottomSheetDialogFragment {
             editTitle.setText(data[0]);
             editDescription.setText(data[1]);
             String period = "";
-            if (data[2].equals(Period.daily.toString())){
+            if (data[2].equals(Period.daily.toString())) {
                 period = getString(R.string.period_daily);
-            }else if (data[2].equals(Period.weekly.toString())){
+            } else if (data[2].equals(Period.weekly.toString())) {
                 period = getString(R.string.period_weekly);
-            }else if (data[2].equals(Period.monthly.toString())){
+            } else if (data[2].equals(Period.monthly.toString())) {
                 period = getString(R.string.period_monthly);
             }
             editPeriod.setText(period);
@@ -80,14 +83,15 @@ public class PeriodTaskBottomSheet extends BottomSheetDialogFragment {
             String description = editDescription.getText().toString();
             String period = editPeriod.getText().toString();
 
-            if (period.equals(getString(R.string.period_daily))){
+            if (period.equals(getString(R.string.period_daily))) {
                 period = Period.daily.toString();
-            }else if (period.equals(getString(R.string.period_weekly))){
+            } else if (period.equals(getString(R.string.period_weekly))) {
                 period = Period.weekly.toString();
-            }else if (period.equals(getString(R.string.period_monthly))){
+            } else if (period.equals(getString(R.string.period_monthly))) {
                 period = Period.monthly.toString();
             }
 
+            assert data != null;
             int id = Integer.parseInt(data[3]);
 
             Log.d(TAG, "onClick: updating record with ID " + id);

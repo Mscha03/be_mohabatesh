@@ -2,6 +2,8 @@
 <resources>
     <string name="app_name">به محبتش</string>
     <string name="today_text">امروز</string>
+    <string name="future_text">آینده</string>
+    <string name="past_text">گذشته</string>
     <string name="this_week_text">این هفته</string>
     <string name="this_month_text">این ماه</string>
     <string name="title_activity_add_new_task">اضافه کردن فعالیت جدید</string>
@@ -45,5 +47,31 @@
         <item>بهمن</item>
         <item>اسفند</item>
     </string-array>
+    <string name="main_nav_periodic_task_title">فعالیت های دوره ای</string>
+    <string name="main_nav_normal_task_title">فعالیت های زمان دار</string>
+    <string name="main_nav_history_title">تاریخچه</string>
+    <string name="main_nav_open">باز کردن نوار کشویی</string>
+    <string name="main_nav_close">بستن نوار کشویی</string>
+    <string name="main_nav_drawer_communicate_title">ارتباط</string>
+    <string name="main_nav_about_title">درباره ما</string>
+    <string name="main_nav_contact_title">ارتباط با ما</string>
+    <string name="main_nav_drawer_home_title">خانه</string>
+    <string name="choose_date_button">انتخاب تاریخ</string>
+    <string name="choose_date_ok_text">تایید</string>
+    <string name="choose_date_cancel_text">لغو</string>
+    <string name="choose_date_today_text">امروز</string>
+    <string name="choose_date_error">هنوز تاریخی انتخاب نشده است</string>
+    <string name="main_nav_simple_task_title">فعالیت عادی</string>
+    <string name="main_activity_title">کارهای انجام نشده</string>
+    <string name="main_bottom_sheet_txt">نوع فعالیت را انتخاب کنید</string>
+    <string name="timed_task_btn_txt">فعالیت های زمان دار</string>
+    <string name="periodic_task_btn_txt">فعالیت های دوره ای</string>
+    <string name="simple_task_btn_txt">فعالیت های عادی</string>
+    <string name="about_Toast">چی بگم والا! میشناسی منو دیگه…</string>
+    <string name="contact_us_title">خوشحال میشیم نظراتتون رو بشنویم</string>
+    <string name="contact_phone_number">تلفن : 09157476168</string>
+    <string name="contact_telegram">آیدی تلگرام : t.me/mscha03</string>
+    <string name="contact_eitaa">آیدی ایتا : eitaa.ir/mscha09</string>
+    <string name="contact_email">ایمیل : m.saleh.sedeghi@gmail.com</string>
 
 </resources>

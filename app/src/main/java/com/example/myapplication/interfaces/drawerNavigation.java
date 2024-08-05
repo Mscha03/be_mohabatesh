@@ -2,11 +2,11 @@ package com.example.myapplication.interfaces;
 
 import android.content.Context;
 import android.content.Intent;
+import android.widget.Toast;
 
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.example.myapplication.AboutUsActivity;
 import com.example.myapplication.ContactUsActivity;
 import com.example.myapplication.HistoryActivity;
 import com.example.myapplication.MainActivity;
@@ -16,7 +16,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.SimpleTaskActivity;
 
 public interface drawerNavigation {
-    public static void drawerNavigationHandler(int itemId, Context packageContext, int viewId, DrawerLayout drawerLayout) {
+    static void drawerNavigationHandler(int itemId, Context packageContext, int viewId, DrawerLayout drawerLayout) {
         if (itemId == viewId) {
             drawerLayout.closeDrawer(GravityCompat.START);
 
@@ -40,8 +40,7 @@ public interface drawerNavigation {
             packageContext.startActivity(intent);
 
         } else if (itemId == R.id.main_nav_about_us) {
-            Intent intent = new Intent(packageContext, AboutUsActivity.class);
-            packageContext.startActivity(intent);
+            Toast.makeText(packageContext, R.string.about_Toast, Toast.LENGTH_LONG).show();
 
         } else if (itemId == R.id.main_contact_us) {
             Intent intent = new Intent(packageContext, ContactUsActivity.class);

@@ -18,7 +18,7 @@ import java.util.Calendar;
 
 public class GetAllTask {
 
-    private static String TAG = "GetAllTask";
+    private static final String TAG = "GetAllTask";
 
     // normal task
     static TaskDB taskDB;
@@ -30,7 +30,7 @@ public class GetAllTask {
     static TaskModel[] pastModels;
 
     // periodic task
-    static RoutineDB routineDB ;
+    static RoutineDB routineDB;
     static ArrayList<PeriodicModel> dailyTasks;
     static ArrayList<PeriodicModel> weeklyTasks;
     static ArrayList<PeriodicModel> monthlyTasks;
@@ -39,38 +39,42 @@ public class GetAllTask {
     static PeriodicModel[] monthlyModels;
 
     // simple task
-    static SimpleDB simpleDB ;
+    static SimpleDB simpleDB;
     static ArrayList<SimpleModel> simpleTasks;
     static SimpleModel[] simpleModels;
 
-    public static TaskModel[] todayTasks(Context context){
+    public static TaskModel[] todayTasks(Context context) {
         getNormalTasks(context);
         return todayModels;
     }
+
     public static TaskModel[] futureTasks(Context context) {
         getNormalTasks(context);
         return futureModels;
     }
+
     public static TaskModel[] pastTasks(Context context) {
         getNormalTasks(context);
         return pastModels;
     }
 
 
-    public static PeriodicModel[] dailyTasks(Context context){
+    public static PeriodicModel[] dailyTasks(Context context) {
         getPeriodicTasks(context);
         return dailyModels;
     }
-    public static PeriodicModel[] weeklyTasks(Context context){
+
+    public static PeriodicModel[] weeklyTasks(Context context) {
         getPeriodicTasks(context);
         return weeklyModels;
     }
-    public static PeriodicModel[] monthlyTasks(Context context){
+
+    public static PeriodicModel[] monthlyTasks(Context context) {
         getPeriodicTasks(context);
         return monthlyModels;
     }
 
-    public static SimpleModel[] simpleTasks(Context context){
+    public static SimpleModel[] simpleTasks(Context context) {
         getSimpleTasks(context);
         return simpleModels;
     }
@@ -80,7 +84,7 @@ public class GetAllTask {
         taskDB = new TaskDB(context);
         today = new ArrayList<>();
         future = new ArrayList<>();
-        past= new ArrayList<>();
+        past = new ArrayList<>();
 
         Cursor cursor = taskDB.getAllRecords();
         if (cursor.moveToFirst()) {
@@ -166,7 +170,7 @@ public class GetAllTask {
 
                 String description = cursor.getString(cursor.getColumnIndexOrThrow("description"));
 
-                String dbPeriod =  cursor.getString(cursor.getColumnIndexOrThrow("period"));
+                String dbPeriod = cursor.getString(cursor.getColumnIndexOrThrow("period"));
 
                 int dbChangeDay = cursor.getInt(cursor.getColumnIndexOrThrow("changeday"));
                 int dbChangeWeek = cursor.getInt(cursor.getColumnIndexOrThrow("changeweek"));
@@ -176,7 +180,7 @@ public class GetAllTask {
                 checkBox.setText(title);
                 checkBox.setChecked(PeriodicCheckBoxReset.checkDay(isDone, dbChangeDay, dbChangeWeek, dbChangeMonth, dbPeriod));
 
-                switch (dbPeriod){
+                switch (dbPeriod) {
                     case "daily":
                         dailyTasks.add(new PeriodicModel(checkBox, description, Period.daily, id, dbChangeDay, dbChangeWeek, dbChangeMonth));
                         break;

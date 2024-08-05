@@ -27,7 +27,7 @@ public class TaskDB extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-         String createTable =
+        String createTable =
                 "CREATE TABLE " + TABLE_NAME + " ( "
                         + ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                         + NAME_COL + " TEXT, "
@@ -46,7 +46,7 @@ public class TaskDB extends SQLiteOpenHelper {
     }
 
     // Create
-    public long insertRecord(
+    public void insertRecord(
             String name, String description,
             int isDone, int deadDay, int deadMonth, int deadYear) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -57,7 +57,7 @@ public class TaskDB extends SQLiteOpenHelper {
         values.put(DEADDAY, deadDay);
         values.put(DEADMONTH, deadMonth);
         values.put(DEADYEAR, deadYear);
-        return db.insert(TABLE_NAME, null, values);
+        db.insert(TABLE_NAME, null, values);
     }
 
     // Read
@@ -80,7 +80,7 @@ public class TaskDB extends SQLiteOpenHelper {
     // Update
     public void updateRecord(
             int id, String name, String description,
-            int isDone, int deadDay, int deadMonth, int deadYear){
+            int isDone, int deadDay, int deadMonth, int deadYear) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(NAME_COL, name);
@@ -94,14 +94,9 @@ public class TaskDB extends SQLiteOpenHelper {
     }
 
     // Delete
-    public int deleteRecord(int id) {
+    public void deleteRecord(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_NAME, ID_COL + " = ?", new String[]{String.valueOf(id)});
-    }
-
-    public int deleteAllRecord(){
-        SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_NAME,null,null);
+        db.delete(TABLE_NAME, ID_COL + " = ?", new String[]{String.valueOf(id)});
     }
 }
 
