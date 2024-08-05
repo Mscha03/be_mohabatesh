@@ -9,6 +9,7 @@ import com.ali.uneversaldatetools.date.JalaliDateTime;
 import com.example.myapplication.Period;
 import com.example.myapplication.changer.BoolInt;
 import com.example.myapplication.model.PeriodicModel;
+import com.example.myapplication.model.SimpleModel;
 import com.example.myapplication.model.TaskModel;
 
 import java.util.ArrayList;
@@ -22,7 +23,6 @@ public class GetUndoneTask {
     static ArrayList<TaskModel> today;
     static ArrayList<TaskModel> future;
     static ArrayList<TaskModel> past;
-
     static TaskModel[] todayModels;
     static TaskModel[] futureModels;
     static TaskModel[] pastModels;
@@ -37,16 +37,20 @@ public class GetUndoneTask {
     static PeriodicModel[] monthlyModels;
     static PeriodicModel[] allRoutineModels;
 
+    //Simple task
+    static SimpleDB simpleDB;
+    static ArrayList<SimpleModel> simpleTasks;
+    static SimpleModel[] simpleModels;
+
+    // public method
     public static TaskModel[] todayTasks(Context context) {
         getNormalTasks(context);
         return todayModels;
     }
-
     public static TaskModel[] futureTasks(Context context) {
         getNormalTasks(context);
         return futureModels;
     }
-
     public static TaskModel[] pastTasks(Context context) {
         getNormalTasks(context);
         return pastModels;
@@ -56,17 +60,14 @@ public class GetUndoneTask {
         getPeriodicTasks(context);
         return dailyModels;
     }
-
     public static PeriodicModel[] weeklyTasks(Context context) {
         getPeriodicTasks(context);
         return weeklyModels;
     }
-
     public static PeriodicModel[] monthlyTasks(Context context) {
         getPeriodicTasks(context);
         return monthlyModels;
     }
-
     public static PeriodicModel[] allRoutineTasks(Context context) {
         getPeriodicTasks(context);
         allRoutineModels = new PeriodicModel[dailyModels.length + weeklyModels.length + monthlyModels.length];
@@ -100,7 +101,13 @@ public class GetUndoneTask {
         return allRoutineModels;
     }
 
+    public static SimpleModel[] simpleTasks(Context context) {
+        getSimpleTasks(context);
+        return simpleModels;
+    }
 
+
+    // private method
     private static void getNormalTasks(Context context) {
         db = new TaskDB(context);
         today = new ArrayList<>();
@@ -263,10 +270,56 @@ public class GetUndoneTask {
 
         }
         for (int i = 0; i < monthlyTasks.size(); i++) {
-
             monthlyModels[i] = monthlyTasks.get(i);
 
         }
+    }
+
+    private static void getSimpleTasks(Context context) {
+        simpleDB = new SimpleDB(context);
+        Log.d(TAG, "onCreate: database initialized");
+        simpleTasks = new ArrayList<>();
+
+
+        Cursor cursor = simpleDB.getAllRecords();
+        if (cursor.moveToFirst()) {
+            Log.d(TAG, "onCreate: fetching tasks from database");
+
+            do {
+                CheckBox checkBox = new CheckBox(context);
+                checkBox.setText(cursor.getString(cursor.getColumnIndexOrThrow("name")));
+                checkBox.setChecked(BoolInt.intToBool(cursor.getInt(cursor.getColumnIndexOrThrow("isdone"))));
+
+                SimpleModel simpleModel = new SimpleModel(
+                        checkBox,
+                        cursor.getString(cursor.getColumnIndexOrThrow("description")),
+                        cursor.getInt(cursor.getColumnIndexOrThrow("id"))
+                );
+
+                Log.d(TAG, "onCreate: periodicModel created:" +
+                        " title: " + simpleModel.getCheckBox().getText() +
+                        " isDone: " + simpleModel.getCheckBox().isChecked() +
+                        " descreption: " + simpleModel.getDescription() +
+                        " id: " + simpleModel.getId());
+
+                if (!simpleModel.getCheckBox().isChecked()) {
+                   simpleTasks.add(simpleModel);
+                }
+
+            } while (cursor.moveToNext());
+            Log.d(TAG, "onCreate: tasks loaded from database");
+        } else {
+            Log.d(TAG, "onCreate: no tasks found in database");
+        }
+        cursor.close();
+
+        simpleModels = new SimpleModel[simpleTasks.size()];
+
+
+        for (int i = 0; i < simpleTasks.size(); i++) {
+            simpleModels[i] = simpleTasks.get(i);
+        }
+
     }
 
 }

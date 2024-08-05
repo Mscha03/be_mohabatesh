@@ -35,17 +35,11 @@ import java.util.ArrayList;
 
 
 
-
-
-
 public class PeriodicTasksActivity extends AppCompatActivity {
 
     private static final String TAG = "PeriodicTaskActivity";
 
     public static RoutineDB db;
-    ArrayList<PeriodicModel> dailyTasks;
-    ArrayList<PeriodicModel> weeklyTasks;
-    ArrayList<PeriodicModel> monthlyTasks;
 
     DrawerLayout drawerLayout;
     NavigationView navigationView;

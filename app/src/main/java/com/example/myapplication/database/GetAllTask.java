@@ -9,6 +9,7 @@ import com.ali.uneversaldatetools.date.JalaliDateTime;
 import com.example.myapplication.Period;
 import com.example.myapplication.changer.BoolInt;
 import com.example.myapplication.model.PeriodicModel;
+import com.example.myapplication.model.SimpleModel;
 import com.example.myapplication.model.TaskModel;
 import com.example.myapplication.time.PeriodicCheckBoxReset;
 
@@ -37,15 +38,20 @@ public class GetAllTask {
     static PeriodicModel[] weeklyModels;
     static PeriodicModel[] monthlyModels;
 
+    // simple task
+    static SimpleDB simpleDB ;
+    static ArrayList<SimpleModel> simpleTasks;
+    static SimpleModel[] simpleModels;
+
     public static TaskModel[] todayTasks(Context context){
         getNormalTasks(context);
         return todayModels;
     }
-    public static TaskModel[] futureTasks(Context context){
+    public static TaskModel[] futureTasks(Context context) {
         getNormalTasks(context);
         return futureModels;
     }
-    public static TaskModel[] pastTasks(Context context){
+    public static TaskModel[] pastTasks(Context context) {
         getNormalTasks(context);
         return pastModels;
     }
@@ -63,6 +69,12 @@ public class GetAllTask {
         getPeriodicTasks(context);
         return monthlyModels;
     }
+
+    public static SimpleModel[] simpleTasks(Context context){
+        getSimpleTasks(context);
+        return simpleModels;
+    }
+
 
     private static void getNormalTasks(Context context) {
         taskDB = new TaskDB(context);
@@ -200,5 +212,43 @@ public class GetAllTask {
             monthlyModels[i] = monthlyTasks.get(i);
         }
     }
+
+    private static void getSimpleTasks(Context context) {
+        simpleDB = new SimpleDB(context);
+        Log.d(TAG, "onCreate: database initialized");
+        simpleTasks = new ArrayList<>();
+
+        Cursor cursor = simpleDB.getAllRecords();
+        if (cursor.moveToFirst()) {
+            Log.d(TAG, "onCreate: fetching tasks from database");
+
+            do {
+                CheckBox checkBox = new CheckBox(context);
+                checkBox.setText(cursor.getString(cursor.getColumnIndexOrThrow("name")));
+                checkBox.setChecked(BoolInt.intToBool(cursor.getInt(cursor.getColumnIndexOrThrow("isdone"))));
+
+                SimpleModel simpleModel = new SimpleModel(
+                        checkBox,
+                        cursor.getString(cursor.getColumnIndexOrThrow("description")),
+                        cursor.getInt(cursor.getColumnIndexOrThrow("id"))
+                );
+
+                simpleTasks.add(simpleModel);
+
+            } while (cursor.moveToNext());
+            Log.d(TAG, "onCreate: tasks loaded from database");
+        } else {
+            Log.d(TAG, "onCreate: no tasks found in database");
+        }
+        cursor.close();
+
+        simpleModels = new SimpleModel[simpleTasks.size()];
+
+        for (int i = 0; i < simpleTasks.size(); i++) {
+            simpleModels[i] = simpleTasks.get(i);
+        }
+
+    }
+
 }
 

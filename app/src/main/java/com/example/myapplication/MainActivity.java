@@ -25,8 +25,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.database.GetAllTask;
 import com.example.myapplication.database.GetUndoneTask;
 import com.example.myapplication.database.RoutineDB;
+import com.example.myapplication.database.SimpleDB;
 import com.example.myapplication.database.TaskDB;
 import com.example.myapplication.recadapter.PeriodAdapter;
+import com.example.myapplication.recadapter.SimpleAdapter;
 import com.example.myapplication.recadapter.TaskAdapter;
 import com.google.android.material.navigation.NavigationView;
 
@@ -40,9 +42,10 @@ public class MainActivity extends AppCompatActivity {
     ActionBarDrawerToggle drawerToggle;
     ImageButton drawerMenu;
 
-    RecyclerView timedRecyclerView, periodicRecyclerView;
+    RecyclerView timedRecyclerView, periodicRecyclerView, simpleRecyclerView;
     TaskDB taskDB;
     RoutineDB routineDB;
+    SimpleDB simpleDB;
 
 
     @SuppressLint("MissingInflatedId")
@@ -70,10 +73,11 @@ public class MainActivity extends AppCompatActivity {
         navigationView = findViewById(R.id.main_nav_view);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.main_nav_open, R.string.main_nav_close);
         drawerLayout.addDrawerListener(drawerToggle);
-        drawerToggle.syncState();;
+        drawerToggle.syncState();
+        ;
         navigationView.bringToFront();
 
-        //
+        // load undone work from data base
         taskDB = new TaskDB(this);
         timedRecyclerView = findViewById(R.id.timed_activities_recycler);
         TaskAdapter timedAdapter = new TaskAdapter(GetUndoneTask.todayTasks(this), taskDB);
@@ -90,28 +94,33 @@ public class MainActivity extends AppCompatActivity {
         periodicRecyclerView.setAdapter(periodAdapter);
         Log.d(TAG, "onViewCreated: timed tasks recycler view set up");
 
-
-
-
+        simpleDB = new SimpleDB(this);
+        simpleRecyclerView = findViewById(R.id.simple_activities_recycler);
+        SimpleAdapter simpleAdapter = new SimpleAdapter(GetUndoneTask.simpleTasks(this), simpleDB);
+        simpleRecyclerView.setHasFixedSize(true);
+        simpleRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        simpleRecyclerView.setAdapter(simpleAdapter);
+        Log.d(TAG, "onViewCreated: timed tasks recycler view set up");
 
 
         getOnBackPressedDispatcher().addCallback(new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                if (drawerLayout.isDrawerOpen(GravityCompat.START)){
+                if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
                     drawerLayout.closeDrawer(GravityCompat.START);
                 } else {
                     if (isEnabled()) {
                         setEnabled(false);
                         handleOnBackPressed();
-                    }                }
+                    }
+                }
             }
         });
 
 
         navigationView.setNavigationItemSelectedListener(item -> {
 
-            int itemId =  item.getItemId();
+            int itemId = item.getItemId();
 
             drawerNavigationHandler(itemId, MainActivity.this, R.id.main_nav_home, drawerLayout);
 
