@@ -35,16 +35,13 @@
             android:noHistory="true"/>
         <activity
             android:name=".ContactUsActivity"
-            android:exported="false"
-            android:noHistory="true"/>
+            android:exported="false" />
         <activity
             android:name=".AboutUsActivity"
-            android:exported="false"
-            android:noHistory="true"/>
+            android:exported="false" />
         <activity
             android:name=".HistoryActivity"
-            android:exported="false"
-            android:noHistory="true"/>
+            android:exported="false" />
         <activity
             android:name=".NormalTaskActivity"
             android:exported="false"
