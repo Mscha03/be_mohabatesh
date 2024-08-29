@@ -8,6 +8,7 @@ import android.widget.CheckBox;
 import com.ali.uneversaldatetools.date.JalaliDateTime;
 import com.example.myapplication.Period;
 import com.example.myapplication.changer.BoolInt;
+import com.example.myapplication.customwidget.MultiStateCheckBox;
 import com.example.myapplication.model.PeriodicModel;
 import com.example.myapplication.model.SimpleModel;
 import com.example.myapplication.model.TaskModel;
@@ -154,11 +155,13 @@ public class GetAllTask {
     private static void getPeriodicTasks(Context context) {
         routineDB = new RoutineDB(context);
         Log.d(TAG, "onCreate: database initialized");
+
         dailyTasks = new ArrayList<>();
         weeklyTasks = new ArrayList<>();
         monthlyTasks = new ArrayList<>();
 
-        Cursor cursor = routineDB.getAllRecords();
+        Cursor cursor = routineDB.getAllRecords(RoutineDB.ROUTINE_TABLE_NAME);
+
         if (cursor.moveToFirst()) {
             Log.d(TAG, "onCreate: fetching tasks from database");
 
@@ -166,34 +169,46 @@ public class GetAllTask {
                 int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
 
                 String title = cursor.getString(cursor.getColumnIndexOrThrow("name"));
-                int isDone = cursor.getInt(cursor.getColumnIndexOrThrow("isdone"));
-
                 String description = cursor.getString(cursor.getColumnIndexOrThrow("description"));
-
                 String dbPeriod = cursor.getString(cursor.getColumnIndexOrThrow("period"));
 
-                int dbChangeDay = cursor.getInt(cursor.getColumnIndexOrThrow("changeday"));
-                int dbChangeWeek = cursor.getInt(cursor.getColumnIndexOrThrow("changeweek"));
-                int dbChangeMonth = cursor.getInt(cursor.getColumnIndexOrThrow("changemonth"));
+                JalaliDateTime jalaliDateTime = JalaliDateTime.Now();
+                Calendar calendar = Calendar.getInstance();
+                calendar.setFirstDayOfWeek(Calendar.SATURDAY);
 
-                CheckBox checkBox = new CheckBox(context);
+                int day = jalaliDateTime.getDay();
+                int week = calendar.get(Calendar.WEEK_OF_YEAR);
+                int month = jalaliDateTime.getMonth();
+                int year = jalaliDateTime.getYear();
+
+
+                MultiStateCheckBox checkBox = new MultiStateCheckBox(context);
                 checkBox.setText(title);
-                checkBox.setChecked(PeriodicCheckBoxReset.checkDay(isDone, dbChangeDay, dbChangeWeek, dbChangeMonth, dbPeriod));
 
                 switch (dbPeriod) {
                     case "daily":
-                        dailyTasks.add(new PeriodicModel(checkBox, description, Period.daily, id, dbChangeDay, dbChangeWeek, dbChangeMonth));
+                        week = 0;
+                        checkBox.setState(PeriodicCheckBoxReset.checkDay(id, day, week, month,year, context));
+                        dailyTasks.add(new PeriodicModel(checkBox, description, Period.daily, id, day, week, month, year));
                         break;
 
                     case "weekly":
-                        weeklyTasks.add(new PeriodicModel(checkBox, description, Period.weekly, id, dbChangeDay, dbChangeWeek, dbChangeMonth));
+                        day = 0;
+                        month = 0;
+                        checkBox.setState(PeriodicCheckBoxReset.checkDay(id, day, week, month,year, context));
+                        weeklyTasks.add(new PeriodicModel(checkBox, description, Period.weekly, id, day, week, month, year));
                         break;
+
                     case "monthly":
-                        monthlyTasks.add(new PeriodicModel(checkBox, description, Period.monthly, id, dbChangeDay, dbChangeWeek, dbChangeMonth));
+                        day = 0;
+                        week = 0;
+                        checkBox.setState(PeriodicCheckBoxReset.checkDay(id, day, week, month,year, context));
+                        monthlyTasks.add(new PeriodicModel(checkBox, description, Period.monthly, id, day, week, month, year));
                         break;
                     default:
                         break;
                 }
+
 
             } while (cursor.moveToNext());
             Log.d(TAG, "onCreate: tasks loaded from database");

@@ -98,15 +98,12 @@ public class PeriodTaskBottomSheet extends BottomSheetDialogFragment {
 
 
             Cursor cursor = db.getRecord(id);
-            int isDone = cursor.getInt(cursor.getColumnIndexOrThrow("isdone"));
-            int day = cursor.getInt(cursor.getColumnIndexOrThrow("changeday"));
-            int week = cursor.getInt(cursor.getColumnIndexOrThrow("changeweek"));
-            int month = cursor.getInt(cursor.getColumnIndexOrThrow("changemonth"));
+            int year = cursor.getInt(cursor.getColumnIndexOrThrow("year"));
 
-            Log.d(TAG, "onClick: current values - isDone: " + isDone + ", day: " + day + ", week: " + week + ", month: " + month);
+            Log.d(TAG, "onClick: current values - year = " + year);
 
 
-            db.updateRecord(id, title, description, period, isDone, day, week, month);
+            db.updateRecord(id, title, description, period, year);
             Log.d(TAG, "onClick: record updated");
 
             Toast.makeText(v.getContext(), getString(R.string.edit_successfully),

@@ -1,46 +1,26 @@
 package com.example.myapplication.time;
 
-import com.ali.uneversaldatetools.date.JalaliDateTime;
-
-import java.util.Calendar;
+import android.content.Context;
+import android.database.Cursor;
+import android.util.Log;
+import com.example.myapplication.database.RoutineDB;
 
 public class PeriodicCheckBoxReset {
-    static Calendar calendar = Calendar.getInstance();
-    static JalaliDateTime jalaliDateTime = JalaliDateTime.Now();
-    static int day = jalaliDateTime.getDay();
-    static int month = jalaliDateTime.getMonth();
-    static int weekOfYear = calendar.get(Calendar.WEEK_OF_YEAR);
+    private static RoutineDB db;
+    private static final String TAG = "PeriodicCheckBoxReset";
 
-    public static boolean checkDay(int isDone, int changeDay, int changeWeek, int changeMonth, String period) {
+    public static int checkDay(int routineId, int changeDay, int changeWeek, int changeMonth, int changeYear, Context context) {
 
-        calendar.setFirstDayOfWeek(7);
-
-
-        switch (period) {
-            case "daily":
-                if (day == changeDay) {
-                    return (isDone == 1);
-                } else {
-                    return false;
-                }
-
-            case "weekly":
-                if (weekOfYear == changeWeek) {
-                    return (isDone == 1);
-                } else {
-                    return false;
-                }
-
-
-            case "monthly":
-
-                if (month == changeMonth) {
-                    return (isDone == 1);
-                } else {
-                    return false;
-                }
+        db = new RoutineDB(context);
+        Cursor cursor = db.getDays(routineId, changeDay, changeWeek, changeMonth, changeYear);
+        int check = 0;
+        if (cursor.moveToFirst()) {
+            Log.d(TAG, "checkDay: fetching tasks from database");
+            do {
+                check = cursor.getInt(cursor.getColumnIndexOrThrow("isdone"));
+            } while (cursor.moveToNext());
 
         }
-        return false;
+        return check;
     }
 }

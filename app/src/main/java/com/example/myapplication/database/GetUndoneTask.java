@@ -8,9 +8,11 @@ import android.widget.CheckBox;
 import com.ali.uneversaldatetools.date.JalaliDateTime;
 import com.example.myapplication.Period;
 import com.example.myapplication.changer.BoolInt;
+import com.example.myapplication.customwidget.MultiStateCheckBox;
 import com.example.myapplication.model.PeriodicModel;
 import com.example.myapplication.model.SimpleModel;
 import com.example.myapplication.model.TaskModel;
+import com.example.myapplication.time.PeriodicCheckBoxReset;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -193,26 +195,45 @@ public class GetUndoneTask {
         weeklyTasks = new ArrayList<>();
         monthlyTasks = new ArrayList<>();
 
-        Cursor cursor = routineDB.getAllRecords();
+        Cursor cursor = routineDB.getAllRecords(RoutineDB.ROUTINE_TABLE_NAME);
         if (cursor.moveToFirst()) {
             Log.d(TAG, "onCreate: fetching tasks from database");
 
             do {
 
-                CheckBox checkBox = new CheckBox(context);
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+
+                JalaliDateTime jalaliDateTime = JalaliDateTime.Now();
+                Calendar calendar = Calendar.getInstance();
+                calendar.setFirstDayOfWeek(Calendar.SATURDAY);
+
+                int day = jalaliDateTime.getDay();
+                int week = calendar.get(Calendar.WEEK_OF_YEAR);
+                int month = jalaliDateTime.getMonth();
+                int year = jalaliDateTime.getYear();
+
+                MultiStateCheckBox checkBox = new MultiStateCheckBox(context);
                 checkBox.setText(cursor.getString(cursor.getColumnIndexOrThrow("name")));
-                checkBox.setChecked(BoolInt.intToBool(cursor.getInt(cursor.getColumnIndexOrThrow("isdone"))));
 
                 String dbPeriod = cursor.getString(cursor.getColumnIndexOrThrow("period"));
+
                 Period period = null;
                 switch (dbPeriod) {
                     case "daily":
+                        week = 0;
+                        checkBox.setState(PeriodicCheckBoxReset.checkDay(id, day, week, month,year, context));
                         period = Period.daily;
                         break;
                     case "weekly":
+                        day = 0;
+                        month = 0;
+                        checkBox.setState(PeriodicCheckBoxReset.checkDay(id, day, week, month,year, context));
                         period = Period.weekly;
                         break;
                     case "monthly":
+                        day = 0;
+                        week = 0;
+                        checkBox.setState(PeriodicCheckBoxReset.checkDay(id, day, week, month,year, context));
                         period = Period.monthly;
                         break;
                     default:
@@ -224,22 +245,19 @@ public class GetUndoneTask {
                         cursor.getString(cursor.getColumnIndexOrThrow("description")),
                         period,
                         cursor.getInt(cursor.getColumnIndexOrThrow("id")),
-                        cursor.getInt(cursor.getColumnIndexOrThrow("changeday")),
-                        cursor.getInt(cursor.getColumnIndexOrThrow("changeweek")),
-                        cursor.getInt(cursor.getColumnIndexOrThrow("changemonth"))
-                );
+                        day, week, month, year);
 
                 Log.d(TAG, "onCreate: periodicModel created:" +
                         " title: " + periodicModel.getCheckBox().getText() +
-                        " isDone: " + periodicModel.getCheckBox().isChecked() +
                         " descreption: " + periodicModel.getDescription() +
                         " period: " + periodicModel.getPeriod().toString() +
                         " id: " + periodicModel.getId() +
                         " day: " + periodicModel.getChangeDay() +
                         " month: " + periodicModel.getChangeMonth() +
-                        " week: " + periodicModel.getChangeWeek());
+                        " week: " + periodicModel.getChangeWeek() +
+                        " year" + periodicModel.getChangeYear());
 
-                if (!periodicModel.getCheckBox().isChecked()) {
+                if (periodicModel.getCheckBox().getState() == 0) {
                     switch (dbPeriod) {
                         case "daily":
                             dailyTasks.add(periodicModel);
@@ -248,9 +266,11 @@ public class GetUndoneTask {
                         case "weekly":
                             weeklyTasks.add(periodicModel);
                             break;
+
                         case "monthly":
                             monthlyTasks.add(periodicModel);
                             break;
+
                         default:
                             break;
                     }
@@ -269,6 +289,7 @@ public class GetUndoneTask {
 
         for (int i = 0; i < dailyTasks.size(); i++) {
             dailyModels[i] = dailyTasks.get(i);
+
         }
         for (int i = 0; i < weeklyTasks.size(); i++) {
             weeklyModels[i] = weeklyTasks.get(i);

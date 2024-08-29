@@ -1,35 +1,36 @@
 package com.example.myapplication.model;
-
-import android.widget.CheckBox;
-
 import com.example.myapplication.Period;
+import com.example.myapplication.customwidget.MultiStateCheckBox;
 
 public class PeriodicModel {
-    private CheckBox checkBox;
+    private MultiStateCheckBox checkBox;
     private String description;
     private Period period;
-    private int id = 0;
-    private boolean isDone = false;
+    private int id;
+    private int isDone;
     private int changeDay;
     private int changeWeek;
     private int changeMonth;
+    private int changeYear;
 
-    public PeriodicModel(CheckBox checkBox, String description, Period period, int id, int changeDay, int changeWeek, int changeMonth) {
+
+    public PeriodicModel(MultiStateCheckBox checkBox, String description, Period period, int id, int changeDay, int changeWeek, int changeMonth, int changeYear) {
         this.checkBox = checkBox;
         this.description = description;
         this.period = period;
         this.id = id;
-        isDone = checkBox.isChecked();
+        isDone = checkBox.getState();
         this.changeDay = changeDay;
         this.changeWeek = changeWeek;
         this.changeMonth = changeMonth;
+        this.changeYear = changeYear;
     }
 
-    public CheckBox getCheckBox() {
+    public MultiStateCheckBox getCheckBox() {
         return checkBox;
     }
 
-    public void setCheckBox(CheckBox checkBox) {
+    public void setCheckBox(MultiStateCheckBox checkBox) {
         this.checkBox = checkBox;
     }
 
@@ -57,11 +58,11 @@ public class PeriodicModel {
         this.id = id;
     }
 
-    public boolean isDone() {
+    public int isDone() {
         return isDone;
     }
 
-    public void setDone(boolean done) {
+    public void setDone(int done) {
         isDone = done;
     }
 
@@ -89,4 +90,11 @@ public class PeriodicModel {
         this.changeMonth = changeMonth;
     }
 
+    public int getChangeYear() {
+        return changeYear;
+    }
+
+    public void setChangeYear(int changeYear) {
+        this.changeYear = changeYear;
+    }
 }

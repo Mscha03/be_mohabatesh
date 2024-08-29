@@ -15,11 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-
 import com.ali.uneversaldatetools.date.JalaliDateTime;
 import com.example.myapplication.database.RoutineDB;
-
-import java.util.Calendar;
 
 public class AddPeriodTask extends AppCompatActivity {
 
@@ -33,6 +30,7 @@ public class AddPeriodTask extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         Log.d(TAG, "onCreate: started");
 
         EdgeToEdge.enable(this);
@@ -42,6 +40,7 @@ public class AddPeriodTask extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
 
         // initials
         addTitle = findViewById(R.id.task_title_edit_text);
@@ -56,9 +55,6 @@ public class AddPeriodTask extends AppCompatActivity {
         addPeriod.setAdapter(arrayAdapter);
         Log.d(TAG, "onCreate: dropdown list set");
 
-        // database
-        db = new RoutineDB(this);
-        Log.d(TAG, "onCreate: database initialized");
 
         addButton.setOnClickListener(v -> {
             Log.d(TAG, "onClick: add button clicked");
@@ -70,28 +66,8 @@ public class AddPeriodTask extends AppCompatActivity {
             Log.d(TAG, "onClick: title: " + title + ", description: " + description + ", period: " + period);
 
             if (!getString(R.string.choose_period_drop_down_title).equals(period)) {
-                int isDone = 0;
 
-                if (period.equals(getString(R.string.period_daily))){
-                    period = Period.daily.toString();
-                }else if (period.equals(getString(R.string.period_weekly))){
-                    period = Period.weekly.toString();
-                }else if (period.equals(getString(R.string.period_monthly))){
-                    period = Period.monthly.toString();
-                }
-
-                Calendar calendar = Calendar.getInstance();
-                calendar.setFirstDayOfWeek(Calendar.SATURDAY);
-                JalaliDateTime jalaliDateTime = JalaliDateTime.Now();
-
-                int day = jalaliDateTime.getDay();
-                int week = calendar.get(Calendar.WEEK_OF_YEAR);
-                int month = jalaliDateTime.getMonth();
-
-                Log.d(TAG, "onClick: current date - day: " + day + ", week: " + week + ", month: " + month);
-
-                db.insertRecord(title, description, period, isDone, day, week, month);
-                Log.d(TAG, "onClick: record inserted into database");
+                addHabit(title, description, period);
 
                 Toast.makeText(AddPeriodTask.this, getString(R.string.add_successfully), Toast.LENGTH_LONG).show();
                 Log.i(TAG, "onClick: task added successfully");
@@ -116,5 +92,69 @@ public class AddPeriodTask extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+
+
+
+    private void addHabit(
+            String name, String description, String period
+    ){
+        // database
+        db = new RoutineDB(this);
+        Log.d(TAG, "addHabit: database initialized");
+
+        if (period.equals(getString(R.string.period_daily))){
+            period = Period.daily.toString();
+        }else if (period.equals(getString(R.string.period_weekly))){
+            period = Period.weekly.toString();
+        }else if (period.equals(getString(R.string.period_monthly))){
+            period = Period.monthly.toString();
+        }
+
+        JalaliDateTime jalaliDateTime = JalaliDateTime.Now();
+
+        long id = db.insertRecord(name, description, period, jalaliDateTime.getYear());
+        addDays(period, id);
+        Log.d(TAG, "onClick: record inserted into database");
+    }
+
+
+
+    private void addDays(String period, long id){
+        db = new RoutineDB(this);
+        Log.d(TAG, "addDays: database initialized");
+
+        JalaliDateTime jalaliDateTime = JalaliDateTime.Now();
+
+        if (period.equals(Period.daily.toString())){
+            for (int i = 1; i <= 6 ; i++) {
+                for (int j = 1; j <= 31; j++) {
+                    db.insertDays((int)id, 0, j, 0, i, jalaliDateTime.getYear());
+                }
+            }
+            for (int i = 7; i <= 11 ; i++) {
+                for (int j = 1; j <= 30; j++) {
+                    db.insertDays((int)id, 0, j, 0, i, jalaliDateTime.getYear());
+                }
+            }
+            for (int j = 1; j <= 29; j++) {
+                db.insertDays((int)id, 0, j, 0, 12, jalaliDateTime.getYear());
+            }
+
+        }
+        else if (period.equals(Period.weekly.toString())){
+            for (int i = 1; i <= 52; i++) {
+                db.insertDays((int)id, 0, 0, i, 0, jalaliDateTime.getYear());
+            }
+
+
+        }
+        else if (period.equals(Period.monthly.toString())){
+            for (int i = 1; i <= 12; i++) {
+                db.insertDays((int)id, 0, 0, 0, i, jalaliDateTime.getYear());
+            }
+        }
+
     }
 }
