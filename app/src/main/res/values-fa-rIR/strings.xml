@@ -79,5 +79,6 @@
     <string name="drawer_btn_description">منوی کشویی</string>
     <string name="add_btn_description">اضافه کردن فعالیت</string>
     <string name="Tasks_title">فعالیت ها</string>
+    <string name="list_item_button">دکمه رفتن به اطلاعات</string>
 
 </resources>

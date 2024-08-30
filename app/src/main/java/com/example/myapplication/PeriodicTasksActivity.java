@@ -87,7 +87,6 @@ public class PeriodicTasksActivity extends AppCompatActivity {
 
         db = new RoutineDB(this);
 
-
         RecyclerView dailyRecyclerView = findViewById(R.id.today_recycler_view);
         PeriodAdapter dailyAdapter = new PeriodAdapter(GetAllTask.dailyTasks(this), db);
         dailyRecyclerView.setHasFixedSize(true);

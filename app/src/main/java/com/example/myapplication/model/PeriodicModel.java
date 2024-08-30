@@ -1,5 +1,4 @@
 package com.example.myapplication.model;
-import com.example.myapplication.Period;
 import com.example.myapplication.customwidget.MultiStateCheckBox;
 
 public class PeriodicModel {

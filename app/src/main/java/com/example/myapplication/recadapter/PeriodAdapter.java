@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.ali.uneversaldatetools.date.JalaliDateTime;
-import com.example.myapplication.Period;
+import com.example.myapplication.model.Period;
 import com.example.myapplication.PeriodicTaskDetailActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.customwidget.MultiStateCheckBox;
@@ -135,5 +135,7 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.ViewHolder
         week = calendar.get(Calendar.WEEK_OF_YEAR);
         month = jalaliDateTime.getMonth();
         year = jalaliDateTime.getYear();
+
+
     }
 }

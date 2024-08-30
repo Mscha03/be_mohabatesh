@@ -6,7 +6,7 @@ import android.util.Log;
 import android.widget.CheckBox;
 
 import com.ali.uneversaldatetools.date.JalaliDateTime;
-import com.example.myapplication.Period;
+import com.example.myapplication.model.Period;
 import com.example.myapplication.changer.BoolInt;
 import com.example.myapplication.customwidget.MultiStateCheckBox;
 import com.example.myapplication.model.PeriodicModel;
@@ -17,7 +17,7 @@ import com.example.myapplication.time.PeriodicCheckBoxReset;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class GetAllTask {
+public class GetAllTask implements AddInformationForHistory{
 
     private static final String TAG = "GetAllTask";
 
@@ -166,11 +166,12 @@ public class GetAllTask {
             Log.d(TAG, "onCreate: fetching tasks from database");
 
             do {
-                int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
 
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
                 String title = cursor.getString(cursor.getColumnIndexOrThrow("name"));
                 String description = cursor.getString(cursor.getColumnIndexOrThrow("description"));
                 String dbPeriod = cursor.getString(cursor.getColumnIndexOrThrow("period"));
+                int dbYear = cursor.getInt(cursor.getColumnIndexOrThrow("year"));
 
                 JalaliDateTime jalaliDateTime = JalaliDateTime.Now();
                 Calendar calendar = Calendar.getInstance();
@@ -180,6 +181,10 @@ public class GetAllTask {
                 int week = calendar.get(Calendar.WEEK_OF_YEAR);
                 int month = jalaliDateTime.getMonth();
                 int year = jalaliDateTime.getYear();
+
+                if (dbYear != year){
+                    AddInformationForHistory.addDays(dbPeriod, id, routineDB);
+                }
 
 
                 MultiStateCheckBox checkBox = new MultiStateCheckBox(context);

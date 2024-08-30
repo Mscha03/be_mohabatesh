@@ -18,6 +18,9 @@ public class RoutineDB extends SQLiteOpenHelper {
     private static final String ROUTINE_NAME_COL = "name";
     private static final String ROUTINE_DESCRIPTION_COL = "description";
     private static final String ROUTINE_PERIOD_COL = "period";
+    private static final String ROUTINE_DAY = "day";
+    private static final String ROUTINE_WEEK = "week";
+    private static final String ROUTINE_MONTH = "month";
     private static final String ROUTINE_YEAR = "year";
 
     public static final String DAYS_TABLE_NAME = "habits";
@@ -42,6 +45,9 @@ public class RoutineDB extends SQLiteOpenHelper {
                         + ROUTINE_NAME_COL + " TEXT, "
                         + ROUTINE_DESCRIPTION_COL + " TEXT, "
                         + ROUTINE_PERIOD_COL + " TEXT, "
+                        + ROUTINE_DAY + " int, "
+                        + ROUTINE_WEEK + " int, "
+                        + ROUTINE_MONTH + " int, "
                         + ROUTINE_YEAR + " int)";
 
         String createDaysTable =
@@ -69,12 +75,15 @@ public class RoutineDB extends SQLiteOpenHelper {
 
     // Create
     public long insertRecord(
-            String name, String description, String period, int year) {
+            String name, String description, String period, int day, int week, int month, int year) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(ROUTINE_NAME_COL, name);
         values.put(ROUTINE_DESCRIPTION_COL, description);
         values.put(ROUTINE_PERIOD_COL, period);
+        values.put(ROUTINE_DAY, day);
+        values.put(ROUTINE_WEEK, week);
+        values.put(ROUTINE_MONTH, month);
         values.put(ROUTINE_YEAR, year);
         return db.insert(ROUTINE_TABLE_NAME, null, values);
     }
@@ -124,15 +133,29 @@ public class RoutineDB extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public Cursor getHistory(int routineId){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(DAYS_TABLE_NAME, null,
+                DAYS_ROUTINE_TABLE_ID + " = ?",
+                new String[]{String.valueOf(routineId)},
+                null,null,null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+        return cursor;
+    }
 
     // Update
     public void updateRecord(
-            int id, String name, String description, String period, int year) {
+            int id, String name, String description, String period, int day, int week, int month, int year) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(ROUTINE_NAME_COL, name);
         values.put(ROUTINE_DESCRIPTION_COL, description);
         values.put(ROUTINE_PERIOD_COL, period);
+        values.put(ROUTINE_DAY, day);
+        values.put(ROUTINE_WEEK, week);
+        values.put(ROUTINE_MONTH, month);
         values.put(ROUTINE_YEAR, year);
         db.update(ROUTINE_TABLE_NAME, values, ROUTINE_ID_COL + " = ?", new String[]{String.valueOf(id)});
         db.close();
@@ -152,8 +175,8 @@ public class RoutineDB extends SQLiteOpenHelper {
         values.put(DAYS_YEAR, year);
 
         db.update(DAYS_TABLE_NAME, values,
-                DAYS_DAY + " = ?" + " AND "+ DAYS_Week + " = ?" + " AND "+ DAYS_MONTH + " = ?" + " AND "+ DAYS_YEAR + " = ?"
-                , new String[]{String.valueOf(day), String.valueOf(week), String.valueOf(month), String.valueOf(year)});
+                DAYS_ROUTINE_TABLE_ID + " = ?" + " AND " + DAYS_DAY + " = ?" + " AND " + DAYS_Week + " = ?" + " AND "+ DAYS_MONTH + " = ?" + " AND "+ DAYS_YEAR + " = ?"
+                , new String[]{String.valueOf(routine_id),String.valueOf(day), String.valueOf(week), String.valueOf(month), String.valueOf(year)});
     }
 
     // Delete
@@ -161,6 +184,8 @@ public class RoutineDB extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(ROUTINE_TABLE_NAME, ROUTINE_ID_COL + " = ?", new String[]{String.valueOf(id)});
     }
+
+
 
 }
 

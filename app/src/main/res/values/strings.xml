@@ -62,6 +62,8 @@
     <string name="drawer_btn_description">Drawer menu</string>
     <string name="add_btn_description">Add task</string>
     <string name="Tasks_title">Tasks</string>
+    <string name="list_item_button">button to detail</string>
+    <string name="history_detail_title">Habit name</string>
     <string-array name="period">
         <item>daily</item>
         <item>weekly</item>

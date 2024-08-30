@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import com.example.myapplication.Period;
+import com.example.myapplication.model.Period;
 import com.example.myapplication.PeriodicTasksActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.database.RoutineDB;
@@ -98,12 +98,15 @@ public class PeriodTaskBottomSheet extends BottomSheetDialogFragment {
 
 
             Cursor cursor = db.getRecord(id);
+            int day = cursor.getInt(cursor.getColumnIndexOrThrow("day"));
+            int week = cursor.getInt(cursor.getColumnIndexOrThrow("week"));
+            int month = cursor.getInt(cursor.getColumnIndexOrThrow("month"));
             int year = cursor.getInt(cursor.getColumnIndexOrThrow("year"));
 
             Log.d(TAG, "onClick: current values - year = " + year);
 
 
-            db.updateRecord(id, title, description, period, year);
+            db.updateRecord(id, title, description, period, day, week, month, year);
             Log.d(TAG, "onClick: record updated");
 
             Toast.makeText(v.getContext(), getString(R.string.edit_successfully),

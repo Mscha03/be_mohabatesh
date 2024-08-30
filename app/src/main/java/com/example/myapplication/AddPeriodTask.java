@@ -15,8 +15,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
 import com.ali.uneversaldatetools.date.JalaliDateTime;
+import com.example.myapplication.database.AddInformationForHistory;
 import com.example.myapplication.database.RoutineDB;
+import com.example.myapplication.model.Period;
+
+import java.util.Calendar;
 
 public class AddPeriodTask extends AppCompatActivity {
 
@@ -113,48 +118,20 @@ public class AddPeriodTask extends AppCompatActivity {
         }
 
         JalaliDateTime jalaliDateTime = JalaliDateTime.Now();
+        Calendar calendar = Calendar.getInstance();
 
-        long id = db.insertRecord(name, description, period, jalaliDateTime.getYear());
-        addDays(period, id);
+        long id = db.insertRecord(name, description, period,
+                jalaliDateTime.getDay(),
+                calendar.get(Calendar.WEEK_OF_YEAR),
+                jalaliDateTime.getMonth(),
+                jalaliDateTime.getYear()
+                );
+
+        AddInformationForHistory.addDays(period, id, db);
         Log.d(TAG, "onClick: record inserted into database");
     }
 
 
 
-    private void addDays(String period, long id){
-        db = new RoutineDB(this);
-        Log.d(TAG, "addDays: database initialized");
 
-        JalaliDateTime jalaliDateTime = JalaliDateTime.Now();
-
-        if (period.equals(Period.daily.toString())){
-            for (int i = 1; i <= 6 ; i++) {
-                for (int j = 1; j <= 31; j++) {
-                    db.insertDays((int)id, 0, j, 0, i, jalaliDateTime.getYear());
-                }
-            }
-            for (int i = 7; i <= 11 ; i++) {
-                for (int j = 1; j <= 30; j++) {
-                    db.insertDays((int)id, 0, j, 0, i, jalaliDateTime.getYear());
-                }
-            }
-            for (int j = 1; j <= 29; j++) {
-                db.insertDays((int)id, 0, j, 0, 12, jalaliDateTime.getYear());
-            }
-
-        }
-        else if (period.equals(Period.weekly.toString())){
-            for (int i = 1; i <= 52; i++) {
-                db.insertDays((int)id, 0, 0, i, 0, jalaliDateTime.getYear());
-            }
-
-
-        }
-        else if (period.equals(Period.monthly.toString())){
-            for (int i = 1; i <= 12; i++) {
-                db.insertDays((int)id, 0, 0, 0, i, jalaliDateTime.getYear());
-            }
-        }
-
-    }
 }

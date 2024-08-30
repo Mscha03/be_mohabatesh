@@ -6,7 +6,7 @@ import android.util.Log;
 import android.widget.CheckBox;
 
 import com.ali.uneversaldatetools.date.JalaliDateTime;
-import com.example.myapplication.Period;
+import com.example.myapplication.model.Period;
 import com.example.myapplication.changer.BoolInt;
 import com.example.myapplication.customwidget.MultiStateCheckBox;
 import com.example.myapplication.model.PeriodicModel;
