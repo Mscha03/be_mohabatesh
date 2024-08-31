@@ -2,11 +2,9 @@ package com.example.myapplication.interfaces;
 
 import android.content.Context;
 import android.content.Intent;
-import android.widget.Toast;
-
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-
+import com.example.myapplication.AboutUsActivity;
 import com.example.myapplication.ContactUsActivity;
 import com.example.myapplication.HistoryActivity;
 import com.example.myapplication.MainActivity;
@@ -40,7 +38,8 @@ public interface drawerNavigation {
             packageContext.startActivity(intent);
 
         } else if (itemId == R.id.main_nav_about_us) {
-            Toast.makeText(packageContext, R.string.about_Toast, Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(packageContext, AboutUsActivity.class);
+            packageContext.startActivity(intent);
 
         } else if (itemId == R.id.main_contact_us) {
             Intent intent = new Intent(packageContext, ContactUsActivity.class);

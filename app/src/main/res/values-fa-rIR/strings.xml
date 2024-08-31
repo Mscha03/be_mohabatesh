@@ -23,6 +23,17 @@
     <string name="dialog_massage_delete_item">فعالیت از لیست کارهای درحال انجام پاک می شود.</string>
     <string name="delete_task_toast">حذف شد</string>
 
+    <string name="us_text_1">طراح و برنامه نویس:</string>
+    <string name="us_text_2">محمدصالح صدیقی</string>
+    <string name="us_text_3">پیشنهاد نام:</string>
+    <string name="us_text_4">خانوم شکیبا یوسفیان</string>
+    <string name="us_text_5">باتشکر از اعضای گروه به محبتش برای تست و ارائه پیشنهادات مخصوصا:</string>
+    <string name="us_text_6">خانوم آرزو الهی رودپشتی</string>
+    <string name="us_text_7">خانوم شکیبا یوسفیان</string>
+    <string name="us_text_8">خانوم مرضیه رضایی</string>
+    <string name="us_text_9">و سایر دوستانی که مارا در ساخت این برنامه یاری کردند.</string>
+
+
     <string name="period_daily">روزانه</string>
     <string name="period_weekly">هفتگی</string>
     <string name="period_monthly">ماهانه</string>
