@@ -1,6 +1,5 @@
 package com.example.myapplication.recadapter;
 
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.util.Log;
@@ -9,11 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.myapplication.R;
 import com.example.myapplication.model.HistoryModel;
 
@@ -81,15 +78,15 @@ public class HistoryDetailAdapter extends RecyclerView.Adapter<HistoryDetailAdap
 
         switch (model.getPeriod()){
             case daily:
-                s = model.getChangeDay() + " / " + model.getChangeMonth() + " / " + model.getChangeYear();
+                s = model.getChangeYear() + " / " + model.getChangeMonth() + " / " + model.getChangeDay();
                 break;
 
             case weekly:
-                s = model.getChangeWeek() + " - " + model.getChangeYear();
+                s = model.getChangeYear() + " - " + model.getChangeWeek();
                 break;
 
             case monthly:
-                s = model.getChangeMonth() + " / " + model.getChangeYear();
+                s = model.getChangeYear() + " / " + model.getChangeMonth();
                 break;
             default:
                 break;

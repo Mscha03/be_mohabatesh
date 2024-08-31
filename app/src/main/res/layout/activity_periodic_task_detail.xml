@@ -30,6 +30,7 @@
             android:layout_height="60dp"
             android:layout_weight="1"
             android:background="@drawable/box_background_shape"
+            android:contentDescription="@string/edit_task_button_txt"
             android:src="@drawable/baseline_edit_square_24"
             android:layout_margin="5sp"/>
 
@@ -39,6 +40,7 @@
             android:layout_height="60dp"
             android:layout_weight="1"
             android:background="@drawable/box_background_shape"
+            android:contentDescription="@string/delete_btn_description"
             android:src="@drawable/baseline_delete_24"
             android:layout_marginTop="5sp"
             android:layout_marginBottom="5sp"
@@ -95,9 +97,8 @@
                 android:id="@+id/task_description_edit_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="textMultiLine"
                 android:padding="15sp"
-                android:text="description"
+                android:text="@string/description_textView"
                 android:textColor="@color/text"
                 android:textColorHint="@color/text"
                 android:textSize="20sp" />
@@ -116,7 +117,7 @@
             android:paddingTop="15sp"
             android:paddingBottom="15sp"
             android:singleLine="true"
-            android:text="period"
+            android:text="@string/period_textView"
             android:textColor="@color/text"
             android:textColorHint="@color/text"
             android:textSize="20sp"
@@ -129,7 +130,7 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/box_background_shape"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="350dp"/>
 
     </LinearLayout>
 

@@ -10,6 +10,7 @@ import com.example.myapplication.model.Period;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class GetDates {
 
@@ -20,7 +21,6 @@ public class GetDates {
     static HistoryModel[] taskModels;
 
     static JalaliDateTime jalaliDateTime = JalaliDateTime.Now();
-    ;
     static Calendar calendar = java.util.Calendar.getInstance();
 
 
@@ -28,13 +28,26 @@ public class GetDates {
         calendar.setFirstDayOfWeek(Calendar.SATURDAY);
     }
 
-    public static HistoryModel[] getTaskHistory(Context context, int routineId) {
+    public  HistoryModel[] getTaskHistoryArray(Context context, int routineId) {
         getDailyDates(context, routineId);
+
+        taskModels = new HistoryModel[tasksHistory.size()];
+
+        for (int i = 0; i < tasksHistory.size(); i++) {
+            taskModels[i] = tasksHistory.get(i);
+
+        }
+
         return taskModels;
     }
 
+    public  List<HistoryModel> getTaskHistoryList(Context context, int routineId){
+        getDailyDates(context, routineId);
+        return tasksHistory;
+    }
 
-    private static void getDailyDates(Context context, int routineId) {
+
+    private void getDailyDates(Context context, int routineId) {
         routineDB = new RoutineDB(context);
         Log.d(TAG, "onCreate: database initialized");
 
@@ -114,37 +127,66 @@ public class GetDates {
             Log.d(TAG, "onCreate: no tasks found in database");
         }
 
-        taskModels = new HistoryModel[tasksHistory.size()];
 
-
-        for (int i = 0; i < tasksHistory.size(); i++) {
-            taskModels[i] = tasksHistory.get(i);
-
-        }
     }
 
+    private boolean afterCreateDay(int day, int month, int year, int tDay, int tMonth, int tYear) {
 
-    private static boolean afterCreateDay(int day, int month, int year, int tDay, int tMonth, int tYear) {
-
+        boolean b = false;
         if (tYear < year) {
-            return true;
+            b = true;
         } else if ((tYear == year) && (tMonth < month)) {
-            return true;
-        } else return (tYear == year) && (tMonth == month) && (tDay <= day);
+            b = true;
+        } else if ((tYear == year) && (tMonth == month) && (tDay <= day)){
+            b = true;
+        }
+
+        if (jalaliDateTime.getYear() < year) {
+            b = false;
+        } else if ((jalaliDateTime.getYear() == year) && (jalaliDateTime.getMonth() < month)) {
+            b = false;
+        } else if ((jalaliDateTime.getYear() == year) && (jalaliDateTime.getMonth() == month) && (jalaliDateTime.getDay() < day)){
+            b = false;
+        }
+
+        return b;
     }
 
-    private static boolean afterCreatedWeek(int week, int year, int tWeek, int tYear) {
+    private boolean afterCreatedWeek(int week, int year, int tWeek, int tYear) {
+
+        boolean b = false;
 
         if (tYear < year) {
-            return true;
-        } else return (tYear == year) && (tWeek <= week);
+            b = true;
+        } else if( (tYear == year) && (tWeek <= week)){
+            b = true;
+        }
+
+        if (jalaliDateTime.getYear() < year) {
+            b = false;
+        } else if ((jalaliDateTime.getYear() == year) && (calendar.get(Calendar.WEEK_OF_YEAR) < week)) {
+            b = false;
+        }
+
+        return b;
     }
 
-    private static boolean afterCreateMonth(int month, int year, int tMonth, int tYear) {
+    private boolean afterCreateMonth(int month, int year, int tMonth, int tYear) {
 
+        boolean b = false;
         if (tYear < year) {
-            return true;
-        } else return (tYear == year) && (tMonth <= month);
+            b = true;
+        } else if ((tYear == year) && (tMonth <= month)) {
+            b = true;
+        }
+
+        if (jalaliDateTime.getYear() < year) {
+            b = false;
+        } else if ((jalaliDateTime.getYear() == year) && (jalaliDateTime.getMonth() < month)) {
+            b = false;
+        }
+
+        return b;
 
     }
 }

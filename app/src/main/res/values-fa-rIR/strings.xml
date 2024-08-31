@@ -20,7 +20,7 @@
     <string name="add_new_task_dropdown_title">یک دوره را انتخاب کنید</string>
     <string name="edit_task_title">جزئیات فعالیت</string>
     <string name="dialog_title_delete_item">فعالیت را پاک می کنید؟</string>
-    <string name="dialog_massage_delete_item">فعالیت از لیست کارهای درحال انجام پاک می شود اما در تاریخچه فعالیت ها باقی می ماند.</string>
+    <string name="dialog_massage_delete_item">فعالیت از لیست کارهای درحال انجام پاک می شود.</string>
     <string name="delete_task_toast">حذف شد</string>
 
     <string name="period_daily">روزانه</string>
@@ -47,7 +47,7 @@
         <item>بهمن</item>
         <item>اسفند</item>
     </string-array>
-    <string name="main_nav_periodic_task_title">فعالیت های دوره ای</string>
+    <string name="main_nav_periodic_task_title">عادت ها</string>
     <string name="main_nav_normal_task_title">فعالیت های زمان دار</string>
     <string name="main_nav_history_title">تاریخچه</string>
     <string name="main_nav_open">باز کردن نوار کشویی</string>
@@ -80,5 +80,13 @@
     <string name="add_btn_description">اضافه کردن فعالیت</string>
     <string name="Tasks_title">فعالیت ها</string>
     <string name="list_item_button">دکمه رفتن به اطلاعات</string>
+    <string name="history_chart_undone">انجام نشده</string>
+    <string name="history_chart_green_done">عالی</string>
+    <string name="history_detail_title">نام عادت</string>
+    <string name="history_chart_yellow_done">خوب</string>
+    <string name="history_chart_red_done">بد</string>
+    <string name="history_chart_description">جزئیات انجام عادت ها</string>
+    <string name="description_textView">توضیحات</string>
+    <string name="period_textView">دوره</string>
 
 </resources>

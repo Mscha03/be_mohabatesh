@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,8 +17,11 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.bottomsheet.PeriodTaskBottomSheet;
+import com.example.myapplication.chartadapter.HistroyChartAdapter;
 import com.example.myapplication.database.RoutineDB;
 import com.example.myapplication.model.Period;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Description;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class PeriodicTaskDetailActivity extends AppCompatActivity {
@@ -28,8 +30,8 @@ public class PeriodicTaskDetailActivity extends AppCompatActivity {
 
     private ImageButton edit, delete;
     private TextView title, description, period;
-    private LinearLayout layout;
     private RoutineDB db;
+    private PieChart pieChart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +47,6 @@ public class PeriodicTaskDetailActivity extends AppCompatActivity {
         });
 
         // initials
-        layout = findViewById(R.id.edit_delete_layout);
         edit = findViewById(R.id.edit_button_edit_activity);
         delete = findViewById(R.id.delete_button_edit_activity);
         title = findViewById(R.id.task_title_edit_activity);
@@ -76,6 +77,22 @@ public class PeriodicTaskDetailActivity extends AppCompatActivity {
         }
         this.period.setText(period);
         Log.d(TAG, "onCreate: task details set - Title: " + detail[0] + ", Description: " + detail[1] + ", Period: " + detail[2]);
+
+
+        // chart
+        HistroyChartAdapter histroyChartAdapter = new HistroyChartAdapter();
+        pieChart = findViewById(R.id.detail_pie_chart);
+        pieChart.notifyDataSetChanged();
+        pieChart.setData(null);
+        pieChart.setData(histroyChartAdapter.pieChartEntry(this, id));
+        pieChart.notifyDataSetChanged();
+
+
+        Description description = new Description();
+//        description.setText(getString(R.string.history_chart_description));
+        description.setText(" ");
+        pieChart.setDescription(description);
+
 
         delete.setOnClickListener(v -> {
             Log.d(TAG, "onClick: delete button clicked");

@@ -21,14 +21,14 @@
     <string name="add_new_task_dropdown_title">Choose Period</string>
     <string name="edit_task_title">Task Detail</string>
     <string name="dialog_title_delete_item">Delete task?</string>
-    <string name="dialog_massage_delete_item">Deleting task from your task list but it will stay in your history.</string>
+    <string name="dialog_massage_delete_item">Deleting task from your task list.</string>
     <string name="delete_task_toast">Deleted.</string>
 
     <string name="period_daily">daily</string>
     <string name="period_weekly">weekly</string>
     <string name="period_monthly">monthly</string>
 
-    <string name="main_nav_periodic_task_title">periodic tasks</string>
+    <string name="main_nav_periodic_task_title">habits</string>
     <string name="main_nav_normal_task_title">timed tasks</string>
     <string name="main_nav_history_title">history</string>
     <string name="main_nav_open">open navigation drawer</string>
@@ -63,7 +63,20 @@
     <string name="add_btn_description">Add task</string>
     <string name="Tasks_title">Tasks</string>
     <string name="list_item_button">button to detail</string>
+
+
+    <string name="history_chart_undone">undone</string>
+    <string name="history_chart_green_done">Perfect</string>
+    <string name="history_chart_yellow_done">Good</string>
+    <string name="history_chart_red_done">Bad</string>
+    <string name="history_chart_description">detail</string>
+
+
+
+
     <string name="history_detail_title">Habit name</string>
+    <string name="description_textView">description</string>
+    <string name="period_textView">period</string>
     <string-array name="period">
         <item>daily</item>
         <item>weekly</item>

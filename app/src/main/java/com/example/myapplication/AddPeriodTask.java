@@ -119,6 +119,7 @@ public class AddPeriodTask extends AppCompatActivity {
 
         JalaliDateTime jalaliDateTime = JalaliDateTime.Now();
         Calendar calendar = Calendar.getInstance();
+        calendar.setFirstDayOfWeek(Calendar.SATURDAY);
 
         long id = db.insertRecord(name, description, period,
                 jalaliDateTime.getDay(),
