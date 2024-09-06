@@ -25,7 +25,6 @@ public class AboutUsActivity extends AppCompatActivity {
     ActionBarDrawerToggle drawerToggle;
     ImageButton drawerMenu;
 
-    TextView t1, t2, t3, t4, t5, t6, t7, t8, t9;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,25 +73,7 @@ public class AboutUsActivity extends AppCompatActivity {
         });
 
 
-        t1 = findViewById(R.id.us_text1);
-        t2 = findViewById(R.id.us_text2);
-        t3 = findViewById(R.id.us_text3);
-        t4 = findViewById(R.id.us_text4);
-        t5 = findViewById(R.id.us_text5);
-        t6 = findViewById(R.id.us_text6);
-        t7 = findViewById(R.id.us_text7);
-        t8 = findViewById(R.id.us_text8);
-        t9 = findViewById(R.id.us_text9);
 
-        t1.setText(getString(R.string.us_text_1));
-        t2.setText(getString(R.string.us_text_2));
-        t3.setText(getString(R.string.us_text_3));
-        t4.setText(getString(R.string.us_text_4));
-        t5.setText(getString(R.string.us_text_5));
-        t6.setText(getString(R.string.us_text_6));
-        t7.setText(getString(R.string.us_text_7));
-        t8.setText(getString(R.string.us_text_8));
-        t9.setText(getString(R.string.us_text_9));
 
     }
 }

@@ -99,14 +99,11 @@
     </string-array>
 
     <string name="us_text_1">"Designer and programmer: "</string>
-    <string name="us_text_2">Mohammad Saleh Seddiqi</string>
-    <string name="us_text_3">App name suggester</string>
-    <string name="us_text_4">Ms. Shakiba Yousefian</string>
-    <string name="us_text_5">Thank you to the members of the \"Be Mohabatesh\" group in testing and providing suggestions, especially:</string>
-    <string name="us_text_6">Ms. Arzoo Allahi Roudposhti</string>
-    <string name="us_text_7">Ms. Shakiba Yousefian</string>
-    <string name="us_text_8">Ms. Marzieh Rezaei</string>
-    <string name="us_text_9">and other friends who helped us in making this application.</string>
+    <string name="us_text_2">Mohammad Saleh Seddighi</string>
+    <string name="us_text_3">Thanks to the members of the \"Be Mohabatesh\" group
+        in testing and providing suggestions
+        and other friends who helped us in making this application.</string>
+
 
 
 </resources>
