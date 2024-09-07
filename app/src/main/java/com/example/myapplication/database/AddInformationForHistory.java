@@ -20,8 +20,14 @@ public interface AddInformationForHistory {
                     db.insertDays((int)id, 0, j, 0, i, jalaliDateTime.getYear());
                 }
             }
-            for (int j = 1; j <= 29; j++) {
-                db.insertDays((int)id, 0, j, 0, 12, jalaliDateTime.getYear());
+            if ((jalaliDateTime.getYear() % 4 ) == 3) {  //kabise => 366 days in year
+                for (int j = 1; j <= 30; j++) {
+                    db.insertDays((int) id, 0, j, 0, 12, jalaliDateTime.getYear());
+                }
+            }else { // normal => 365 day in year
+                for (int j = 1; j <= 29; j++) {
+                    db.insertDays((int) id, 0, j, 0, 12, jalaliDateTime.getYear());
+                }
             }
 
         }
