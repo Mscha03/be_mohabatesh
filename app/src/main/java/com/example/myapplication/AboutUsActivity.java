@@ -53,7 +53,7 @@ public class AboutUsActivity extends AppCompatActivity {
 
             int itemId = item.getItemId();
 
-            drawerNavigationHandler(itemId, AboutUsActivity.this, R.id.main_nav_home, drawerLayout);
+            drawerNavigationHandler(itemId, AboutUsActivity.this, R.id.main_nav_about_us, drawerLayout);
 
             return false;
         });

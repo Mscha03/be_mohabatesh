@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedCallback;
@@ -19,6 +20,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ali.uneversaldatetools.date.JalaliDateTime;
 import com.example.myapplication.bottomsheet.MainBottomSheet;
 import com.example.myapplication.database.GetUndoneTask;
 import com.example.myapplication.database.RoutineDB;
@@ -27,6 +29,7 @@ import com.example.myapplication.database.TaskDB;
 import com.example.myapplication.recadapter.PeriodAdapter;
 import com.example.myapplication.recadapter.SimpleAdapter;
 import com.example.myapplication.recadapter.TaskAdapter;
+import com.example.myapplication.time.ShamsiMonth;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
@@ -34,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
+    TextView today;
 
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -59,6 +63,15 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        //date
+        today = findViewById(R.id.main_date_text_view);
+        JalaliDateTime jalaliDateTime = JalaliDateTime.Now();
+        String date =
+                jalaliDateTime.getDay() + " " +
+                        ShamsiMonth.getMonthName(jalaliDateTime.getMonth(),this) + " " +
+                        jalaliDateTime.getYear();
+        today.setText(date);
 
         //navigation button
         drawerMenu = findViewById(R.id.main_nav_drawer_button);

@@ -25,13 +25,10 @@
 
     <string name="us_text_1">طراح و برنامه نویس:</string>
     <string name="us_text_2">محمدصالح صدیقی</string>
-    <string name="us_text_3">پیشنهاد نام:</string>
-    <string name="us_text_4">خانوم شکیبا یوسفیان</string>
-    <string name="us_text_5">باتشکر از اعضای گروه به محبتش برای تست و ارائه پیشنهادات مخصوصا:</string>
-    <string name="us_text_6">خانوم آرزو الهی رودپشتی</string>
-    <string name="us_text_7">خانوم شکیبا یوسفیان</string>
-    <string name="us_text_8">خانوم مرضیه رضایی</string>
-    <string name="us_text_9">و سایر دوستانی که مارا در ساخت این برنامه یاری کردند.</string>
+    <string name="us_text_3">با تشکر از اعضای گروه \"به محبتش\"
+    برای کمک و پیشنهادات خوبشان و
+    همچنین دیگر دوستانی که ما را در ساخت این برنامه یاری کردند</string>
+
 
 
     <string name="period_daily">روزانه</string>
