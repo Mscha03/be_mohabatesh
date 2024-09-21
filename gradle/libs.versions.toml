@@ -13,6 +13,7 @@ lifecycleViewmodelKtx = "2.8.4"
 material3 = "1.2.1"
 mpandroidchart = "v3.1.0"
 persianDatePickerDialog = "1.8.0"
+kotlin = "1.9.0"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -31,4 +32,5 @@ persian-date-picker-dialog = { module = "com.github.aliab:Persian-Date-Picker-Di
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
+jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 

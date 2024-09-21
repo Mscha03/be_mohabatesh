@@ -72,8 +72,6 @@
     <string name="history_chart_description">detail</string>
 
 
-
-
     <string name="history_detail_title">Habit name</string>
     <string name="description_textView">description</string>
     <string name="period_textView">period</string>
@@ -103,7 +101,6 @@
     <string name="us_text_3">Thanks to the members of the \"Be Mohabatesh\" group
         in testing and providing suggestions
         and other friends who helped us in making this application.</string>
-
 
 
 </resources>
