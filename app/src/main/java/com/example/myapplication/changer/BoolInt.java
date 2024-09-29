@@ -4,9 +4,9 @@ public interface BoolInt {
 
     static int boolToInt(boolean b) {
         if (b) {
-            return 0;
-        } else {
             return 1;
+        } else {
+            return 0;
         }
     }
 

@@ -6,12 +6,12 @@ import android.util.Log;
 import android.widget.CheckBox;
 
 import com.ali.uneversaldatetools.date.JalaliDateTime;
-import com.example.myapplication.model.Period;
 import com.example.myapplication.changer.BoolInt;
 import com.example.myapplication.customwidget.MultiStateCheckBox;
+import com.example.myapplication.model.Period;
 import com.example.myapplication.model.PeriodicModel;
-import com.example.myapplication.model.SimpleModel;
 import com.example.myapplication.model.TaskModel;
+import com.example.myapplication.model.tasks.SimpleTask;
 import com.example.myapplication.time.PeriodicCheckBoxReset;
 
 import java.util.ArrayList;
@@ -41,8 +41,8 @@ public class GetAllTask implements AddInformationForHistory{
 
     // simple task
     static SimpleDB simpleDB;
-    static ArrayList<SimpleModel> simpleTasks;
-    static SimpleModel[] simpleModels;
+    static ArrayList<SimpleTask> simpleTasksList;
+    static SimpleTask[] simpleTaskArray;
 
     public static TaskModel[] todayTasks(Context context) {
         getNormalTasks(context);
@@ -75,9 +75,9 @@ public class GetAllTask implements AddInformationForHistory{
         return monthlyModels;
     }
 
-    public static SimpleModel[] simpleTasks(Context context) {
+    public static SimpleTask[] simpleTasks(Context context) {
         getSimpleTasks(context);
-        return simpleModels;
+        return simpleTaskArray;
     }
 
 
@@ -240,24 +240,22 @@ public class GetAllTask implements AddInformationForHistory{
     private static void getSimpleTasks(Context context) {
         simpleDB = new SimpleDB(context);
         Log.d(TAG, "onCreate: database initialized");
-        simpleTasks = new ArrayList<>();
+        simpleTasksList = new ArrayList<>();
 
         Cursor cursor = simpleDB.getAllRecords();
         if (cursor.moveToFirst()) {
             Log.d(TAG, "onCreate: fetching tasks from database");
 
             do {
-                CheckBox checkBox = new CheckBox(context);
-                checkBox.setText(cursor.getString(cursor.getColumnIndexOrThrow("name")));
-                checkBox.setChecked(BoolInt.intToBool(cursor.getInt(cursor.getColumnIndexOrThrow("isdone"))));
 
-                SimpleModel simpleModel = new SimpleModel(
-                        checkBox,
+                SimpleTask simpleTask = new SimpleTask(
+                        cursor.getInt(cursor.getColumnIndexOrThrow("id")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("name")),
                         cursor.getString(cursor.getColumnIndexOrThrow("description")),
-                        cursor.getInt(cursor.getColumnIndexOrThrow("id"))
+                        (cursor.getInt(cursor.getColumnIndexOrThrow("isdone")))
                 );
 
-                simpleTasks.add(simpleModel);
+                simpleTasksList.add(simpleTask);
 
             } while (cursor.moveToNext());
             Log.d(TAG, "onCreate: tasks loaded from database");
@@ -266,10 +264,10 @@ public class GetAllTask implements AddInformationForHistory{
         }
         cursor.close();
 
-        simpleModels = new SimpleModel[simpleTasks.size()];
+        simpleTaskArray = new SimpleTask[simpleTasksList.size()];
 
-        for (int i = 0; i < simpleTasks.size(); i++) {
-            simpleModels[i] = simpleTasks.get(i);
+        for (int i = 0; i < simpleTasksList.size(); i++) {
+            simpleTaskArray[i] = simpleTasksList.get(i);
         }
 
     }

@@ -6,12 +6,12 @@ import android.util.Log;
 import android.widget.CheckBox;
 
 import com.ali.uneversaldatetools.date.JalaliDateTime;
-import com.example.myapplication.model.Period;
 import com.example.myapplication.changer.BoolInt;
 import com.example.myapplication.customwidget.MultiStateCheckBox;
+import com.example.myapplication.model.Period;
 import com.example.myapplication.model.PeriodicModel;
-import com.example.myapplication.model.SimpleModel;
 import com.example.myapplication.model.TaskModel;
+import com.example.myapplication.model.tasks.SimpleTask;
 import com.example.myapplication.time.PeriodicCheckBoxReset;
 
 import java.util.ArrayList;
@@ -41,8 +41,8 @@ public class GetUndoneTask {
 
     //Simple task
     static SimpleDB simpleDB;
-    static ArrayList<SimpleModel> simpleTasks;
-    static SimpleModel[] simpleModels;
+    static ArrayList<SimpleTask> simpleTasksList;
+    static SimpleTask[] simpleTasksArray;
 
     // public method
     public static TaskModel[] todayTasks(Context context) {
@@ -108,9 +108,9 @@ public class GetUndoneTask {
         return allRoutineModels;
     }
 
-    public static SimpleModel[] simpleTasks(Context context) {
+    public static SimpleTask[] simpleTasks(Context context) {
         getSimpleTasks(context);
-        return simpleModels;
+        return simpleTasksArray;
     }
 
 
@@ -304,7 +304,7 @@ public class GetUndoneTask {
     private static void getSimpleTasks(Context context) {
         simpleDB = new SimpleDB(context);
         Log.d(TAG, "onCreate: database initialized");
-        simpleTasks = new ArrayList<>();
+        simpleTasksList = new ArrayList<>();
 
 
         Cursor cursor = simpleDB.getAllRecords();
@@ -312,24 +312,22 @@ public class GetUndoneTask {
             Log.d(TAG, "onCreate: fetching tasks from database");
 
             do {
-                CheckBox checkBox = new CheckBox(context);
-                checkBox.setText(cursor.getString(cursor.getColumnIndexOrThrow("name")));
-                checkBox.setChecked(BoolInt.intToBool(cursor.getInt(cursor.getColumnIndexOrThrow("isdone"))));
 
-                SimpleModel simpleModel = new SimpleModel(
-                        checkBox,
+                SimpleTask simpleModel = new SimpleTask(
+                        cursor.getInt(cursor.getColumnIndexOrThrow("id")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("name")),
                         cursor.getString(cursor.getColumnIndexOrThrow("description")),
-                        cursor.getInt(cursor.getColumnIndexOrThrow("id"))
+                        cursor.getInt(cursor.getColumnIndexOrThrow("isdone"))
                 );
 
                 Log.d(TAG, "onCreate: periodicModel created:" +
-                        " title: " + simpleModel.getCheckBox().getText() +
-                        " isDone: " + simpleModel.getCheckBox().isChecked() +
+                        " title: " + simpleModel.getTitle() +
+                        " isDone: " + simpleModel.getIsDone() +
                         " descreption: " + simpleModel.getDescription() +
                         " id: " + simpleModel.getId());
 
-                if (!simpleModel.getCheckBox().isChecked()) {
-                    simpleTasks.add(simpleModel);
+                if (simpleModel.getIsDone() == 0) {
+                    simpleTasksList.add(simpleModel);
                 }
 
             } while (cursor.moveToNext());
@@ -339,11 +337,10 @@ public class GetUndoneTask {
         }
         cursor.close();
 
-        simpleModels = new SimpleModel[simpleTasks.size()];
-
-
-        for (int i = 0; i < simpleTasks.size(); i++) {
-            simpleModels[i] = simpleTasks.get(i);
+        // List to simpleArray
+        simpleTasksArray = new SimpleTask[simpleTasksList.size()];
+        for (int i = 0; i < simpleTasksList.size(); i++) {
+            simpleTasksArray[i] = simpleTasksList.get(i);
         }
 
     }

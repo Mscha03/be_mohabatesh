@@ -16,7 +16,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.myapplication.database.SimpleDB;
-import com.example.myapplication.model.SimpleModel;
+import com.example.myapplication.model.tasks.SimpleTask;
 
 public class AddSimpleTask extends AppCompatActivity {
 
@@ -25,7 +25,7 @@ public class AddSimpleTask extends AppCompatActivity {
 
     private SimpleDB db;
     private EditText addTitle, addDescription;
-    private SimpleModel simpleModel;
+    private SimpleTask simpleTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +55,12 @@ public class AddSimpleTask extends AppCompatActivity {
             checkBox.setText(addTitle.getText());
             checkBox.setChecked(false);
 
-            simpleModel = new SimpleModel(checkBox, addDescription.getText().toString(), 0);
+            simpleTask = new SimpleTask(checkBox.getText().toString(), addDescription.getText().toString());
 
-            Log.d(TAG, "onClick: title: " + simpleModel.getCheckBox().getText() + ", description: " + simpleModel.getDescription());
+            Log.d(TAG, "onClick: title: " + simpleTask.getTitle() + ", description: " + simpleTask.getDescription());
 
 
-            db.insertRecord(simpleModel.getCheckBox().getText().toString(), simpleModel.getDescription(), 0);
+            db.insertRecord(simpleTask.getTitle(), simpleTask.getDescription(), simpleTask.getIsDone());
 
             Log.d(TAG, "onClick: record inserted into database");
 
