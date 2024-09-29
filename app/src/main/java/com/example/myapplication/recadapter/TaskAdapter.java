@@ -1,5 +1,8 @@
 package com.example.myapplication.recadapter;
 
+import static com.example.myapplication.changer.BoolInt.boolToInt;
+import static com.example.myapplication.changer.BoolInt.intToBool;
+
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,15 +16,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.NormalTaskDetailActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.database.TaskDB;
-import com.example.myapplication.model.TaskModel;
+import com.example.myapplication.model.tasks.DeadLinedTask;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     private static final String TAG = "TaskAdapter";
 
-    private final TaskModel[] listdata;
+    private final DeadLinedTask[] listdata;
     private final TaskDB db;
 
-    public TaskAdapter(TaskModel[] listdata, TaskDB db) {
+    public TaskAdapter(DeadLinedTask[] listdata, TaskDB db) {
         this.listdata = listdata;
         this.db = db;
         Log.d(TAG, "PeriodAdapter: Adapter created with " + listdata.length + " items");
@@ -40,26 +43,26 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder: binding view holder at position " + position);
 
-        TaskModel model = listdata[position];
+        DeadLinedTask model = listdata[position];
         Log.d(TAG, "onBindViewHolder: model ID " + model.getId() + ", description: " + model.getDescription());
 
         holder.checkBox.setOnCheckedChangeListener(null);
 
-        holder.checkBox.setText(model.getCheckBox().getText());
-        holder.checkBox.setChecked(model.getCheckBox().isChecked());
-        Log.d(TAG, "onBindViewHolder: set checkbox text to " + model.getCheckBox().getText() + " and checked state to " + model.getCheckBox().isChecked());
+        holder.checkBox.setText(model.getTitle());
+        holder.checkBox.setChecked(intToBool(model.getIsDone()));
+        Log.d(TAG, "onBindViewHolder: set checkbox text to " + model.getTitle() + " and checked state to " + model.getIsDone());
 
         holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            Log.d(TAG, "onCheckedChanged: checkbox with text " + model.getCheckBox().getText() + " changed to " + isChecked);
-            model.getCheckBox().setChecked(isChecked);
+            Log.d(TAG, "onCheckedChanged: checkbox with text " + model.getTitle() + " changed to " + isChecked);
+            model.setIsDone(boolToInt(isChecked));
             db.updateRecord(
                     model.getId(),
-                    model.getCheckBox().getText().toString(),
+                    model.getTitle(),
                     model.getDescription(),
-                    model.getCheckBox().isChecked() ? 1 : 0,
-                    model.getDeadDay(),
-                    model.getDeadMonth(),
-                    model.getDeadYear());
+                    model.getIsDone(),
+                    model.getDeadDate().getDay(),
+                    model.getDeadDate().getMonth(),
+                    model.getDeadDate().getYear());
             Log.d(TAG, "onCheckedChanged: updated record in database for ID " + model.getId());
         });
 

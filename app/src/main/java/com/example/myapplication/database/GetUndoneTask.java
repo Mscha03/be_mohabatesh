@@ -1,16 +1,17 @@
 package com.example.myapplication.database;
 
+import static com.example.myapplication.changer.BoolInt.intToBool;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 import android.widget.CheckBox;
 
 import com.ali.uneversaldatetools.date.JalaliDateTime;
-import com.example.myapplication.changer.BoolInt;
 import com.example.myapplication.customwidget.MultiStateCheckBox;
 import com.example.myapplication.model.Period;
 import com.example.myapplication.model.PeriodicModel;
-import com.example.myapplication.model.TaskModel;
+import com.example.myapplication.model.tasks.DeadLinedTask;
 import com.example.myapplication.model.tasks.SimpleTask;
 import com.example.myapplication.time.PeriodicCheckBoxReset;
 
@@ -22,12 +23,12 @@ public class GetUndoneTask {
     private static final String TAG = "GetAllTask";
 
     static TaskDB db;
-    static ArrayList<TaskModel> today;
-    static ArrayList<TaskModel> future;
-    static ArrayList<TaskModel> past;
-    static TaskModel[] todayModels;
-    static TaskModel[] futureModels;
-    static TaskModel[] pastModels;
+    static ArrayList<DeadLinedTask> today;
+    static ArrayList<DeadLinedTask> future;
+    static ArrayList<DeadLinedTask> past;
+    static DeadLinedTask[] todayModels;
+    static DeadLinedTask[] futureModels;
+    static DeadLinedTask[] pastModels;
 
     // periodic task
     static RoutineDB routineDB;
@@ -45,17 +46,17 @@ public class GetUndoneTask {
     static SimpleTask[] simpleTasksArray;
 
     // public method
-    public static TaskModel[] todayTasks(Context context) {
+    public static DeadLinedTask[] todayTasks(Context context) {
         getNormalTasks(context);
         return todayModels;
     }
 
-    public static TaskModel[] futureTasks(Context context) {
+    public static DeadLinedTask[] futureTasks(Context context) {
         getNormalTasks(context);
         return futureModels;
     }
 
-    public static TaskModel[] pastTasks(Context context) {
+    public static DeadLinedTask[] pastTasks(Context context) {
         getNormalTasks(context);
         return pastModels;
     }
@@ -129,15 +130,17 @@ public class GetUndoneTask {
 
                 CheckBox checkBox = new CheckBox(context);
                 checkBox.setText(cursor.getString(cursor.getColumnIndexOrThrow("name")));
-                checkBox.setChecked(BoolInt.intToBool(cursor.getInt(cursor.getColumnIndexOrThrow("isdone"))));
+                checkBox.setChecked(intToBool(cursor.getInt(cursor.getColumnIndexOrThrow("isdone"))));
 
-                TaskModel taskModel = new TaskModel(
-                        checkBox,
-                        cursor.getString(cursor.getColumnIndexOrThrow("description")),
+                DeadLinedTask taskModel = new DeadLinedTask(
                         cursor.getInt(cursor.getColumnIndexOrThrow("id")),
-                        cursor.getInt(cursor.getColumnIndexOrThrow("deadday")),
-                        cursor.getInt(cursor.getColumnIndexOrThrow("deadmonth")),
-                        cursor.getInt(cursor.getColumnIndexOrThrow("deadyear"))
+                        cursor.getString(cursor.getColumnIndexOrThrow("name")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("description")),
+                        cursor.getInt(cursor.getColumnIndexOrThrow("isdone")),
+                        new JalaliDateTime(
+                                cursor.getInt(cursor.getColumnIndexOrThrow("deadyear")),
+                                cursor.getInt(cursor.getColumnIndexOrThrow("deadmonth")),
+                                cursor.getInt(cursor.getColumnIndexOrThrow("deadday")))
                 );
 
                 Calendar calendar = Calendar.getInstance();
@@ -149,12 +152,12 @@ public class GetUndoneTask {
                 int thisYear = jalaliDateTime.getYear();
                 Log.d(TAG, "onClick: current date - day: " + today + ", month: " + thisMonth + ", year: " + thisYear);
 
-                int deadDay = taskModel.getDeadDay();
-                int deadMonth = taskModel.getDeadMonth();
-                int deadYear = taskModel.getDeadYear();
+                int deadDay = taskModel.getDeadDate().getDay();
+                int deadMonth = taskModel.getDeadDate().getMonth();
+                int deadYear = taskModel.getDeadDate().getYear();
                 Log.d(TAG, "onClick: deadline date - day: " + deadDay + ", month: " + deadMonth + ", year: " + deadYear);
 
-                if (!taskModel.getCheckBox().isChecked()) {
+                if (!intToBool(taskModel.getIsDone())) {
                     if ((deadDay == thisDay) && (deadMonth == thisMonth) && (deadYear == thisYear)) {
                         today.add(taskModel);
                     } else if ((deadYear > thisYear) || ((deadYear == thisYear) && (deadMonth > thisMonth)) || ((deadYear == thisYear) && (deadMonth == thisMonth) && (deadDay > thisDay))) {
@@ -172,9 +175,9 @@ public class GetUndoneTask {
         }
         cursor.close();
 
-        todayModels = new TaskModel[today.size()];
-        futureModels = new TaskModel[future.size()];
-        pastModels = new TaskModel[past.size()];
+        todayModels = new DeadLinedTask[today.size()];
+        futureModels = new DeadLinedTask[future.size()];
+        pastModels = new DeadLinedTask[past.size()];
 
         for (int i = 0; i < today.size(); i++) {
             todayModels[i] = today.get(i);

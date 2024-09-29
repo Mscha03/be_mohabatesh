@@ -18,12 +18,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.ali.uneversaldatetools.date.JalaliDateTime;
-import com.example.myapplication.database.RoutineDB;
 import com.example.myapplication.database.TaskDB;
-import com.example.myapplication.model.TaskModel;
+import com.example.myapplication.model.tasks.DeadLinedTask;
 import com.example.myapplication.time.ShamsiMonth;
-
-import java.util.Calendar;
 
 import ir.hamsaa.persiandatepicker.PersianDatePickerDialog;
 import ir.hamsaa.persiandatepicker.api.PersianPickerDate;
@@ -41,9 +38,9 @@ public class AddNormalTask extends AppCompatActivity {
     private Button addButton, dateButton;
 
     private int deadDay,deadMonth ,deadYear;
-    private boolean dateChoosed = false;
+    private boolean dateChosen = false;
 
-    private TaskModel taskModel;
+    private DeadLinedTask deadLinedTask;
 
 
     @Override
@@ -86,7 +83,7 @@ public class AddNormalTask extends AppCompatActivity {
                             deadDay = persianPickerDate.getPersianDay();
                             deadMonth = persianPickerDate.getPersianMonth();
                             deadYear = persianPickerDate.getPersianYear();
-                            dateChoosed = true;
+                            dateChosen = true;
                             String s = "  " + deadDay + "  " +
                                     ShamsiMonth.getMonthName(deadMonth, AddNormalTask.this) + "  " +
                                     deadYear + "  ";
@@ -118,16 +115,24 @@ public class AddNormalTask extends AppCompatActivity {
             checkBox.setText(addTitle.getText());
             checkBox.setChecked(false);
 
-            taskModel = new TaskModel(
-                    checkBox, addDescription.getText().toString(), 0 , deadDay, deadMonth, deadYear);
+            deadLinedTask = new DeadLinedTask(
+                    addTitle.getText().toString(),
+                    addDescription.getText().toString(),
+                    JalaliDateTime.Now());
 
 
-            if(dateChoosed){
-            Log.d(TAG, "onClick: title: " + taskModel.getCheckBox().getText() + ", description: " + taskModel.getDescription());
+            if(dateChosen){
+            Log.d(TAG, "onClick: title: " + deadLinedTask.getTitle()
+                    + ", description: " + deadLinedTask.getDescription());
 
 
-                db.insertRecord(taskModel.getCheckBox().getText().toString() , taskModel.getDescription(), 0,
-                        taskModel.getDeadDay(), taskModel.getDeadMonth(), taskModel.getDeadYear());
+                db.insertRecord(deadLinedTask.getTitle(),
+                        deadLinedTask.getDescription(),
+                        deadLinedTask.getIsDone(),
+                        deadLinedTask.getDeadDate().getDay(),
+                        deadLinedTask.getDeadDate().getMonth(),
+                        deadLinedTask.getDeadDate().getYear()
+                        );
 
                 Log.d(TAG, "onClick: record inserted into database");
 
