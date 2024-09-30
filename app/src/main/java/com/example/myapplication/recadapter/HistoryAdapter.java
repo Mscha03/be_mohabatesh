@@ -10,23 +10,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ali.uneversaldatetools.date.JalaliDateTime;
 import com.example.myapplication.HistoryDetailActivity;
-import com.example.myapplication.PeriodicTaskDetailActivity;
 import com.example.myapplication.R;
-import com.example.myapplication.customwidget.MultiStateCheckBox;
-import com.example.myapplication.database.RoutineDB;
-import com.example.myapplication.model.Period;
-import com.example.myapplication.model.PeriodicModel;
-
-import java.util.Calendar;
+import com.example.myapplication.model.tasks.Habit;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder> {
     private static final String TAG = "PeriodAdapter";
 
-    private final PeriodicModel[] listdata;
+    private final Habit[] listdata;
 
-    public HistoryAdapter(PeriodicModel[] listdata) {
+    public HistoryAdapter(Habit[] listdata) {
         this.listdata = listdata;
         Log.d(TAG, "PeriodAdapter: Adapter created with " + listdata.length + " items");
     }
@@ -44,17 +37,17 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder: binding view holder at position " + position);
 
-        PeriodicModel model = listdata[position];
+        Habit model = listdata[position];
         Log.d(TAG, "onBindViewHolder: model ID " + model.getId() + ", description: " + model.getDescription());
 
-        holder.checkBox.setText(model.getCheckBox().getText());
-        Log.d(TAG, "onBindViewHolder: set checkbox text to " + model.getCheckBox().getText());
+        holder.checkBox.setText(model.getTitle());
+        Log.d(TAG, "onBindViewHolder: set checkbox text to " + model.getTitle());
 
         holder.itemView.setOnClickListener(v -> {
             Log.d(TAG, "onClick: item clicked with ID " + model.getId());
             Intent intent = new Intent(v.getContext(), HistoryDetailActivity.class);
             intent.putExtra("taskId", model.getId());
-            intent.putExtra("taskName", model.getCheckBox().getText());
+            intent.putExtra("taskName", model.getTitle());
             v.getContext().startActivity(intent);
             Log.d(TAG, "onClick: started PeriodicTaskDetailActivity activity for ID " + model.getId());
         });

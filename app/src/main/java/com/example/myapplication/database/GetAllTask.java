@@ -7,12 +7,12 @@ import android.widget.CheckBox;
 
 import com.ali.uneversaldatetools.date.JalaliDateTime;
 import com.example.myapplication.changer.BoolInt;
-import com.example.myapplication.customwidget.MultiStateCheckBox;
 import com.example.myapplication.model.Period;
-import com.example.myapplication.model.PeriodicModel;
 import com.example.myapplication.model.tasks.DeadLinedTask;
+import com.example.myapplication.model.tasks.Habit;
 import com.example.myapplication.model.tasks.SimpleTask;
 import com.example.myapplication.time.PeriodicCheckBoxReset;
+import com.example.myapplication.time.WithWeekJalaliDateTime;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -32,12 +32,12 @@ public class GetAllTask implements AddInformationForHistory{
 
     // periodic task
     static RoutineDB routineDB;
-    static ArrayList<PeriodicModel> dailyTasks;
-    static ArrayList<PeriodicModel> weeklyTasks;
-    static ArrayList<PeriodicModel> monthlyTasks;
-    static PeriodicModel[] dailyModels;
-    static PeriodicModel[] weeklyModels;
-    static PeriodicModel[] monthlyModels;
+    static ArrayList<Habit> dailyTasks;
+    static ArrayList<Habit> weeklyTasks;
+    static ArrayList<Habit> monthlyTasks;
+    static Habit[] dailyModels;
+    static Habit[] weeklyModels;
+    static Habit[] monthlyModels;
 
     // simple task
     static SimpleDB simpleDB;
@@ -60,17 +60,17 @@ public class GetAllTask implements AddInformationForHistory{
     }
 
 
-    public static PeriodicModel[] dailyTasks(Context context) {
+    public static Habit[] dailyTasks(Context context) {
         getPeriodicTasks(context);
         return dailyModels;
     }
 
-    public static PeriodicModel[] weeklyTasks(Context context) {
+    public static Habit[] weeklyTasks(Context context) {
         getPeriodicTasks(context);
         return weeklyModels;
     }
 
-    public static PeriodicModel[] monthlyTasks(Context context) {
+    public static Habit[] monthlyTasks(Context context) {
         getPeriodicTasks(context);
         return monthlyModels;
     }
@@ -190,29 +190,45 @@ public class GetAllTask implements AddInformationForHistory{
                     AddInformationForHistory.addDays(dbPeriod, id, routineDB);
                 }
 
-
-                MultiStateCheckBox checkBox = new MultiStateCheckBox(context);
-                checkBox.setText(title);
-
                 switch (dbPeriod) {
                     case "daily":
                         week = 0;
-                        checkBox.setState(PeriodicCheckBoxReset.checkDay(id, day, week, month,year, context));
-                        dailyTasks.add(new PeriodicModel(checkBox, description, Period.daily, id, day, week, month, year));
+                        dailyTasks.add(
+                                new Habit(
+                                        id,
+                                        title,
+                                        description,
+                                        PeriodicCheckBoxReset.checkDay(id, day, week, month,year, context),
+                                        new WithWeekJalaliDateTime(year, month,week, day),
+                                        Period.daily
+                                        ));
                         break;
 
                     case "weekly":
                         day = 0;
                         month = 0;
-                        checkBox.setState(PeriodicCheckBoxReset.checkDay(id, day, week, month,year, context));
-                        weeklyTasks.add(new PeriodicModel(checkBox, description, Period.weekly, id, day, week, month, year));
-                        break;
+                        dailyTasks.add(
+                                new Habit(
+                                        id,
+                                        title,
+                                        description,
+                                        PeriodicCheckBoxReset.checkDay(id, day, week, month,year, context),
+                                        new WithWeekJalaliDateTime(year, month,week, day),
+                                        Period.weekly
+                                ));      break;
 
                     case "monthly":
                         day = 0;
                         week = 0;
-                        checkBox.setState(PeriodicCheckBoxReset.checkDay(id, day, week, month,year, context));
-                        monthlyTasks.add(new PeriodicModel(checkBox, description, Period.monthly, id, day, week, month, year));
+                        dailyTasks.add(
+                                new Habit(
+                                        id,
+                                        title,
+                                        description,
+                                        PeriodicCheckBoxReset.checkDay(id, day, week, month,year, context),
+                                        new WithWeekJalaliDateTime(year, month,week, day),
+                                        Period.monthly
+                                ));
                         break;
                     default:
                         break;
@@ -226,9 +242,9 @@ public class GetAllTask implements AddInformationForHistory{
         }
         cursor.close();
 
-        dailyModels = new PeriodicModel[dailyTasks.size()];
-        weeklyModels = new PeriodicModel[weeklyTasks.size()];
-        monthlyModels = new PeriodicModel[monthlyTasks.size()];
+        dailyModels = new Habit[dailyTasks.size()];
+        weeklyModels = new Habit[weeklyTasks.size()];
+        monthlyModels = new Habit[monthlyTasks.size()];
 
         for (int i = 0; i < dailyTasks.size(); i++) {
             dailyModels[i] = dailyTasks.get(i);

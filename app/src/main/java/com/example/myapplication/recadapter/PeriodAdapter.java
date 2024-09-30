@@ -5,21 +5,24 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.ali.uneversaldatetools.date.JalaliDateTime;
-import com.example.myapplication.model.Period;
 import com.example.myapplication.PeriodicTaskDetailActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.customwidget.MultiStateCheckBox;
 import com.example.myapplication.database.RoutineDB;
-import com.example.myapplication.model.PeriodicModel;
+import com.example.myapplication.model.Period;
+import com.example.myapplication.model.tasks.Habit;
+
 import java.util.Calendar;
 
 public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.ViewHolder> {
     private static final String TAG = "PeriodAdapter";
 
-    private final PeriodicModel[] listdata;
+    private final Habit[] listdata;
     private final RoutineDB db;
 
     static Calendar calendar = Calendar.getInstance();
@@ -30,7 +33,7 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.ViewHolder
     private static int month;
     private static int year;
 
-    public PeriodAdapter(PeriodicModel[] listdata, RoutineDB db) {
+    public PeriodAdapter(Habit[] listdata, RoutineDB db) {
         this.listdata = listdata;
         this.db = db;
         Log.d(TAG, "PeriodAdapter: Adapter created with " + listdata.length + " items");
@@ -53,31 +56,31 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.ViewHolder
         Log.d(TAG, "onBindViewHolder: binding view holder at position " + position);
 
 
-        PeriodicModel model = listdata[position];
+        Habit model = listdata[position];
         Log.d(TAG, "onBindViewHolder: model ID " + model.getId() + ", description: " + model.getDescription());
 
         holder.checkBox.setOnCheckedChangeListener(null);
 
-        holder.checkBox.setText(model.getCheckBox().getText());
-        holder.checkBox.setState(model.getCheckBox().getState());
-        Log.d(TAG, "onBindViewHolder: set checkbox text to " + model.getCheckBox().getText() + " and checked state to " + model.getCheckBox().isChecked());
+        holder.checkBox.setText(model.getTitle());
+        holder.checkBox.setState(model.getIsDone());
+        Log.d(TAG, "onBindViewHolder: set checkbox text to " + model.getTitle() + " and checked state to " + model.getIsDone());
 
 
         holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
 
             int state = (holder.checkBox.getState() + 1) % 4;
-            model.getCheckBox().setState(state);
+            model.setIsDone(state);
 
             zeroExtraNumbers(model.getPeriod());
 
             db.updateDays(model.getId(),
-                    model.getCheckBox().getState(),
+                    model.getIsDone(),
                     day,
                     week,
                     month,
                     year);
 
-            Log.d(TAG, "setOnCheckedChangeListener: data base updated: " + model.getCheckBox().getText() + " and checked state to " + model.getCheckBox().getState() +
+            Log.d(TAG, "setOnCheckedChangeListener: data base updated: " + model.getTitle() + " and checked state to " + model.getId() +
                     " in day: " + day + " - week: " + week + " - month: " + month + " - year: " + year + " - id: " + model.getId());
 
             resetTime();

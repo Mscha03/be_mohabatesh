@@ -2,31 +2,46 @@ package com.example.myapplication.model.tasks;
 
 import androidx.annotation.NonNull;
 
-import com.ali.uneversaldatetools.date.JalaliDateTime;
+import com.example.myapplication.model.Period;
+import com.example.myapplication.time.WithWeekJalaliDateTime;
 
 public class Habit extends SimpleTask{
 
-    private JalaliDateTime createDate;
+    private WithWeekJalaliDateTime createDate;
+    private Period period;
 
-    public Habit(int id, @NonNull String title, @NonNull String description, int isDone, JalaliDateTime createDate) {
+
+    public Habit(int id, @NonNull String title, @NonNull String description, int isDone, WithWeekJalaliDateTime createDate, Period period) {
         super(id, title, description, isDone);
         this.createDate = createDate;
+        this.period = period;
     }
 
-    public Habit(String title, String description, int isDone, JalaliDateTime createDate) {
+    public Habit(String title, String description, int isDone, WithWeekJalaliDateTime createDate, Period period) {
         super(title, description, isDone);
         this.createDate = createDate;
+        this.period = period;
     }
-    public Habit(String title, String description, JalaliDateTime createDate) {
+    public Habit(String title, String description, WithWeekJalaliDateTime createDate, Period period) {
         super(title, description);
         this.createDate = createDate;
+        this.period = period;
     }
 
-    public JalaliDateTime getCreateDate() {
+    public Period getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(Period period) {
+        this.period = period;
+    }
+
+    public WithWeekJalaliDateTime getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(JalaliDateTime createDate) {
+    public void setCreateDate(WithWeekJalaliDateTime createDate) {
         this.createDate = createDate;
     }
+
 }

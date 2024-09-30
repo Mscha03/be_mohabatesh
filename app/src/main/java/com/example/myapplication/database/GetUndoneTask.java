@@ -8,12 +8,12 @@ import android.util.Log;
 import android.widget.CheckBox;
 
 import com.ali.uneversaldatetools.date.JalaliDateTime;
-import com.example.myapplication.customwidget.MultiStateCheckBox;
 import com.example.myapplication.model.Period;
-import com.example.myapplication.model.PeriodicModel;
 import com.example.myapplication.model.tasks.DeadLinedTask;
+import com.example.myapplication.model.tasks.Habit;
 import com.example.myapplication.model.tasks.SimpleTask;
 import com.example.myapplication.time.PeriodicCheckBoxReset;
+import com.example.myapplication.time.WithWeekJalaliDateTime;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -32,13 +32,13 @@ public class GetUndoneTask {
 
     // periodic task
     static RoutineDB routineDB;
-    static ArrayList<PeriodicModel> dailyTasks;
-    static ArrayList<PeriodicModel> weeklyTasks;
-    static ArrayList<PeriodicModel> monthlyTasks;
-    static PeriodicModel[] dailyModels;
-    static PeriodicModel[] weeklyModels;
-    static PeriodicModel[] monthlyModels;
-    static PeriodicModel[] allRoutineModels;
+    static ArrayList<Habit> dailyTasks;
+    static ArrayList<Habit> weeklyTasks;
+    static ArrayList<Habit> monthlyTasks;
+    static Habit[] dailyModels;
+    static Habit[] weeklyModels;
+    static Habit[] monthlyModels;
+    static Habit[] allRoutineModels;
 
     //Simple task
     static SimpleDB simpleDB;
@@ -61,36 +61,36 @@ public class GetUndoneTask {
         return pastModels;
     }
 
-    public static PeriodicModel[] dailyTasks(Context context) {
+    public static Habit[] dailyTasks(Context context) {
         getPeriodicTasks(context);
         return dailyModels;
     }
 
-    public static PeriodicModel[] weeklyTasks(Context context) {
+    public static Habit[] weeklyTasks(Context context) {
         getPeriodicTasks(context);
         return weeklyModels;
     }
 
-    public static PeriodicModel[] monthlyTasks(Context context) {
+    public static Habit[] monthlyTasks(Context context) {
         getPeriodicTasks(context);
         return monthlyModels;
     }
 
-    public static PeriodicModel[] allRoutineTasks(Context context) {
+    public static Habit[] allRoutineTasks(Context context) {
         getPeriodicTasks(context);
-        allRoutineModels = new PeriodicModel[dailyModels.length + weeklyModels.length + monthlyModels.length];
+        allRoutineModels = new Habit[dailyModels.length + weeklyModels.length + monthlyModels.length];
 
         for (int i = 0; i < dailyModels.length + weeklyModels.length + monthlyModels.length; i++) {
             if (i < dailyModels.length) {
-                for (PeriodicModel dailyModel : dailyModels) {
+                for (Habit dailyModel : dailyModels) {
                     allRoutineModels[i] = dailyModel;
                 }
             } else if (i < dailyModels.length + weeklyModels.length) {
-                for (PeriodicModel weeklyModel : weeklyModels) {
+                for (Habit weeklyModel : weeklyModels) {
                     allRoutineModels[i] = weeklyModel;
                 }
             } else {
-                for (PeriodicModel monthlyModel : monthlyModels) {
+                for (Habit monthlyModel : monthlyModels) {
                     allRoutineModels[i] = monthlyModel;
                 }
             }
@@ -204,8 +204,6 @@ public class GetUndoneTask {
 
             do {
 
-                int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
-
                 JalaliDateTime jalaliDateTime = JalaliDateTime.Now();
                 Calendar calendar = Calendar.getInstance();
                 calendar.setFirstDayOfWeek(Calendar.SATURDAY);
@@ -215,52 +213,58 @@ public class GetUndoneTask {
                 int month = jalaliDateTime.getMonth();
                 int year = jalaliDateTime.getYear();
 
-                MultiStateCheckBox checkBox = new MultiStateCheckBox(context);
-                checkBox.setText(cursor.getString(cursor.getColumnIndexOrThrow("name")));
 
+
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
                 String dbPeriod = cursor.getString(cursor.getColumnIndexOrThrow("period"));
 
                 Period period = null;
+                int isDone = 0;
                 switch (dbPeriod) {
                     case "daily":
                         week = 0;
-                        checkBox.setState(PeriodicCheckBoxReset.checkDay(id, day, week, month,year, context));
+                        isDone = PeriodicCheckBoxReset.checkDay(id, day, week, month,year, context);
                         period = Period.daily;
                         break;
                     case "weekly":
                         day = 0;
                         month = 0;
-                        checkBox.setState(PeriodicCheckBoxReset.checkDay(id, day, week, month,year, context));
+                        isDone = PeriodicCheckBoxReset.checkDay(id, day, week, month,year, context);
                         period = Period.weekly;
                         break;
                     case "monthly":
                         day = 0;
                         week = 0;
-                        checkBox.setState(PeriodicCheckBoxReset.checkDay(id, day, week, month,year, context));
+                        isDone = PeriodicCheckBoxReset.checkDay(id, day, week, month,year, context);
                         period = Period.monthly;
                         break;
                     default:
                         break;
                 }
 
-                PeriodicModel periodicModel = new PeriodicModel(
-                        checkBox,
-                        cursor.getString(cursor.getColumnIndexOrThrow("description")),
-                        period,
+                Habit periodicModel = new Habit(
                         cursor.getInt(cursor.getColumnIndexOrThrow("id")),
-                        day, week, month, year);
+                        cursor.getString(cursor.getColumnIndexOrThrow("name")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("description")),
+                        isDone,
+                        new WithWeekJalaliDateTime(
+                                cursor.getInt(cursor.getColumnIndexOrThrow("year")),
+                                cursor.getInt(cursor.getColumnIndexOrThrow("month")),
+                                cursor.getInt(cursor.getColumnIndexOrThrow("week")),
+                                cursor.getInt(cursor.getColumnIndexOrThrow("day"))),
+                        period);
 
                 Log.d(TAG, "onCreate: periodicModel created:" +
-                        " title: " + periodicModel.getCheckBox().getText() +
+                        " title: " + periodicModel.getTitle() +
                         " descreption: " + periodicModel.getDescription() +
                         " period: " + periodicModel.getPeriod().toString() +
                         " id: " + periodicModel.getId() +
-                        " day: " + periodicModel.getChangeDay() +
-                        " month: " + periodicModel.getChangeMonth() +
-                        " week: " + periodicModel.getChangeWeek() +
-                        " year" + periodicModel.getChangeYear());
+                        " day: " + periodicModel.getCreateDate().getDay() +
+                        " month: " + periodicModel.getCreateDate().getMonth() +
+                        " week: " + periodicModel.getCreateDate().getWeek() +
+                        " year" + periodicModel.getCreateDate().getYear());
 
-                if (periodicModel.getCheckBox().getState() == 0) {
+                if (periodicModel.getIsDone() == 0) {
                     switch (dbPeriod) {
                         case "daily":
                             dailyTasks.add(periodicModel);
@@ -286,9 +290,9 @@ public class GetUndoneTask {
         }
         cursor.close();
 
-        dailyModels = new PeriodicModel[dailyTasks.size()];
-        weeklyModels = new PeriodicModel[weeklyTasks.size()];
-        monthlyModels = new PeriodicModel[monthlyTasks.size()];
+        dailyModels = new Habit[dailyTasks.size()];
+        weeklyModels = new Habit[weeklyTasks.size()];
+        monthlyModels = new Habit[monthlyTasks.size()];
 
         for (int i = 0; i < dailyTasks.size(); i++) {
             dailyModels[i] = dailyTasks.get(i);
