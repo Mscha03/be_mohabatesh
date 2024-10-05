@@ -1,84 +1,84 @@
 <resources>
-    <string name="app_name">Be mohabatesh</string>
+    <string name="app_name">Be Mohabatesh</string>
     <string name="today_text">Today</string>
     <string name="future_text">Future</string>
     <string name="past_text">Past</string>
     <string name="this_week_text">This Week</string>
     <string name="this_month_text">This Month</string>
     <string name="fab_button" translatable="false">fab button</string>
-    <string name="fab_text" translatable="false">add</string>
-    <string name="title_activity_add_new_task">AddNewTask</string>
-    <string name="add_new_task_title">Add new task</string>
-    <string name="task_name">name</string>
-    <string name="choose_period_error">Choose one option</string>
+    <string name="fab_text" translatable="false">Add</string>
+    <string name="title_activity_add_new_task">Add New Task</string>
+    <string name="add_new_task_title">Add New Task</string>
+    <string name="task_name">Name</string>
+    <string name="choose_period_error">Choose One Option</string>
     <string name="choose_period_drop_down_title">Choose Period</string>
-    <string name="add_successfully">Successfully added</string>
-    <string name="edit_successfully">Successfully edited</string>
-    <string name="new_task_title_hint">title</string>
-    <string name="new_task_description_hint">description</string>
+    <string name="add_successfully">Successfully Added</string>
+    <string name="edit_successfully">Successfully Edited</string>
+    <string name="new_task_title_hint">Title</string>
+    <string name="new_task_description_hint">Description</string>
     <string name="add_new_task_button_txt">Add</string>
     <string name="edit_task_button_txt">Edit</string>
     <string name="add_new_task_dropdown_title">Choose Period</string>
     <string name="edit_task_title">Task Detail</string>
-    <string name="dialog_title_delete_item">Delete task?</string>
     <string name="dialog_massage_delete_item">Deleting task.</string>
     <string name="delete_task_toast">Deleted.</string>
 
-    <string name="period_daily">daily</string>
-    <string name="period_weekly">weekly</string>
-    <string name="period_monthly">monthly</string>
+    <string name="period_daily">Daily</string>
+    <string name="period_weekly">Weekly</string>
+    <string name="period_monthly">Monthly</string>
 
-    <string name="main_nav_periodic_task_title">habits</string>
-    <string name="main_nav_normal_task_title">Dead lined task</string>
-    <string name="main_nav_history_title">history</string>
-    <string name="main_nav_open">open navigation drawer</string>
-    <string name="main_nav_close">close navigation drawer</string>
-    <string name="main_nav_drawer_communicate_title">communicate</string>
-    <string name="main_nav_about_title">about us</string>
-    <string name="main_nav_contact_title">contact us</string>
+    <string name="main_nav_periodic_task_title">Habits</string>
+    <string name="main_nav_normal_task_title">Timed Tasks</string>
+    <string name="main_nav_normal_task_title">Deadlined Task</string>
+    <string name="main_nav_history_title">History</string>
+    <string name="main_nav_open">Open Navigation Drawer</string>
+    <string name="main_nav_close">Close Navigation Drawer</string>
+    <string name="main_nav_drawer_communicate_title">Communication</string>
+    <string name="main_nav_about_title">About us</string>
+    <string name="main_nav_contact_title">Contact us</string>
     <string name="main_nav_drawer_home_title">Home</string>
-    <string name="choose_date_button">Choose date</string>
+    <string name="choose_date_button">Choose Date</string>
 
     <string name="choose_date_ok_text">OK</string>
     <string name="choose_date_cancel_text">Cancel</string>
     <string name="choose_date_today_text">Today</string>
-    <string name="choose_date_error">No date has been added yet</string>
-    <string name="main_nav_simple_task_title">simple task</string>
-    <string name="main_activity_title">Undone works</string>
+    <string name="choose_date_error">No date has been chosen yet</string>
+    <string name="main_nav_simple_task_title">Simple Task</string>
+    <string name="main_activity_title">Unfinished Tasks</string>
     <string name="main_bottom_sheet_txt">Select the type of task</string>
-    <string name="timed_task_btn_txt">Dead lined tasks</string>
-    <string name="periodic_task_btn_txt">habits</string>
-    <string name="simple_task_btn_txt">Simple tasks</string>
+    <string name="timed_task_btn_txt">Timed Tasks</string>
+    <string name="periodic_task_btn_txt">Periodic Tasks</string>
+    <string name="simple_task_btn_txt">Simple Tasks</string>
 
-    <string name="about_Toast">You know me. So nothing to say…</string>
-    <string name="contact_us_title">Help us to create the best for you</string>
+    <string name="about_Toast">Well you already know me!...What else is there to say?</string>
+    <string name="contact_us_title">We'll be glad to hear your feedback!</string>
     <string name="contact_phone_number">Phone number: +989157476168</string>
     <string name="contact_telegram">Telegram: t.me/mscha03</string>
     <string name="contact_eitaa">Eitaa: eitaa.ir/mscha03</string>
     <string name="contact_email">Email: m.saleh.sedeghi@gmail.com</string>
-    <string name="delete_btn_description">Delete the task</string>
-    <string name="edti_btn_description">Edit the task</string>
-    <string name="description_text">description</string>
-    <string name="drawer_btn_description">Drawer menu</string>
-    <string name="add_btn_description">Add task</string>
+    <string name="delete_btn_description">Delete Task</string>
+    <string name="edti_btn_description">Edit Task</string>
+    <string name="description_text">Description</string>
+    <string name="drawer_btn_description">Drawer Menu</string>
+    <string name="add_btn_description">Add Task</string>
     <string name="Tasks_title">Tasks</string>
-    <string name="list_item_button">button to detail</string>
+    <string name="list_item_button">Details Button</string>
 
 
-    <string name="history_chart_undone">undone</string>
+    <string name="history_chart_undone">Unfinished</string>
     <string name="history_chart_green_done">Perfect</string>
     <string name="history_chart_yellow_done">Good</string>
     <string name="history_chart_red_done">Bad</string>
-    <string name="history_chart_description">detail</string>
+    <string name="history_chart_description">Detail</string>
 
 
-    <string name="history_detail_title">Habit name</string>
-    <string name="description_textView">description</string>
-    <string name="period_textView">period</string>
+    <string name="history_detail_title">Habit Name</string>
+    <string name="description_textView">Description</string>
+    <string name="period_textView">Period</string>
     <string-array name="period">
-        <item>daily</item>
-        <item>weekly</item>
-        <item>monthly</item>
+        <item>Daily</item>
+        <item>Weekly</item>
+        <item>Monthly</item>
     </string-array>
 
     <string-array name="shamsiMonth">
@@ -106,14 +106,14 @@
         <item>Friday</item>
     </string-array>
 
-    <string name="us_text_1">"Designer and programmer: "</string>
+    <string name="us_text_1">"Designer and Programmer: "</string>
     <string name="us_text_2">Mohammad Saleh Seddighi</string>
     <string name="us_text_3">Thanks to the members of the \"Be Mohabatesh\" group
-        in testing and providing suggestions
-        and other friends who helped us in making this application.</string>
+        for testing and providing suggestions
+        and other friends who helped us during this application's development.</string>
 
 
-    <string name="main_nav_settings">settings</string>
+    <string name="main_nav_settings">Settings</string>
     <string name="setting_item_language">Language</string>
     <string name="app_language">English</string>
 
