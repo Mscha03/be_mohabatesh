@@ -1,4 +1,4 @@
-package com.example.myapplication.database;
+package com.example.myapplication.database.TaskDataBase;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
-public class RoutineDB extends SQLiteOpenHelper {
+public class HabitDB extends SQLiteOpenHelper {
 
     private static final String TAG = "ROUTINE_DATA_BASE";
 
@@ -33,7 +33,7 @@ public class RoutineDB extends SQLiteOpenHelper {
     private static final String DAYS_YEAR = "changeyear";
 
 
-    public RoutineDB(@Nullable Context context) {
+    public HabitDB(@Nullable Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 

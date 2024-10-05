@@ -17,8 +17,8 @@ import androidx.annotation.Nullable;
 
 import com.example.myapplication.NormalTaskActivity;
 import com.example.myapplication.R;
-import com.example.myapplication.database.TaskDB;
-import com.example.myapplication.time.ShamsiMonth;
+import com.example.myapplication.database.TaskDataBase.DeadLinedTaskDB;
+import com.example.myapplication.time.ShamsiName;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import ir.hamsaa.persiandatepicker.PersianDatePickerDialog;
@@ -28,7 +28,7 @@ import ir.hamsaa.persiandatepicker.api.PersianPickerListener;
 public class NormalTaskBottomSheet extends BottomSheetDialogFragment {
     private static final String TAG = "NormalTaskBottomSheet";
 
-    private TaskDB db;
+    private DeadLinedTaskDB db;
     private EditText editTitle, editDescription;
     private TextView dateText;
     private Button edit, dateButton;
@@ -61,7 +61,7 @@ public class NormalTaskBottomSheet extends BottomSheetDialogFragment {
             deadDay = Integer.parseInt(data[3]);
             deadMonth = Integer.parseInt(data[4]);
             deadYear = Integer.parseInt(data[5]);
-            String s = deadDay + " " + ShamsiMonth.getMonthName(deadMonth, v.getContext()) + " " + deadYear;
+            String s = deadDay + " " + ShamsiName.getMonthName(deadMonth, v.getContext()) + " " + deadYear;
             dateText.setText(s);
 
         } else {
@@ -103,7 +103,7 @@ public class NormalTaskBottomSheet extends BottomSheetDialogFragment {
         });
 
 
-        db = new TaskDB(v.getContext());
+        db = new DeadLinedTaskDB(v.getContext());
         Log.d(TAG, "onCreateView: database initialized");
 
         // update values

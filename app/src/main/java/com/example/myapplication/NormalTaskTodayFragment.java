@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.database.GetAllTask;
-import com.example.myapplication.database.TaskDB;
+import com.example.myapplication.database.TaskDataBase.DeadLinedTaskDB;
 import com.example.myapplication.recadapter.TaskAdapter;
 
 
@@ -22,7 +22,7 @@ public class NormalTaskTodayFragment extends Fragment {
     private static final String TAG = "NormalTaskActivity:TodayFragment";
 
     RecyclerView todayRecyclerView;
-    TaskDB db;
+    DeadLinedTaskDB db;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -35,7 +35,7 @@ public class NormalTaskTodayFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        db = new TaskDB(getActivity());
+        db = new DeadLinedTaskDB(getActivity());
         todayRecyclerView = view.findViewById(R.id.today_recycler_view);
         TaskAdapter taskAdapter = new TaskAdapter(GetAllTask.todayTasks(getActivity()), db);
         todayRecyclerView.setHasFixedSize(true);

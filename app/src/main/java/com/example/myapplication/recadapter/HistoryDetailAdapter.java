@@ -12,15 +12,15 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.R;
-import com.example.myapplication.model.HistoryModel;
+import com.example.myapplication.model.HabitHistoryItemModel;
 
 public class HistoryDetailAdapter extends RecyclerView.Adapter<HistoryDetailAdapter.ViewHolder>{
 
     private static final String TAG = "PeriodAdapter";
 
-    private final HistoryModel[] listdata;
+    private final HabitHistoryItemModel[] listdata;
 
-    public HistoryDetailAdapter(HistoryModel[] listdata) {
+    public HistoryDetailAdapter(HabitHistoryItemModel[] listdata) {
         this.listdata = listdata;
         Log.d(TAG, "HistoryDetailAdapter: Adapter created with " + listdata.length + " items");
     }
@@ -38,7 +38,7 @@ public class HistoryDetailAdapter extends RecyclerView.Adapter<HistoryDetailAdap
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder: binding view holder at position " + position);
 
-        HistoryModel model = listdata[position];
+        HabitHistoryItemModel model = listdata[position];
         Log.d(TAG, "onBindViewHolder: Day = " + model.getChangeDay() +
                                     " Week = " + model.getChangeWeek() +
                                     " Month = " + model.getChangeMonth() +
@@ -73,7 +73,7 @@ public class HistoryDetailAdapter extends RecyclerView.Adapter<HistoryDetailAdap
         }
     }
 
-    private String titleCreator(HistoryModel model) {
+    private String titleCreator(HabitHistoryItemModel model) {
         String s = "";
 
         switch (model.getPeriod()){
@@ -94,7 +94,7 @@ public class HistoryDetailAdapter extends RecyclerView.Adapter<HistoryDetailAdap
         return s;
     }
 
-    private int setBackgroundColor(HistoryModel model){
+    private int setBackgroundColor(HabitHistoryItemModel model){
         int i;
 
         switch (model.getIsDone()){

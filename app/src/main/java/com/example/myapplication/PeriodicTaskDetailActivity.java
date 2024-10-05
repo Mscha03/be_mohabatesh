@@ -18,7 +18,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.bottomsheet.PeriodTaskBottomSheet;
 import com.example.myapplication.chartadapter.HistroyChartAdapter;
-import com.example.myapplication.database.RoutineDB;
+import com.example.myapplication.database.TaskDataBase.HabitDB;
 import com.example.myapplication.model.Period;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
@@ -30,7 +30,7 @@ public class PeriodicTaskDetailActivity extends AppCompatActivity {
 
     private ImageButton edit, delete;
     private TextView title, description, period;
-    private RoutineDB db;
+    private HabitDB db;
     private PieChart pieChart;
 
     @Override
@@ -52,7 +52,7 @@ public class PeriodicTaskDetailActivity extends AppCompatActivity {
         title = findViewById(R.id.task_title_edit_activity);
         description = findViewById(R.id.task_description_edit_activity);
         period = findViewById(R.id.period_text_edit_activity);
-        db = new RoutineDB(this);
+        db = new HabitDB(this);
         Log.d(TAG, "onCreate: views initialized");
 
         int id = getIntent().getIntExtra("task", 0);

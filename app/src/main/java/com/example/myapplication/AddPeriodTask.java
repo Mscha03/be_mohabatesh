@@ -18,7 +18,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.ali.uneversaldatetools.date.JalaliDateTime;
 import com.example.myapplication.database.AddInformationForHistory;
-import com.example.myapplication.database.RoutineDB;
+import com.example.myapplication.database.TaskDataBase.HabitDB;
 import com.example.myapplication.model.Period;
 
 import java.util.Calendar;
@@ -27,7 +27,7 @@ public class AddPeriodTask extends AppCompatActivity {
 
     private static final String TAG = "AddPeriodTask";
 
-    private RoutineDB db;
+    private HabitDB db;
     private EditText addTitle, addDescription;
     private AutoCompleteTextView addPeriod;
     private Button addButton;
@@ -106,7 +106,7 @@ public class AddPeriodTask extends AppCompatActivity {
             String name, String description, String period
     ){
         // database
-        db = new RoutineDB(this);
+        db = new HabitDB(this);
         Log.d(TAG, "addHabit: database initialized");
 
         if (period.equals(getString(R.string.period_daily))){

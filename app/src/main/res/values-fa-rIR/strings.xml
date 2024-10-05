@@ -6,11 +6,11 @@
     <string name="past_text">گذشته</string>
     <string name="this_week_text">این هفته</string>
     <string name="this_month_text">این ماه</string>
-    <string name="title_activity_add_new_task">اضافه کردن فعالیت جدید</string>
-    <string name="add_new_task_title">اضافه کردن فعالیت جدید</string>
+    <string name="title_activity_add_new_task">اضافه کردن تسک جدید</string>
+    <string name="add_new_task_title">اضافه کردن تسک جدید</string>
     <string name="task_name">نام</string>
     <string name="choose_period_error">یک مورد را انتخاب کنید</string>
-    <string name="choose_period_drop_down_title">یک دوره را انتخاب کنید</string>
+    <string name="choose_period_drop_down_title">زمان تکرار را اضافه کنید</string>
     <string name="add_successfully">با موفقیت اضافه شد</string>
     <string name="edit_successfully">با موفقیت ویرایش شد</string>
     <string name="new_task_title_hint">موضوع</string>
@@ -19,8 +19,8 @@
     <string name="edit_task_button_txt">ویرایش</string>
     <string name="add_new_task_dropdown_title">یک دوره را انتخاب کنید</string>
     <string name="edit_task_title">جزئیات فعالیت</string>
-    <string name="dialog_title_delete_item">فعالیت را پاک می کنید؟</string>
-    <string name="dialog_massage_delete_item">فعالیت از لیست کارهای درحال انجام پاک می شود.</string>
+    <string name="dialog_title_delete_item">تسک را پاک می کنید؟</string>
+    <string name="dialog_massage_delete_item">تسک پاک می شود.</string>
     <string name="delete_task_toast">حذف شد</string>
 
     <string name="us_text_1">طراح و برنامه نویس:</string>
@@ -55,6 +55,18 @@
         <item>بهمن</item>
         <item>اسفند</item>
     </string-array>
+
+    <string-array name="shamsiWeekDay">
+        <item>شنبه</item>
+        <item>یکشنبه</item>
+        <item>دوشنبه</item>
+        <item>سه شنبه</item>
+        <item>چهارشنبه</item>
+        <item>پنج شنبه</item>
+        <item>جمعه</item>
+    </string-array>
+
+
     <string name="main_nav_periodic_task_title">عادت ها</string>
     <string name="main_nav_normal_task_title">فعالیت های زمان دار</string>
     <string name="main_nav_history_title">تاریخچه</string>
@@ -69,11 +81,11 @@
     <string name="choose_date_cancel_text">لغو</string>
     <string name="choose_date_today_text">امروز</string>
     <string name="choose_date_error">هنوز تاریخی انتخاب نشده است</string>
-    <string name="main_nav_simple_task_title">فعالیت عادی</string>
+    <string name="main_nav_simple_task_title">تسک ساده</string>
     <string name="main_activity_title">کارهای انجام نشده</string>
     <string name="main_bottom_sheet_txt">نوع فعالیت را انتخاب کنید</string>
     <string name="timed_task_btn_txt">فعالیت های زمان دار</string>
-    <string name="periodic_task_btn_txt">فعالیت های دوره ای</string>
+    <string name="periodic_task_btn_txt">عادت ها</string>
     <string name="simple_task_btn_txt">فعالیت های عادی</string>
     <string name="about_Toast">چی بگم والا! میشناسی منو دیگه…</string>
     <string name="contact_us_title">خوشحال میشیم نظراتتون رو بشنویم</string>
@@ -96,5 +108,11 @@
     <string name="history_chart_description">جزئیات انجام عادت ها</string>
     <string name="description_textView">توضیحات</string>
     <string name="period_textView">دوره</string>
+
+    <string name="main_nav_settings">تنظیمات</string>
+    <string name="setting_item_language">زبان</string>
+    <string name="app_language">فارسی</string>
+
+
 
 </resources>

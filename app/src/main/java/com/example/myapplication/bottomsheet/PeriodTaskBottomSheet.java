@@ -18,7 +18,7 @@ import androidx.annotation.Nullable;
 import com.example.myapplication.model.Period;
 import com.example.myapplication.PeriodicTasksActivity;
 import com.example.myapplication.R;
-import com.example.myapplication.database.RoutineDB;
+import com.example.myapplication.database.TaskDataBase.HabitDB;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 
@@ -27,7 +27,7 @@ public class PeriodTaskBottomSheet extends BottomSheetDialogFragment {
     private static final String TAG = "PeriodTaskBottomSheet";
 
 
-    private RoutineDB db;
+    private HabitDB db;
     private EditText editTitle, editDescription;
     AutoCompleteTextView editPeriod;
     private Button editButton;
@@ -73,7 +73,7 @@ public class PeriodTaskBottomSheet extends BottomSheetDialogFragment {
         Log.d(TAG, "onCreateView: dropdown menu created");
 
 
-        db = new RoutineDB(v.getContext());
+        db = new HabitDB(v.getContext());
         Log.d(TAG, "onCreateView: database initialized");
 
 

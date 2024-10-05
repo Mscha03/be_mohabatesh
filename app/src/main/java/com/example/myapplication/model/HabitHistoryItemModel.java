@@ -1,6 +1,6 @@
 package com.example.myapplication.model;
 
-public class HistoryModel {
+public class HabitHistoryItemModel {
     private Period period;
     private int isDone;
     private int changeDay;
@@ -56,7 +56,7 @@ public class HistoryModel {
         this.changeYear = changeYear;
     }
 
-    public HistoryModel(Period period, int isDone, int changeDay, int changeWeek, int changeMonth, int changeYear) {
+    public HabitHistoryItemModel(Period period, int isDone, int changeDay, int changeWeek, int changeMonth, int changeYear) {
         this.period = period;
         this.isDone = isDone;
         this.changeDay = changeDay;

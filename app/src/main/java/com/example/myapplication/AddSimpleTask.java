@@ -15,7 +15,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.myapplication.database.SimpleDB;
+import com.example.myapplication.database.TaskDataBase.SimpleTaskDB;
 import com.example.myapplication.model.tasks.SimpleTask;
 
 public class AddSimpleTask extends AppCompatActivity {
@@ -23,7 +23,7 @@ public class AddSimpleTask extends AppCompatActivity {
     String TAG = "AddSimpleTask";
 
 
-    private SimpleDB db;
+    private SimpleTaskDB db;
     private EditText addTitle, addDescription;
     private SimpleTask simpleTask;
 
@@ -45,7 +45,7 @@ public class AddSimpleTask extends AppCompatActivity {
         Log.d(TAG, "onCreate: views initialized");
 
         // database
-        db = new SimpleDB(this);
+        db = new SimpleTaskDB(this);
         Log.d(TAG, "onCreate: database initialized");
 
         addButton.setOnClickListener(v -> {

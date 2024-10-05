@@ -19,20 +19,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.database.GetAllTask;
-import com.example.myapplication.database.RoutineDB;
+import com.example.myapplication.database.TaskDataBase.HabitDB;
 import com.example.myapplication.recadapter.PeriodAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-
-import java.util.ArrayList;
-
 
 
 public class PeriodicTasksActivity extends AppCompatActivity {
 
     private static final String TAG = "PeriodicTaskActivity";
 
-    public static RoutineDB db;
+    public static HabitDB db;
 
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -85,7 +82,7 @@ public class PeriodicTasksActivity extends AppCompatActivity {
             return false;
         });
 
-        db = new RoutineDB(this);
+        db = new HabitDB(this);
 
         RecyclerView dailyRecyclerView = findViewById(R.id.today_recycler_view);
         PeriodAdapter dailyAdapter = new PeriodAdapter(GetAllTask.dailyTasks(this), db);

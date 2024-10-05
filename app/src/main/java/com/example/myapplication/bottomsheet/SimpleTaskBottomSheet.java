@@ -16,13 +16,13 @@ import androidx.annotation.Nullable;
 
 import com.example.myapplication.R;
 import com.example.myapplication.SimpleTaskActivity;
-import com.example.myapplication.database.SimpleDB;
+import com.example.myapplication.database.TaskDataBase.SimpleTaskDB;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 public class SimpleTaskBottomSheet extends BottomSheetDialogFragment {
     private static final String TAG = "NormalTaskBottomSheet";
 
-    private SimpleDB db;
+    private SimpleTaskDB db;
     private EditText editTitle, editDescription;
     private Button edit;
     //        FloatingActionButton fab = findViewById(R.id.fab);
@@ -55,7 +55,7 @@ public class SimpleTaskBottomSheet extends BottomSheetDialogFragment {
         }
 
 
-        db = new SimpleDB(v.getContext());
+        db = new SimpleTaskDB(v.getContext());
         Log.d(TAG, "onCreateView: database initialized");
 
         // update values

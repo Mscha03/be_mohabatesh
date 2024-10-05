@@ -1,8 +1,11 @@
 package com.example.myapplication;
 
 import static com.example.myapplication.interfaces.drawerNavigation.drawerNavigationHandler;
+import static com.example.myapplication.settings.LanguageKt.getLanguageFromPreferences;
+import static com.example.myapplication.settings.LanguageKt.setLocale;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageButton;
@@ -23,15 +26,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ali.uneversaldatetools.date.JalaliDateTime;
 import com.example.myapplication.bottomsheet.MainBottomSheet;
 import com.example.myapplication.database.GetUndoneTask;
-import com.example.myapplication.database.RoutineDB;
-import com.example.myapplication.database.SimpleDB;
-import com.example.myapplication.database.TaskDB;
+import com.example.myapplication.database.TaskDataBase.HabitDB;
+import com.example.myapplication.database.TaskDataBase.SimpleTaskDB;
+import com.example.myapplication.database.TaskDataBase.DeadLinedTaskDB;
 import com.example.myapplication.recadapter.PeriodAdapter;
 import com.example.myapplication.recadapter.SimpleAdapter;
 import com.example.myapplication.recadapter.TaskAdapter;
-import com.example.myapplication.time.ShamsiMonth;
+import com.example.myapplication.time.ShamsiName;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,12 +50,11 @@ public class MainActivity extends AppCompatActivity {
     ImageButton drawerMenu;
 
     RecyclerView timedRecyclerView, periodicRecyclerView, simpleRecyclerView;
-    TaskDB taskDB;
-    RoutineDB routineDB;
-    SimpleDB simpleDB;
+    DeadLinedTaskDB deadLinedTaskDB;
+    HabitDB habitDB;
+    SimpleTaskDB simpleTaskDB;
 
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,12 +68,14 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+
         //date
         today = findViewById(R.id.main_date_text_view);
         JalaliDateTime jalaliDateTime = JalaliDateTime.Now();
         String date =
-                jalaliDateTime.getDay() + " " +
-                        ShamsiMonth.getMonthName(jalaliDateTime.getMonth(),this) + " " +
+                    ShamsiName.getDayName((jalaliDateTime.getDays() + 5) % 7, this) + " " +
+                        jalaliDateTime.getDay() + " " +
+                        ShamsiName.getMonthName(jalaliDateTime.getMonth(),this) + " " +
                         jalaliDateTime.getYear();
         today.setText(date);
 
@@ -88,25 +94,25 @@ public class MainActivity extends AppCompatActivity {
         navigationView.bringToFront();
 
         // load undone work from data base
-        taskDB = new TaskDB(this);
+        deadLinedTaskDB = new DeadLinedTaskDB(this);
         timedRecyclerView = findViewById(R.id.timed_activities_recycler);
-        TaskAdapter timedAdapter = new TaskAdapter(GetUndoneTask.todayTasks(this), taskDB);
+        TaskAdapter timedAdapter = new TaskAdapter(GetUndoneTask.todayTasks(this), deadLinedTaskDB);
         timedRecyclerView.setHasFixedSize(true);
         timedRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         timedRecyclerView.setAdapter(timedAdapter);
         Log.d(TAG, "onViewCreated: timed tasks recycler view set up");
 
-        routineDB = new RoutineDB(this);
+        habitDB = new HabitDB(this);
         periodicRecyclerView = findViewById(R.id.periodic_activities_recycler);
-        PeriodAdapter periodAdapter = new PeriodAdapter(GetUndoneTask.allRoutineTasks(this), routineDB);
+        PeriodAdapter periodAdapter = new PeriodAdapter(GetUndoneTask.allRoutineTasks(this), habitDB);
         periodicRecyclerView.setHasFixedSize(true);
         periodicRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         periodicRecyclerView.setAdapter(periodAdapter);
         Log.d(TAG, "onViewCreated: timed tasks recycler view set up");
 
-        simpleDB = new SimpleDB(this);
+        simpleTaskDB = new SimpleTaskDB(this);
         simpleRecyclerView = findViewById(R.id.simple_activities_recycler);
-        SimpleAdapter simpleAdapter = new SimpleAdapter(GetUndoneTask.simpleTasks(this), simpleDB);
+        SimpleAdapter simpleAdapter = new SimpleAdapter(GetUndoneTask.simpleTasks(this), simpleTaskDB);
         simpleRecyclerView.setHasFixedSize(true);
         simpleRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         simpleRecyclerView.setAdapter(simpleAdapter);

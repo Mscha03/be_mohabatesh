@@ -1,4 +1,4 @@
-package com.example.myapplication.database;
+package com.example.myapplication.database.TaskDataBase;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
-public class TaskDB extends SQLiteOpenHelper {
+public class DeadLinedTaskDB extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "task_db";
     private static final int DB_VERSION = 1;
@@ -21,7 +21,7 @@ public class TaskDB extends SQLiteOpenHelper {
     private static final String DEADMONTH = "deadmonth";
     private static final String DEADYEAR = "deadyear";
 
-    public TaskDB(@Nullable Context context) {
+    public DeadLinedTaskDB(@Nullable Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 

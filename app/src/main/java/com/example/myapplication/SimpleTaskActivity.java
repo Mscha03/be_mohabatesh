@@ -20,9 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.database.GetAllTask;
-import com.example.myapplication.database.RoutineDB;
-import com.example.myapplication.database.SimpleDB;
-import com.example.myapplication.recadapter.PeriodAdapter;
+import com.example.myapplication.database.TaskDataBase.SimpleTaskDB;
 import com.example.myapplication.recadapter.SimpleAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -31,7 +29,7 @@ public class SimpleTaskActivity extends AppCompatActivity {
 
     private static final String TAG = "SimpleTaskActivity";
 
-    public static SimpleDB db;
+    public static SimpleTaskDB db;
 
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -86,7 +84,7 @@ public class SimpleTaskActivity extends AppCompatActivity {
             return false;
         });
 
-        db = new SimpleDB(this);
+        db = new SimpleTaskDB(this);
         RecyclerView dailyRecyclerView = findViewById(R.id.today_recycler_view);
         SimpleAdapter dailyAdapter = new SimpleAdapter(GetAllTask.simpleTasks(this), db);
         dailyRecyclerView.setHasFixedSize(true);

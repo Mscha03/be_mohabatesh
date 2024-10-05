@@ -5,7 +5,8 @@ import android.database.Cursor;
 import android.util.Log;
 
 import com.ali.uneversaldatetools.date.JalaliDateTime;
-import com.example.myapplication.model.HistoryModel;
+import com.example.myapplication.database.TaskDataBase.HabitDB;
+import com.example.myapplication.model.HabitHistoryItemModel;
 import com.example.myapplication.model.Period;
 
 import java.util.ArrayList;
@@ -16,9 +17,9 @@ public class GetDates {
 
     private static final String TAG = "GetDates";
 
-    static RoutineDB routineDB;
-    static ArrayList<HistoryModel> tasksHistory;
-    static HistoryModel[] taskModels;
+    static HabitDB habitDB;
+    static ArrayList<HabitHistoryItemModel> tasksHistory;
+    static HabitHistoryItemModel[] taskModels;
 
     static JalaliDateTime jalaliDateTime = JalaliDateTime.Now();
     static Calendar calendar = java.util.Calendar.getInstance();
@@ -28,10 +29,10 @@ public class GetDates {
         calendar.setFirstDayOfWeek(Calendar.SATURDAY);
     }
 
-    public  HistoryModel[] getTaskHistoryArray(Context context, int routineId) {
+    public  HabitHistoryItemModel[] getTaskHistoryArray(Context context, int routineId) {
         getDailyDates(context, routineId);
 
-        taskModels = new HistoryModel[tasksHistory.size()];
+        taskModels = new HabitHistoryItemModel[tasksHistory.size()];
 
         for (int i = 0; i < tasksHistory.size(); i++) {
             taskModels[i] = tasksHistory.get(i);
@@ -41,21 +42,21 @@ public class GetDates {
         return taskModels;
     }
 
-    public  List<HistoryModel> getTaskHistoryList(Context context, int routineId){
+    public  List<HabitHistoryItemModel> getTaskHistoryList(Context context, int routineId){
         getDailyDates(context, routineId);
         return tasksHistory;
     }
 
 
     private void getDailyDates(Context context, int routineId) {
-        routineDB = new RoutineDB(context);
+        habitDB = new HabitDB(context);
         Log.d(TAG, "onCreate: database initialized");
 
         tasksHistory = new ArrayList<>();
 
 
-        Cursor routineCursor = routineDB.getRecord(routineId);
-        Cursor dayscursor = routineDB.getHistory(routineId);
+        Cursor routineCursor = habitDB.getRecord(routineId);
+        Cursor dayscursor = habitDB.getHistory(routineId);
 
         int tDay = routineCursor.getInt(4);
         int tWeek = routineCursor.getInt(5);
@@ -82,13 +83,13 @@ public class GetDates {
                 break;
         }
 
-        HistoryModel model;
+        HabitHistoryItemModel model;
 
         if (dayscursor.moveToFirst()) {
             Log.d(TAG, "onCreate: fetching tasks from database");
 
             do {
-                model = new HistoryModel(
+                model = new HabitHistoryItemModel(
                         period,
                         dayscursor.getInt(dayscursor.getColumnIndexOrThrow("isdone")),
                         dayscursor.getInt(dayscursor.getColumnIndexOrThrow("changeday")),

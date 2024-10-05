@@ -52,6 +52,7 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     implementation ("androidx.compose.ui:ui-tooling-preview")
 
+
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)

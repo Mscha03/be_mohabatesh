@@ -13,7 +13,7 @@ import com.ali.uneversaldatetools.date.JalaliDateTime;
 import com.example.myapplication.PeriodicTaskDetailActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.customwidget.MultiStateCheckBox;
-import com.example.myapplication.database.RoutineDB;
+import com.example.myapplication.database.TaskDataBase.HabitDB;
 import com.example.myapplication.model.Period;
 import com.example.myapplication.model.tasks.Habit;
 
@@ -23,7 +23,7 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.ViewHolder
     private static final String TAG = "PeriodAdapter";
 
     private final Habit[] listdata;
-    private final RoutineDB db;
+    private final HabitDB db;
 
     static Calendar calendar = Calendar.getInstance();
     static JalaliDateTime jalaliDateTime = JalaliDateTime.Now();
@@ -33,7 +33,7 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.ViewHolder
     private static int month;
     private static int year;
 
-    public PeriodAdapter(Habit[] listdata, RoutineDB db) {
+    public PeriodAdapter(Habit[] listdata, HabitDB db) {
         this.listdata = listdata;
         this.db = db;
         Log.d(TAG, "PeriodAdapter: Adapter created with " + listdata.length + " items");

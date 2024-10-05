@@ -1,7 +1,7 @@
 package com.example.myapplication.recadapter;
 
-import static com.example.myapplication.changer.BoolInt.boolToInt;
-import static com.example.myapplication.changer.BoolInt.intToBool;
+import static com.example.myapplication.converter.BoolInt.boolToInt;
+import static com.example.myapplication.converter.BoolInt.intToBool;
 
 import android.content.Intent;
 import android.util.Log;
@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.SimpleTaskDetailActivity;
-import com.example.myapplication.database.SimpleDB;
+import com.example.myapplication.database.TaskDataBase.SimpleTaskDB;
 import com.example.myapplication.model.tasks.SimpleTask;
 
 
@@ -23,9 +23,9 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
     private static final String TAG = "SimpleAdapter";
 
     private final SimpleTask[] listdata;
-    private final SimpleDB db;
+    private final SimpleTaskDB db;
 
-    public SimpleAdapter(SimpleTask[] listdata, SimpleDB db) {
+    public SimpleAdapter(SimpleTask[] listdata, SimpleTaskDB db) {
         this.listdata = listdata;
         this.db = db;
         Log.d(TAG, "PeriodAdapter: Adapter created with " + listdata.length + " items");

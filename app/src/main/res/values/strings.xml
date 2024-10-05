@@ -21,7 +21,7 @@
     <string name="add_new_task_dropdown_title">Choose Period</string>
     <string name="edit_task_title">Task Detail</string>
     <string name="dialog_title_delete_item">Delete task?</string>
-    <string name="dialog_massage_delete_item">Deleting task from your task list.</string>
+    <string name="dialog_massage_delete_item">Deleting task.</string>
     <string name="delete_task_toast">Deleted.</string>
 
     <string name="period_daily">daily</string>
@@ -29,7 +29,7 @@
     <string name="period_monthly">monthly</string>
 
     <string name="main_nav_periodic_task_title">habits</string>
-    <string name="main_nav_normal_task_title">timed tasks</string>
+    <string name="main_nav_normal_task_title">Dead lined task</string>
     <string name="main_nav_history_title">history</string>
     <string name="main_nav_open">open navigation drawer</string>
     <string name="main_nav_close">close navigation drawer</string>
@@ -46,8 +46,8 @@
     <string name="main_nav_simple_task_title">simple task</string>
     <string name="main_activity_title">Undone works</string>
     <string name="main_bottom_sheet_txt">Select the type of task</string>
-    <string name="timed_task_btn_txt">Timed tasks</string>
-    <string name="periodic_task_btn_txt">Periodic tasks</string>
+    <string name="timed_task_btn_txt">Dead lined tasks</string>
+    <string name="periodic_task_btn_txt">habits</string>
     <string name="simple_task_btn_txt">Simple tasks</string>
 
     <string name="about_Toast">You know me. So nothing to say…</string>
@@ -96,11 +96,26 @@
         <item>Esfand</item>
     </string-array>
 
+    <string-array name="shamsiWeekDay">
+        <item>Saturday</item>
+        <item>Sunday</item>
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+    </string-array>
+
     <string name="us_text_1">"Designer and programmer: "</string>
     <string name="us_text_2">Mohammad Saleh Seddighi</string>
     <string name="us_text_3">Thanks to the members of the \"Be Mohabatesh\" group
         in testing and providing suggestions
         and other friends who helped us in making this application.</string>
+
+
+    <string name="main_nav_settings">settings</string>
+    <string name="setting_item_language">Language</string>
+    <string name="app_language">English</string>
 
 
 </resources>

@@ -1,4 +1,4 @@
-package com.example.myapplication.changer;
+package com.example.myapplication.converter;
 
 public interface BoolInt {
 

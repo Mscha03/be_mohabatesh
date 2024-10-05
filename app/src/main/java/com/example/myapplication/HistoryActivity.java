@@ -16,12 +16,10 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.database.GetAllTask;
-import com.example.myapplication.database.RoutineDB;
+import com.example.myapplication.database.TaskDataBase.HabitDB;
 import com.example.myapplication.recadapter.HistoryAdapter;
-import com.example.myapplication.recadapter.PeriodAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
@@ -32,7 +30,7 @@ public class HistoryActivity extends AppCompatActivity {
 
     private static final String TAG = "PeriodicTaskActivity";
 
-    public static RoutineDB db;
+    public static HabitDB db;
 
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -85,7 +83,7 @@ public class HistoryActivity extends AppCompatActivity {
             return false;
         });
 
-        db = new RoutineDB(this);
+        db = new HabitDB(this);
 
         RecyclerView dailyRecyclerView = findViewById(R.id.today_recycler_view);
         GridLayoutManager dailyGridLayoutManager = new GridLayoutManager(this, 3);

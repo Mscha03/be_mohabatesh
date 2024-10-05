@@ -40,6 +40,12 @@
             </menu>
         </item>
 
+        <item
+            android:id="@+id/main_nav_settings"
+            android:icon="@drawable/baseline_settings_24"
+            android:title="@string/main_nav_settings"
+            />
+
     </group>
 
 </menu>

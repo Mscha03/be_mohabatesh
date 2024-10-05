@@ -3,15 +3,15 @@ package com.example.myapplication.time;
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
-import com.example.myapplication.database.RoutineDB;
+import com.example.myapplication.database.TaskDataBase.HabitDB;
 
 public class PeriodicCheckBoxReset {
-    private static RoutineDB db;
+    private static HabitDB db;
     private static final String TAG = "PeriodicCheckBoxReset";
 
     public static int checkDay(int routineId, int changeDay, int changeWeek, int changeMonth, int changeYear, Context context) {
 
-        db = new RoutineDB(context);
+        db = new HabitDB(context);
         Cursor cursor = db.getDays(routineId, changeDay, changeWeek, changeMonth, changeYear);
         int check = 0;
         if (cursor.moveToFirst()) {

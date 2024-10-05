@@ -1,7 +1,7 @@
 package com.example.myapplication.recadapter;
 
-import static com.example.myapplication.changer.BoolInt.boolToInt;
-import static com.example.myapplication.changer.BoolInt.intToBool;
+import static com.example.myapplication.converter.BoolInt.boolToInt;
+import static com.example.myapplication.converter.BoolInt.intToBool;
 
 import android.content.Intent;
 import android.util.Log;
@@ -15,16 +15,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.NormalTaskDetailActivity;
 import com.example.myapplication.R;
-import com.example.myapplication.database.TaskDB;
+import com.example.myapplication.database.TaskDataBase.DeadLinedTaskDB;
 import com.example.myapplication.model.tasks.DeadLinedTask;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     private static final String TAG = "TaskAdapter";
 
     private final DeadLinedTask[] listdata;
-    private final TaskDB db;
+    private final DeadLinedTaskDB db;
 
-    public TaskAdapter(DeadLinedTask[] listdata, TaskDB db) {
+    public TaskAdapter(DeadLinedTask[] listdata, DeadLinedTaskDB db) {
         this.listdata = listdata;
         this.db = db;
         Log.d(TAG, "PeriodAdapter: Adapter created with " + listdata.length + " items");

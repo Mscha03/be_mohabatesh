@@ -1,4 +1,4 @@
-package com.example.myapplication.database;
+package com.example.myapplication.database.TaskDataBase;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
-public class SimpleDB extends SQLiteOpenHelper {
+public class SimpleTaskDB extends SQLiteOpenHelper {
     private static final String DB_NAME = "simple_db";
     private static final int DB_VERSION = 1;
     private static final String TABLE_NAME = "simple";
@@ -17,7 +17,7 @@ public class SimpleDB extends SQLiteOpenHelper {
     private static final String DESCRIPTION_COL = "description";
     private static final String ISDONE_COL = "isdone";
 
-    public SimpleDB(@Nullable Context context) {
+    public SimpleTaskDB(@Nullable Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 

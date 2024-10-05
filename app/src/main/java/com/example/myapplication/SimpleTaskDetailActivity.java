@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
@@ -15,7 +14,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import com.example.myapplication.bottomsheet.SimpleTaskBottomSheet;
-import com.example.myapplication.database.SimpleDB;
+import com.example.myapplication.database.TaskDataBase.SimpleTaskDB;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class SimpleTaskDetailActivity extends AppCompatActivity {
@@ -24,7 +23,7 @@ public class SimpleTaskDetailActivity extends AppCompatActivity {
 
     private ImageButton edit, delete;
     private TextView title, description;
-    private SimpleDB db;
+    private SimpleTaskDB db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +42,7 @@ public class SimpleTaskDetailActivity extends AppCompatActivity {
         delete = findViewById(R.id.delete_button_edit_activity);
         title = findViewById(R.id.task_title_edit_activity);
         description = findViewById(R.id.task_description_edit_activity);
-        db = new SimpleDB(this);
+        db = new SimpleTaskDB(this);
         Log.d(TAG, "onCreate: views initialized");
 
         int id = getIntent().getIntExtra("task", 0);

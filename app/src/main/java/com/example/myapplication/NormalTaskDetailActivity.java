@@ -18,9 +18,8 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.bottomsheet.NormalTaskBottomSheet;
-import com.example.myapplication.bottomsheet.PeriodTaskBottomSheet;
-import com.example.myapplication.database.TaskDB;
-import com.example.myapplication.time.ShamsiMonth;
+import com.example.myapplication.database.TaskDataBase.DeadLinedTaskDB;
+import com.example.myapplication.time.ShamsiName;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class NormalTaskDetailActivity extends AppCompatActivity {
@@ -30,7 +29,7 @@ public class NormalTaskDetailActivity extends AppCompatActivity {
     private ImageButton edit, delete;
     private TextView title, description, date;
     private LinearLayout layout;
-    private TaskDB db;
+    private DeadLinedTaskDB db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +51,7 @@ public class NormalTaskDetailActivity extends AppCompatActivity {
         title = findViewById(R.id.task_title_edit_activity);
         description = findViewById(R.id.task_description_edit_activity);
         date = findViewById(R.id.date_text_edit_activity);
-        db = new TaskDB(this);
+        db = new DeadLinedTaskDB(this);
         Log.d(TAG, "onCreate: views initialized");
 
         int id = getIntent().getIntExtra("task", 0);
@@ -77,7 +76,7 @@ public class NormalTaskDetailActivity extends AppCompatActivity {
 
         title.setText(detail[1]);
         description.setText(detail[2]);
-        String s = detail[3] + " " + ShamsiMonth.getMonthName(Integer.parseInt(detail[4]),this) + " " + detail[5];
+        String s = detail[3] + " " + ShamsiName.getMonthName(Integer.parseInt(detail[4]),this) + " " + detail[5];
         date.setText(s);
 
         Log.d(TAG, "onCreate: task details set");

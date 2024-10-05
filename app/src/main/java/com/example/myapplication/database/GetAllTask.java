@@ -6,7 +6,10 @@ import android.util.Log;
 import android.widget.CheckBox;
 
 import com.ali.uneversaldatetools.date.JalaliDateTime;
-import com.example.myapplication.changer.BoolInt;
+import com.example.myapplication.converter.BoolInt;
+import com.example.myapplication.database.TaskDataBase.HabitDB;
+import com.example.myapplication.database.TaskDataBase.SimpleTaskDB;
+import com.example.myapplication.database.TaskDataBase.DeadLinedTaskDB;
 import com.example.myapplication.model.Period;
 import com.example.myapplication.model.tasks.DeadLinedTask;
 import com.example.myapplication.model.tasks.Habit;
@@ -22,7 +25,7 @@ public class GetAllTask implements AddInformationForHistory{
     private static final String TAG = "GetAllTask";
 
     // normal task
-    static TaskDB taskDB;
+    static DeadLinedTaskDB deadLinedTaskDB;
     static ArrayList<DeadLinedTask> today;
     static ArrayList<DeadLinedTask> future;
     static ArrayList<DeadLinedTask> past;
@@ -31,7 +34,7 @@ public class GetAllTask implements AddInformationForHistory{
     static DeadLinedTask[] pastModels;
 
     // periodic task
-    static RoutineDB routineDB;
+    static HabitDB habitDB;
     static ArrayList<Habit> dailyTasks;
     static ArrayList<Habit> weeklyTasks;
     static ArrayList<Habit> monthlyTasks;
@@ -40,7 +43,7 @@ public class GetAllTask implements AddInformationForHistory{
     static Habit[] monthlyModels;
 
     // simple task
-    static SimpleDB simpleDB;
+    static SimpleTaskDB simpleTaskDB;
     static ArrayList<SimpleTask> simpleTasksList;
     static SimpleTask[] simpleTaskArray;
 
@@ -82,12 +85,12 @@ public class GetAllTask implements AddInformationForHistory{
 
 
     private static void getNormalTasks(Context context) {
-        taskDB = new TaskDB(context);
+        deadLinedTaskDB = new DeadLinedTaskDB(context);
         today = new ArrayList<>();
         future = new ArrayList<>();
         past = new ArrayList<>();
 
-        Cursor cursor = taskDB.getAllRecords();
+        Cursor cursor = deadLinedTaskDB.getAllRecords();
         if (cursor.moveToFirst()) {
             Log.d(TAG, "onCreate: fetching tasks from database");
 
@@ -157,14 +160,14 @@ public class GetAllTask implements AddInformationForHistory{
     }
 
     private static void getPeriodicTasks(Context context) {
-        routineDB = new RoutineDB(context);
+        habitDB = new HabitDB(context);
         Log.d(TAG, "onCreate: database initialized");
 
         dailyTasks = new ArrayList<>();
         weeklyTasks = new ArrayList<>();
         monthlyTasks = new ArrayList<>();
 
-        Cursor cursor = routineDB.getAllRecords(RoutineDB.ROUTINE_TABLE_NAME);
+        Cursor cursor = habitDB.getAllRecords(HabitDB.ROUTINE_TABLE_NAME);
 
         if (cursor.moveToFirst()) {
             Log.d(TAG, "onCreate: fetching tasks from database");
@@ -187,7 +190,7 @@ public class GetAllTask implements AddInformationForHistory{
                 int year = jalaliDateTime.getYear();
 
                 if (dbYear != year){
-                    AddInformationForHistory.addDays(dbPeriod, id, routineDB);
+                    AddInformationForHistory.addDays(dbPeriod, id, habitDB);
                 }
 
                 switch (dbPeriod) {
@@ -258,11 +261,11 @@ public class GetAllTask implements AddInformationForHistory{
     }
 
     private static void getSimpleTasks(Context context) {
-        simpleDB = new SimpleDB(context);
+        simpleTaskDB = new SimpleTaskDB(context);
         Log.d(TAG, "onCreate: database initialized");
         simpleTasksList = new ArrayList<>();
 
-        Cursor cursor = simpleDB.getAllRecords();
+        Cursor cursor = simpleTaskDB.getAllRecords();
         if (cursor.moveToFirst()) {
             Log.d(TAG, "onCreate: fetching tasks from database");
 

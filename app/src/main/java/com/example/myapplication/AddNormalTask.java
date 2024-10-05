@@ -18,9 +18,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.ali.uneversaldatetools.date.JalaliDateTime;
-import com.example.myapplication.database.TaskDB;
+import com.example.myapplication.database.TaskDataBase.DeadLinedTaskDB;
 import com.example.myapplication.model.tasks.DeadLinedTask;
-import com.example.myapplication.time.ShamsiMonth;
+import com.example.myapplication.time.ShamsiName;
 
 import ir.hamsaa.persiandatepicker.PersianDatePickerDialog;
 import ir.hamsaa.persiandatepicker.api.PersianPickerDate;
@@ -32,7 +32,7 @@ public class AddNormalTask extends AppCompatActivity {
 
     PersianDatePickerDialog picker;
 
-    private TaskDB db;
+    private DeadLinedTaskDB db;
     private EditText addTitle, addDescription;
     private TextView addDate;
     private Button addButton, dateButton;
@@ -85,7 +85,7 @@ public class AddNormalTask extends AppCompatActivity {
                             deadYear = persianPickerDate.getPersianYear();
                             dateChosen = true;
                             String s = "  " + deadDay + "  " +
-                                    ShamsiMonth.getMonthName(deadMonth, AddNormalTask.this) + "  " +
+                                    ShamsiName.getMonthName(deadMonth, AddNormalTask.this) + "  " +
                                     deadYear + "  ";
                             addDate.setText(s);
                             Log.d(TAG, "date = " + persianPickerDate.getPersianDay() + "/" +
@@ -105,7 +105,7 @@ public class AddNormalTask extends AppCompatActivity {
 
 
 // database
-        db = new TaskDB(this);
+        db = new DeadLinedTaskDB(this);
         Log.d(TAG, "onCreate: database initialized");
 
         addButton.setOnClickListener(v -> {

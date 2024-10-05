@@ -1,11 +1,12 @@
 package com.example.myapplication.database;
 
 import com.ali.uneversaldatetools.date.JalaliDateTime;
+import com.example.myapplication.database.TaskDataBase.HabitDB;
 import com.example.myapplication.model.Period;
 
 public interface AddInformationForHistory {
 
-    static void addDays(String period, long id, RoutineDB db){
+    static void addDays(String period, long id, HabitDB db){
 
         JalaliDateTime jalaliDateTime = JalaliDateTime.Now();
 

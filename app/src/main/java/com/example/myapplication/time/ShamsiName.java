@@ -5,7 +5,7 @@ import android.content.Context;
 
 import com.example.myapplication.R;
 
-public class ShamsiMonth {
+public class ShamsiName {
 
     public static String getMonthName(int monthNumber, Context context) {
 
@@ -17,4 +17,13 @@ public class ShamsiMonth {
             return " ";
         }
     }
+
+    public static String getDayName(int dayNumber, Context context) {
+        String[] dayName = context.getResources().getStringArray(R.array.shamsiWeekDay);
+        if (dayNumber >= 0 && dayNumber < 8) {
+            return dayName[dayNumber];
+        } else {
+            return " ";
+    }
+}
 }

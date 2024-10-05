@@ -11,6 +11,7 @@ import com.example.myapplication.MainActivity;
 import com.example.myapplication.NormalTaskActivity;
 import com.example.myapplication.PeriodicTasksActivity;
 import com.example.myapplication.R;
+import com.example.myapplication.SettingActivity;
 import com.example.myapplication.SimpleTaskActivity;
 
 public interface drawerNavigation {
@@ -45,6 +46,9 @@ public interface drawerNavigation {
             Intent intent = new Intent(packageContext, ContactUsActivity.class);
             packageContext.startActivity(intent);
 
+        } else if (itemId == R.id.main_nav_settings) {
+            Intent intent = new Intent(packageContext, SettingActivity.class);
+            packageContext.startActivity(intent);
         }
     }
 }
