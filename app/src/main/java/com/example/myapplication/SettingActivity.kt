@@ -1,29 +1,23 @@
 package com.example.myapplication
 
-import android.content.Context
 import android.content.Intent
-import android.content.res.Configuration
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.ImageButton
+import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -47,7 +41,6 @@ import com.example.myapplication.settings.getLanguageCode
 import com.example.myapplication.settings.saveLanguageToPreferences
 import com.example.myapplication.settings.setLocale
 import com.google.android.material.navigation.NavigationView
-import java.util.Locale
 
 class SettingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,9 +53,14 @@ class SettingActivity : AppCompatActivity() {
             insets
         }
 
+        val appName = findViewById<TextView>(R.id.app_name_text_view)
         val drawerLayout = findViewById<DrawerLayout>(R.id.setting_nav_drawer)
         val navigationView = findViewById<NavigationView>(R.id.setting_nav_view)
         val drawerMenu = findViewById<ImageButton>(R.id.setting_nav_drawer_button)
+
+
+        //set app name
+        appName.text = getText(R.string.application_title)
 
         //navigation button
         drawerMenu.setOnClickListener {

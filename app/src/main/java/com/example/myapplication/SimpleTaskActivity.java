@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedCallback;
@@ -36,6 +37,7 @@ public class SimpleTaskActivity extends AppCompatActivity {
     ActionBarDrawerToggle drawerToggle;
 
     ImageButton drawerMenu;
+    TextView appName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,10 @@ public class SimpleTaskActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        //set Title
+        appName = findViewById(R.id.app_name_text_view);
+        appName.setText(getString(R.string.application_title));
 
         //navigation button
         drawerMenu = findViewById(R.id.periodic_task_nav_drawer_button);

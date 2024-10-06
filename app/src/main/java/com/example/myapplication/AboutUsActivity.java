@@ -20,6 +20,7 @@ import com.google.android.material.navigation.NavigationView;
 
 public class AboutUsActivity extends AppCompatActivity {
 
+    TextView appName;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ActionBarDrawerToggle drawerToggle;
@@ -36,6 +37,10 @@ public class AboutUsActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        //set app name
+        appName = findViewById(R.id.app_name_text_view);
+        appName.setText(getString(R.string.application_title));
 
         //navigation button
         drawerMenu = findViewById(R.id.contact_nav_drawer_button);

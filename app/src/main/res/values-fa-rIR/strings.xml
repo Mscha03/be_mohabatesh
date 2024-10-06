@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">به محبتش</string>
+    <string name="application_title">به محبتش</string>
     <string name="today_text">امروز</string>
     <string name="future_text">آینده</string>
     <string name="past_text">گذشته</string>

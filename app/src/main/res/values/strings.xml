@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Be Mohabatesh</string>
+    <string name="application_title">Be Mohabatesh</string>
     <string name="today_text">Today</string>
     <string name="future_text">Future</string>
     <string name="past_text">Past</string>
@@ -20,6 +21,7 @@
     <string name="edit_task_button_txt">Edit</string>
     <string name="add_new_task_dropdown_title">Choose Period</string>
     <string name="edit_task_title">Task Detail</string>
+    <string name="dialog_title_delete_item">Will you delete task?</string>
     <string name="dialog_massage_delete_item">Deleting task.</string>
     <string name="delete_task_toast">Deleted.</string>
 
@@ -28,7 +30,6 @@
     <string name="period_monthly">Monthly</string>
 
     <string name="main_nav_periodic_task_title">Habits</string>
-    <string name="main_nav_normal_task_title">Timed Tasks</string>
     <string name="main_nav_normal_task_title">Deadlined Task</string>
     <string name="main_nav_history_title">History</string>
     <string name="main_nav_open">Open Navigation Drawer</string>
@@ -46,12 +47,12 @@
     <string name="main_nav_simple_task_title">Simple Task</string>
     <string name="main_activity_title">Unfinished Tasks</string>
     <string name="main_bottom_sheet_txt">Select the type of task</string>
-    <string name="timed_task_btn_txt">Timed Tasks</string>
-    <string name="periodic_task_btn_txt">Periodic Tasks</string>
+    <string name="timed_task_btn_txt">Deadlined Tasks</string>
+    <string name="periodic_task_btn_txt">Habits</string>
     <string name="simple_task_btn_txt">Simple Tasks</string>
 
-    <string name="about_Toast">Well you already know me!...What else is there to say?</string>
-    <string name="contact_us_title">We'll be glad to hear your feedback!</string>
+    <string name="about_Toast">Well you already know me!…What else is there to say?</string>
+    <string name="contact_us_title">We\'ll be glad to hear your feedback!</string>
     <string name="contact_phone_number">Phone number: +989157476168</string>
     <string name="contact_telegram">Telegram: t.me/mscha03</string>
     <string name="contact_eitaa">Eitaa: eitaa.ir/mscha03</string>
@@ -110,7 +111,7 @@
     <string name="us_text_2">Mohammad Saleh Seddighi</string>
     <string name="us_text_3">Thanks to the members of the \"Be Mohabatesh\" group
         for testing and providing suggestions
-        and other friends who helped us during this application's development.</string>
+        and other friends who helped us during this application\'s development.</string>
 
 
     <string name="main_nav_settings">Settings</string>

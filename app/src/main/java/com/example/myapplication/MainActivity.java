@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     TextView today;
+    TextView appName;
 
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -68,6 +69,9 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+        //set app name
+        appName = findViewById(R.id.app_name_text_view);
+        appName.setText(getString(R.string.application_title));
 
         //date
         today = findViewById(R.id.main_date_text_view);

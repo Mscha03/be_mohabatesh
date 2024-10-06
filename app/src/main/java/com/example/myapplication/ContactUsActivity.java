@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -21,6 +22,7 @@ import com.google.android.material.navigation.NavigationView;
 public class ContactUsActivity extends AppCompatActivity {
 
     Button phone, telegram, eitaa, email;
+    TextView appName;
 
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -37,6 +39,9 @@ public class ContactUsActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        appName = findViewById(R.id.app_name_text_view);
+        appName.setText(getString(R.string.application_title));
 
         phone = findViewById(R.id.phone_btn);
         telegram = findViewById(R.id.telegram_btn);
