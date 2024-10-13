@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.HistoryDetailActivity;
 import com.example.myapplication.R;
-import com.example.myapplication.model.tasks.Habit;
+import com.example.myapplication.model.tasks.Habits.Habit;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder> {
     private static final String TAG = "PeriodAdapter";

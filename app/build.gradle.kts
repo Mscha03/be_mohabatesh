@@ -54,6 +54,8 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     implementation ("androidx.compose.ui:ui-tooling-preview")
 
+    implementation ("com.github.hamooo90:jalali-datepicker-compose:1.1.1")
+    implementation ("ir.huri:JalaliCalendar:1.3.3")
 
     implementation(libs.appcompat)
     implementation(libs.material)

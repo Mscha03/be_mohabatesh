@@ -19,7 +19,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.ali.uneversaldatetools.date.JalaliDateTime;
 import com.example.myapplication.database.TaskDataBase.DeadLinedTaskDB;
-import com.example.myapplication.model.tasks.DeadLinedTask;
+import com.example.myapplication.model.tasks.SpecialDay;
 import com.example.myapplication.time.ShamsiName;
 
 import ir.hamsaa.persiandatepicker.PersianDatePickerDialog;
@@ -40,7 +40,7 @@ public class AddNormalTask extends AppCompatActivity {
     private int deadDay,deadMonth ,deadYear;
     private boolean dateChosen = false;
 
-    private DeadLinedTask deadLinedTask;
+    private SpecialDay specialDay;
 
 
     @Override
@@ -115,23 +115,23 @@ public class AddNormalTask extends AppCompatActivity {
             checkBox.setText(addTitle.getText());
             checkBox.setChecked(false);
 
-            deadLinedTask = new DeadLinedTask(
+            specialDay = new SpecialDay(
                     addTitle.getText().toString(),
                     addDescription.getText().toString(),
                     JalaliDateTime.Now());
 
 
             if(dateChosen){
-            Log.d(TAG, "onClick: title: " + deadLinedTask.getTitle()
-                    + ", description: " + deadLinedTask.getDescription());
+            Log.d(TAG, "onClick: title: " + specialDay.getTitle()
+                    + ", description: " + specialDay.getDescription());
 
 
-                db.insertRecord(deadLinedTask.getTitle(),
-                        deadLinedTask.getDescription(),
-                        deadLinedTask.getIsDone(),
-                        deadLinedTask.getDeadDate().getDay(),
-                        deadLinedTask.getDeadDate().getMonth(),
-                        deadLinedTask.getDeadDate().getYear()
+                db.insertRecord(specialDay.getTitle(),
+                        specialDay.getDescription(),
+                        specialDay.getIsDone(),
+                        specialDay.getDeadDate().getDay(),
+                        specialDay.getDeadDate().getMonth(),
+                        specialDay.getDeadDate().getYear()
                         );
 
                 Log.d(TAG, "onClick: record inserted into database");

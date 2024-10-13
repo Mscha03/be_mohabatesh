@@ -15,7 +15,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.customwidget.MultiStateCheckBox;
 import com.example.myapplication.database.TaskDataBase.HabitDB;
 import com.example.myapplication.model.Period;
-import com.example.myapplication.model.tasks.Habit;
+import com.example.myapplication.model.tasks.Habits.Habit;
 
 import java.util.Calendar;
 

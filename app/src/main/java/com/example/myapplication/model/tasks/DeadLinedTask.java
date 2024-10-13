@@ -2,30 +2,30 @@ package com.example.myapplication.model.tasks;
 
 import com.ali.uneversaldatetools.date.JalaliDateTime;
 
-public class DeadLinedTask extends SimpleTask{
+import java.util.ArrayList;
+import java.util.List;
 
-    private JalaliDateTime deadDate;
+public class DeadLinedTask extends SpecialDay{
+
+    private List<SimpleTask> subTask = new ArrayList<>();
 
     public DeadLinedTask(int id, String title, String description, int isDone, JalaliDateTime deadDate) {
-        super(id, title, description, isDone);
-        this.deadDate = deadDate;
+        super(id, title, description, isDone, deadDate);
     }
 
     public DeadLinedTask(String title, String description, int isDone, JalaliDateTime deadDate) {
-        super(title, description, isDone);
-        this.deadDate = deadDate;
+        super(title, description, isDone, deadDate);
     }
 
     public DeadLinedTask(String title, String description, JalaliDateTime deadDate) {
-        super(title, description);
-        this.deadDate = deadDate;
+        super(title, description, deadDate);
     }
 
-    public JalaliDateTime getDeadDate() {
-        return deadDate;
+    public List<SimpleTask> getSubTask() {
+        return subTask;
     }
 
-    public void setDeadDate(JalaliDateTime deadDate) {
-        this.deadDate = deadDate;
+    public void setSubTask(List<SimpleTask> subTask) {
+        this.subTask = subTask;
     }
 }

@@ -1,11 +1,12 @@
-package com.example.myapplication.model.tasks;
+package com.example.myapplication.model.tasks.Habits;
 
 import androidx.annotation.NonNull;
 
 import com.example.myapplication.model.Period;
+import com.example.myapplication.model.tasks.SimpleTask;
 import com.example.myapplication.time.WithWeekJalaliDateTime;
 
-public class Habit extends SimpleTask{
+public class Habit extends SimpleTask {
 
     private WithWeekJalaliDateTime createDate;
     private Period period;

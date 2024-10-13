@@ -11,8 +11,8 @@ import com.example.myapplication.database.TaskDataBase.HabitDB;
 import com.example.myapplication.database.TaskDataBase.SimpleTaskDB;
 import com.example.myapplication.database.TaskDataBase.DeadLinedTaskDB;
 import com.example.myapplication.model.Period;
-import com.example.myapplication.model.tasks.DeadLinedTask;
-import com.example.myapplication.model.tasks.Habit;
+import com.example.myapplication.model.tasks.SpecialDay;
+import com.example.myapplication.model.tasks.Habits.Habit;
 import com.example.myapplication.model.tasks.SimpleTask;
 import com.example.myapplication.time.PeriodicCheckBoxReset;
 import com.example.myapplication.time.WithWeekJalaliDateTime;
@@ -26,12 +26,12 @@ public class GetAllTask implements AddInformationForHistory{
 
     // normal task
     static DeadLinedTaskDB deadLinedTaskDB;
-    static ArrayList<DeadLinedTask> today;
-    static ArrayList<DeadLinedTask> future;
-    static ArrayList<DeadLinedTask> past;
-    static DeadLinedTask[] todayModels;
-    static DeadLinedTask[] futureModels;
-    static DeadLinedTask[] pastModels;
+    static ArrayList<SpecialDay> today;
+    static ArrayList<SpecialDay> future;
+    static ArrayList<SpecialDay> past;
+    static SpecialDay[] todayModels;
+    static SpecialDay[] futureModels;
+    static SpecialDay[] pastModels;
 
     // periodic task
     static HabitDB habitDB;
@@ -47,17 +47,17 @@ public class GetAllTask implements AddInformationForHistory{
     static ArrayList<SimpleTask> simpleTasksList;
     static SimpleTask[] simpleTaskArray;
 
-    public static DeadLinedTask[] todayTasks(Context context) {
+    public static SpecialDay[] todayTasks(Context context) {
         getNormalTasks(context);
         return todayModels;
     }
 
-    public static DeadLinedTask[] futureTasks(Context context) {
+    public static SpecialDay[] futureTasks(Context context) {
         getNormalTasks(context);
         return futureModels;
     }
 
-    public static DeadLinedTask[] pastTasks(Context context) {
+    public static SpecialDay[] pastTasks(Context context) {
         getNormalTasks(context);
         return pastModels;
     }
@@ -100,7 +100,7 @@ public class GetAllTask implements AddInformationForHistory{
                 checkBox.setText(cursor.getString(cursor.getColumnIndexOrThrow("name")));
                 checkBox.setChecked(BoolInt.intToBool(cursor.getInt(cursor.getColumnIndexOrThrow("isdone"))));
 
-                DeadLinedTask deadLinedTask = new DeadLinedTask(
+                SpecialDay specialDay = new SpecialDay(
                         cursor.getInt(cursor.getColumnIndexOrThrow("id")),
                         cursor.getString(cursor.getColumnIndexOrThrow("name")),
                         cursor.getString(cursor.getColumnIndexOrThrow("description")),
@@ -122,17 +122,17 @@ public class GetAllTask implements AddInformationForHistory{
                 int thisYear = jalaliDateTime.getYear();
                 Log.d(TAG, "onClick: current date - day: " + today + ", month: " + thisMonth + ", year: " + thisYear);
 
-                int deadDay = deadLinedTask.getDeadDate().getDay();
-                int deadMonth = deadLinedTask.getDeadDate().getMonth();
-                int deadYear = deadLinedTask.getDeadDate().getYear();
+                int deadDay = specialDay.getDeadDate().getDay();
+                int deadMonth = specialDay.getDeadDate().getMonth();
+                int deadYear = specialDay.getDeadDate().getYear();
                 Log.d(TAG, "onClick: deadline date - day: " + deadDay + ", month: " + deadMonth + ", year: " + deadYear);
 
                 if ((deadDay == thisDay) && (deadMonth == thisMonth) && (deadYear == thisYear)) {
-                    today.add(deadLinedTask);
+                    today.add(specialDay);
                 } else if ((deadYear > thisYear) || ((deadYear == thisYear) && (deadMonth > thisMonth)) || ((deadYear == thisYear) && (deadMonth == thisMonth) && (deadDay > thisDay))) {
-                    future.add(deadLinedTask);
+                    future.add(specialDay);
                 } else {
-                    past.add(deadLinedTask);
+                    past.add(specialDay);
                 }
 
             } while (cursor.moveToNext());
@@ -143,9 +143,9 @@ public class GetAllTask implements AddInformationForHistory{
         }
         cursor.close();
 
-        todayModels = new DeadLinedTask[today.size()];
-        futureModels = new DeadLinedTask[future.size()];
-        pastModels = new DeadLinedTask[past.size()];
+        todayModels = new SpecialDay[today.size()];
+        futureModels = new SpecialDay[future.size()];
+        pastModels = new SpecialDay[past.size()];
 
         for (int i = 0; i < today.size(); i++) {
             todayModels[i] = today.get(i);
