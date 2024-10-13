@@ -49,6 +49,8 @@ dependencies {
     implementation ("androidx.activity:activity-compose:1.7.2")
     implementation (platform("androidx.compose:compose-bom:2022.10.00"))
     implementation ("androidx.compose.ui:ui-graphics")
+    implementation(libs.navigation.fragment.ktx)
+    implementation(libs.navigation.ui.ktx)
     debugImplementation("androidx.compose.ui:ui-tooling")
     implementation ("androidx.compose.ui:ui-tooling-preview")
 

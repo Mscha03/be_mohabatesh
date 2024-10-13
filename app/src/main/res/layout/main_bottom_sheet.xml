@@ -65,6 +65,18 @@
                 android:textAllCaps="false"
                 android:textColor="@color/button_text"
                 android:foreground="?android:attr/selectableItemBackground"
+                android:textSize="15sp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/new_add_task"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="21dp"
+                android:background="@drawable/bg_btn_login_selected"
+                android:text="new add task"
+                android:textAllCaps="false"
+                android:textColor="@color/button_text"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:layout_marginBottom="21dp"
                 android:textSize="15sp" />
 

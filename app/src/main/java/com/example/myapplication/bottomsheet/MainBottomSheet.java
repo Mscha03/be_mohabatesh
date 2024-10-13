@@ -13,13 +13,14 @@ import androidx.annotation.Nullable;
 import com.example.myapplication.AddNormalTask;
 import com.example.myapplication.AddPeriodTask;
 import com.example.myapplication.AddSimpleTask;
+import com.example.myapplication.AddTask;
 import com.example.myapplication.R;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 public class MainBottomSheet extends BottomSheetDialogFragment {
     private static final String TAG = "MainBottomSheet";
 
-    Button timedButton, simpleButton, periodicButton;
+    Button timedButton, simpleButton, periodicButton, newAdd;
 
     @Nullable
     @Override
@@ -32,6 +33,8 @@ public class MainBottomSheet extends BottomSheetDialogFragment {
         simpleButton = v.findViewById(R.id.simple_task_btn);
         periodicButton = v.findViewById(R.id.periodic_task_btn);
 
+        newAdd = v.findViewById(R.id.new_add_task);
+
         timedButton.setOnClickListener(v1 -> {
             Intent i = new Intent(getContext(), AddNormalTask.class);
             startActivity(i);
@@ -42,6 +45,11 @@ public class MainBottomSheet extends BottomSheetDialogFragment {
         });
         periodicButton.setOnClickListener(v1 -> {
             Intent i = new Intent(getContext(), AddPeriodTask.class);
+            startActivity(i);
+        });
+
+        newAdd.setOnClickListener(v1 -> {
+            Intent i = new Intent(getContext(), AddTask.class);
             startActivity(i);
         });
 
