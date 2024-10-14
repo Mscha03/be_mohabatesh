@@ -12,7 +12,7 @@ import com.example.myapplication.database.TaskDataBase.SimpleTaskDB;
 import com.example.myapplication.database.TaskDataBase.DeadLinedTaskDB;
 import com.example.myapplication.model.Period;
 import com.example.myapplication.model.tasks.SpecialDay;
-import com.example.myapplication.model.tasks.Habits.Habit;
+import com.example.myapplication.model.tasks.habits.Habit;
 import com.example.myapplication.model.tasks.SimpleTask;
 import com.example.myapplication.time.PeriodicCheckBoxReset;
 import com.example.myapplication.time.WithWeekJalaliDateTime;

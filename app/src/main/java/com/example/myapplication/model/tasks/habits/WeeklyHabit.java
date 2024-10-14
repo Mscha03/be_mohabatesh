@@ -1,4 +1,4 @@
-package com.example.myapplication.model.tasks.Habits;
+package com.example.myapplication.model.tasks.habits;
 
 import androidx.annotation.NonNull;
 
