@@ -15,16 +15,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.NormalTaskDetailActivity;
 import com.example.myapplication.R;
-import com.example.myapplication.database.TaskDataBase.DeadLinedTaskDB;
-import com.example.myapplication.model.tasks.SpecialDay;
+import com.example.myapplication.database.TaskDataBase.SpecialDayTaskDB;
+import com.example.myapplication.model.tasks.SpecialDayTask;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     private static final String TAG = "TaskAdapter";
 
-    private final SpecialDay[] listdata;
-    private final DeadLinedTaskDB db;
+    private final SpecialDayTask[] listdata;
+    private final SpecialDayTaskDB db;
 
-    public TaskAdapter(SpecialDay[] listdata, DeadLinedTaskDB db) {
+    public TaskAdapter(SpecialDayTask[] listdata, SpecialDayTaskDB db) {
         this.listdata = listdata;
         this.db = db;
         Log.d(TAG, "PeriodAdapter: Adapter created with " + listdata.length + " items");
@@ -43,7 +43,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder: binding view holder at position " + position);
 
-        SpecialDay model = listdata[position];
+        SpecialDayTask model = listdata[position];
         Log.d(TAG, "onBindViewHolder: model ID " + model.getId() + ", description: " + model.getDescription());
 
         holder.checkBox.setOnCheckedChangeListener(null);

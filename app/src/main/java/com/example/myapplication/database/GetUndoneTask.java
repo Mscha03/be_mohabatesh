@@ -10,9 +10,9 @@ import android.widget.CheckBox;
 import com.ali.uneversaldatetools.date.JalaliDateTime;
 import com.example.myapplication.database.TaskDataBase.HabitDB;
 import com.example.myapplication.database.TaskDataBase.SimpleTaskDB;
-import com.example.myapplication.database.TaskDataBase.DeadLinedTaskDB;
+import com.example.myapplication.database.TaskDataBase.SpecialDayTaskDB;
 import com.example.myapplication.model.Period;
-import com.example.myapplication.model.tasks.SpecialDay;
+import com.example.myapplication.model.tasks.SpecialDayTask;
 import com.example.myapplication.model.tasks.habits.Habit;
 import com.example.myapplication.model.tasks.SimpleTask;
 import com.example.myapplication.time.PeriodicCheckBoxReset;
@@ -25,13 +25,13 @@ public class GetUndoneTask {
 
     private static final String TAG = "GetAllTask";
 
-    static DeadLinedTaskDB db;
-    static ArrayList<SpecialDay> today;
-    static ArrayList<SpecialDay> future;
-    static ArrayList<SpecialDay> past;
-    static SpecialDay[] todayModels;
-    static SpecialDay[] futureModels;
-    static SpecialDay[] pastModels;
+    static SpecialDayTaskDB db;
+    static ArrayList<SpecialDayTask> today;
+    static ArrayList<SpecialDayTask> future;
+    static ArrayList<SpecialDayTask> past;
+    static SpecialDayTask[] todayModels;
+    static SpecialDayTask[] futureModels;
+    static SpecialDayTask[] pastModels;
 
     // periodic task
     static HabitDB habitDB;
@@ -49,17 +49,17 @@ public class GetUndoneTask {
     static SimpleTask[] simpleTasksArray;
 
     // public method
-    public static SpecialDay[] todayTasks(Context context) {
+    public static SpecialDayTask[] todayTasks(Context context) {
         getNormalTasks(context);
         return todayModels;
     }
 
-    public static SpecialDay[] futureTasks(Context context) {
+    public static SpecialDayTask[] futureTasks(Context context) {
         getNormalTasks(context);
         return futureModels;
     }
 
-    public static SpecialDay[] pastTasks(Context context) {
+    public static SpecialDayTask[] pastTasks(Context context) {
         getNormalTasks(context);
         return pastModels;
     }
@@ -120,7 +120,7 @@ public class GetUndoneTask {
 
     // private method
     private static void getNormalTasks(Context context) {
-        db = new DeadLinedTaskDB(context);
+        db = new SpecialDayTaskDB(context);
         today = new ArrayList<>();
         future = new ArrayList<>();
         past = new ArrayList<>();
@@ -135,7 +135,7 @@ public class GetUndoneTask {
                 checkBox.setText(cursor.getString(cursor.getColumnIndexOrThrow("name")));
                 checkBox.setChecked(intToBool(cursor.getInt(cursor.getColumnIndexOrThrow("isdone"))));
 
-                SpecialDay taskModel = new SpecialDay(
+                SpecialDayTask taskModel = new SpecialDayTask(
                         cursor.getInt(cursor.getColumnIndexOrThrow("id")),
                         cursor.getString(cursor.getColumnIndexOrThrow("name")),
                         cursor.getString(cursor.getColumnIndexOrThrow("description")),
@@ -178,9 +178,9 @@ public class GetUndoneTask {
         }
         cursor.close();
 
-        todayModels = new SpecialDay[today.size()];
-        futureModels = new SpecialDay[future.size()];
-        pastModels = new SpecialDay[past.size()];
+        todayModels = new SpecialDayTask[today.size()];
+        futureModels = new SpecialDayTask[future.size()];
+        pastModels = new SpecialDayTask[past.size()];
 
         for (int i = 0; i < today.size(); i++) {
             todayModels[i] = today.get(i);

@@ -1,9 +1,15 @@
 package com.example.myapplication
 
+import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.CheckBox
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -13,44 +19,78 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.rounded.Clear
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.ali.uneversaldatetools.date.JalaliDateTime
+import com.example.myapplication.converter.BoolInt
+import com.example.myapplication.database.TaskDataBase.SimpleTaskDB
+import com.example.myapplication.database.TaskDataBase.SpecialDayTaskDB
+import com.example.myapplication.model.tasks.SimpleTask
+import com.example.myapplication.model.tasks.SpecialDayTask
 import com.example.myapplication.model.tasks.TaskType
 import com.example.myapplication.model.tasks.habits.HabitType
+import com.example.myapplication.time.ShamsiName
 import com.gmail.hamedvakhide.compose_jalali_datepicker.JalaliDatePickerDialog
-import ir.huri.jcal.JalaliCalendar
+
+var simpleDB: SimpleTaskDB? = null
+var specialDB: SpecialDayTaskDB? = null
 
 class AddTask : AppCompatActivity() {
 
@@ -64,21 +104,25 @@ class AddTask : AppCompatActivity() {
             insets
         }
 
+        simpleDB = SimpleTaskDB(this)
+        specialDB = SpecialDayTaskDB(this)
+
         val composeView = findViewById<ComposeView>(R.id.composeView)
         composeView.setContent {
-            AddTaskMain()
+            AddTaskMain(this)
         }
     }
 }
 
 @Composable
-fun AddTaskMain() {
+fun AddTaskMain(context: Context) {
 
     var taskTitle = ""
     var taskDescription = ""
     var selectedTaskType = TaskType.SIMPLE
-    var specialDay: JalaliCalendar? = null
-    var deadlinedDay: JalaliCalendar? = null
+    var specialDay: JalaliDateTime? = null
+    var deadlinedDay: JalaliDateTime? = null
+    var subTasksOfDeadlinedTask = ArrayList<SimpleTask>()
 
     var expandedHabitType by remember { mutableStateOf(false) }
     var selectedHabitType: HabitType? = null
@@ -108,7 +152,7 @@ fun AddTaskMain() {
 
             Column(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .fillMaxWidth()
                     .padding(20.dp),
                 verticalArrangement = Arrangement.spacedBy(1.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -132,7 +176,10 @@ fun AddTaskMain() {
                     }
 
                     TaskType.DEADLINED -> {
-                        deadlinedDay = selectDeadLine()
+                        Column(modifier = Modifier.padding()) {
+                            deadlinedDay = selectDeadLine()
+                            subTasksOfDeadlinedTask = addSubTaskForDeadlinedTask()
+                        }
                     }
 
                     TaskType.HABIT -> {
@@ -166,16 +213,44 @@ fun AddTaskMain() {
 
                 }
 
-
                 // Add Button
                 Button(modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 15.dp)
                     .size(55.dp),
                     shape = RoundedCornerShape(10.dp),
-                    onClick = { }) {
-                    Text(text = "Add Task")
-                }
+                    onClick = {
+                        when (selectedTaskType) {
+
+                            TaskType.SIMPLE -> {
+                                addSimpleTask(
+                                    taskTitle,
+                                    taskDescription
+                                )
+                                val intent = Intent(context, MainActivity::class.java)
+                                context.startActivity(intent)
+                                Toast.makeText(context, "Task Added", Toast.LENGTH_SHORT).show()
+                            }
+
+                            TaskType.SPECIAL_DAY -> {
+                                addSpecialTask(
+                                    taskTitle,
+                                    taskDescription,
+                                    specialDay!!
+                                )
+                                val intent = Intent(context, MainActivity::class.java)
+                                context.startActivity(intent)
+                                Toast.makeText(context, "Task Added", Toast.LENGTH_SHORT).show()
+                            }
+
+                            TaskType.DEADLINED -> {
+
+                            }
+
+                            TaskType.HABIT -> TODO()
+                        }
+                    }
+                ) { Text(text = "Add Task") }
             }
         }
 
@@ -183,11 +258,10 @@ fun AddTaskMain() {
 }
 
 
-
 @Preview(showBackground = true)
 @Composable
 fun ShowItem() {
-    AddTaskMain()
+    selectHabitType()
 }
 
 
@@ -407,8 +481,7 @@ fun selectTaskType(): TaskType {
 
 
     Column(
-        modifier = Modifier
-            .fillMaxSize(),
+        modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         ExposedDropdownMenuBox(
@@ -424,7 +497,7 @@ fun selectTaskType(): TaskType {
                 modifier = Modifier
                     .menuAnchor()
                     .padding(vertical = 5.dp)
-                    .fillMaxSize(),
+                    .fillMaxWidth(),
                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedTaskType) }
             )
 
@@ -446,10 +519,89 @@ fun selectTaskType(): TaskType {
     return selectedTaskType
 }
 
+@SuppressLint("MutableCollectionMutableState")
 @Composable
-fun selectDeadLine(): JalaliCalendar {
+fun addSubTaskForDeadlinedTask(): ArrayList<SimpleTask> {
+    val subTaskTitles = remember { mutableStateListOf("sub task")}
+
+    Column (
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(
+                color = colorResource(id = R.color.box_background),
+                shape = RoundedCornerShape(10.dp)
+            ),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ){
+        Text(
+            text = "sub Tasks",
+            modifier = Modifier.padding(start = 25.dp, top = 15.dp))
+        LazyColumn(
+            modifier = Modifier
+                .height((subTaskTitles.size*50).dp)
+        ) {
+            items(subTaskTitles.size) { index ->
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Checkbox(
+                        checked = false,
+                        onCheckedChange = {},
+                        )
+                    Column(modifier = Modifier.padding(10.dp)) {
+                        BasicTextField(value = subTaskTitles[index],
+                            onValueChange = {
+                                subTaskTitles[index] = it
+                            })
+                    }
+
+                    Spacer(modifier = Modifier.weight(1f)) // فضای خالی برای چسباندن آیکون به راست‌ترین قسمت
+
+
+                    // دکمه با آیکون منفی
+                    IconButton(
+                        onClick = {
+                            subTaskTitles.removeAt(index)
+                        },
+                        modifier = Modifier.padding(end = 10.dp) // فاصله از عنوان
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Close, // استفاده از آیکون منفی
+                            contentDescription = "حذف", // توصیف تصویر
+                            modifier = Modifier.size(24.dp) // اندازه تصویر
+                        )
+                    }
+
+                }
+            }
+        }
+
+        Button(
+            shape = RoundedCornerShape(6.dp),
+            modifier = Modifier
+                .padding(5.dp),
+            onClick = {
+                subTaskTitles.add("sub task")
+            }
+        ) {
+            Text("Add sub task")
+        }
+    }
+
+    val subTasks = ArrayList<SimpleTask>()
+
+    subTaskTitles.forEach{ item -> subTasks.add(SimpleTask(item,""))}
+
+    return subTasks
+}
+
+@Composable
+fun selectDeadLine(): JalaliDateTime {
     val openDialog = remember { mutableStateOf(false) }
-    var specialDay by remember { mutableStateOf(JalaliCalendar()) }
+    var specialDay by remember { mutableStateOf(JalaliDateTime.Now()) }
 
 
     Row(
@@ -462,7 +614,12 @@ fun selectDeadLine(): JalaliCalendar {
             modifier = Modifier
                 .width(200.dp)
                 .padding(vertical = 6.dp),
-            value = "تاریخ: ${specialDay.day} ${specialDay.monthString} ${specialDay.year}",
+            value = "تاریخ: ${specialDay.day} ${
+                ShamsiName.getMonthName(
+                    specialDay.month,
+                    LocalContext.current
+                )
+            } ${specialDay.year}",
             onValueChange = {},
             readOnly = true,
         )
@@ -487,7 +644,7 @@ fun selectDeadLine(): JalaliCalendar {
             // nothing
         },
         onConfirm = {
-            specialDay = it
+            specialDay = JalaliDateTime(it.year, it.month, it.day)
             Log.d(
                 "Date",
                 "onConfirm: ${it.day} ${it.monthString} ${it.year}"
@@ -496,6 +653,7 @@ fun selectDeadLine(): JalaliCalendar {
     )
     return specialDay
 }
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -506,7 +664,7 @@ fun selectHabitType(): HabitType {
 
     Column(
         modifier = Modifier
-            .fillMaxSize(),
+            .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         ExposedDropdownMenuBox(
@@ -522,7 +680,7 @@ fun selectHabitType(): HabitType {
                 modifier = Modifier
                     .menuAnchor()
                     .padding(vertical = 5.dp)
-                    .fillMaxSize(),
+                    .fillMaxWidth(),
                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedTaskType) }
             )
 
@@ -542,4 +700,25 @@ fun selectHabitType(): HabitType {
         }
     }
     return selectedHabitType
+}
+
+
+fun addSimpleTask(title: String, description: String) {
+    val simpleTask = SimpleTask(title, description)
+    simpleDB!!.insertRecord(simpleTask)
+}
+
+
+fun addSpecialTask(title: String, description: String, deadLine: JalaliDateTime) {
+    val deadlinedTask = SpecialDayTask(title, description, deadLine)
+    specialDB!!.insertRecord(deadlinedTask)
+}
+
+fun addDeadLinedTask(
+    title: String,
+    description: String,
+    deadLine: JalaliDateTime,
+    subTasks: ArrayList<SimpleTask>){
+
+
 }

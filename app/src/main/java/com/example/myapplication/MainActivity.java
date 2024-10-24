@@ -1,11 +1,7 @@
 package com.example.myapplication;
 
 import static com.example.myapplication.interfaces.drawerNavigation.drawerNavigationHandler;
-import static com.example.myapplication.settings.LanguageKt.getLanguageFromPreferences;
-import static com.example.myapplication.settings.LanguageKt.setLocale;
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageButton;
@@ -28,15 +24,13 @@ import com.example.myapplication.bottomsheet.MainBottomSheet;
 import com.example.myapplication.database.GetUndoneTask;
 import com.example.myapplication.database.TaskDataBase.HabitDB;
 import com.example.myapplication.database.TaskDataBase.SimpleTaskDB;
-import com.example.myapplication.database.TaskDataBase.DeadLinedTaskDB;
+import com.example.myapplication.database.TaskDataBase.SpecialDayTaskDB;
 import com.example.myapplication.recadapter.PeriodAdapter;
 import com.example.myapplication.recadapter.SimpleAdapter;
 import com.example.myapplication.recadapter.TaskAdapter;
 import com.example.myapplication.time.ShamsiName;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-
-import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -51,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     ImageButton drawerMenu;
 
     RecyclerView timedRecyclerView, periodicRecyclerView, simpleRecyclerView;
-    DeadLinedTaskDB deadLinedTaskDB;
+    SpecialDayTaskDB specialDayTaskDB;
     HabitDB habitDB;
     SimpleTaskDB simpleTaskDB;
 
@@ -98,9 +92,9 @@ public class MainActivity extends AppCompatActivity {
         navigationView.bringToFront();
 
         // load undone work from data base
-        deadLinedTaskDB = new DeadLinedTaskDB(this);
+        specialDayTaskDB = new SpecialDayTaskDB(this);
         timedRecyclerView = findViewById(R.id.timed_activities_recycler);
-        TaskAdapter timedAdapter = new TaskAdapter(GetUndoneTask.todayTasks(this), deadLinedTaskDB);
+        TaskAdapter timedAdapter = new TaskAdapter(GetUndoneTask.todayTasks(this), specialDayTaskDB);
         timedRecyclerView.setHasFixedSize(true);
         timedRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         timedRecyclerView.setAdapter(timedAdapter);

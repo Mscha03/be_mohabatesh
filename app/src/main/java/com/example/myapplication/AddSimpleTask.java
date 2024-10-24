@@ -60,7 +60,7 @@ public class AddSimpleTask extends AppCompatActivity {
             Log.d(TAG, "onClick: title: " + simpleTask.getTitle() + ", description: " + simpleTask.getDescription());
 
 
-            db.insertRecord(simpleTask.getTitle(), simpleTask.getDescription(), simpleTask.getIsDone());
+            db.insertRecord(simpleTask);
 
             Log.d(TAG, "onClick: record inserted into database");
 

@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.example.myapplication.model.tasks.SimpleTask;
+
 public class SimpleTaskDB extends SQLiteOpenHelper {
     private static final String DB_NAME = "simple_db";
     private static final int DB_VERSION = 1;
@@ -39,13 +41,12 @@ public class SimpleTaskDB extends SQLiteOpenHelper {
     }
 
     // Create
-    public void insertRecord(
-            String name, String description, int isDone) {
+    public void insertRecord(SimpleTask simpleTask) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(NAME_COL, name);
-        values.put(DESCRIPTION_COL, description);
-        values.put(ISDONE_COL, isDone);
+        values.put(NAME_COL, simpleTask.getTitle());
+        values.put(DESCRIPTION_COL, simpleTask.getDescription());
+        values.put(ISDONE_COL, simpleTask.getIsDone());
         db.insert(TABLE_NAME, null, values);
     }
 

@@ -18,7 +18,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.bottomsheet.NormalTaskBottomSheet;
-import com.example.myapplication.database.TaskDataBase.DeadLinedTaskDB;
+import com.example.myapplication.database.TaskDataBase.SpecialDayTaskDB;
 import com.example.myapplication.time.ShamsiName;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
@@ -29,7 +29,7 @@ public class NormalTaskDetailActivity extends AppCompatActivity {
     private ImageButton edit, delete;
     private TextView title, description, date;
     private LinearLayout layout;
-    private DeadLinedTaskDB db;
+    private SpecialDayTaskDB db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +51,7 @@ public class NormalTaskDetailActivity extends AppCompatActivity {
         title = findViewById(R.id.task_title_edit_activity);
         description = findViewById(R.id.task_description_edit_activity);
         date = findViewById(R.id.date_text_edit_activity);
-        db = new DeadLinedTaskDB(this);
+        db = new SpecialDayTaskDB(this);
         Log.d(TAG, "onCreate: views initialized");
 
         int id = getIntent().getIntExtra("task", 0);

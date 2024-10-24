@@ -18,8 +18,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.ali.uneversaldatetools.date.JalaliDateTime;
-import com.example.myapplication.database.TaskDataBase.DeadLinedTaskDB;
-import com.example.myapplication.model.tasks.SpecialDay;
+import com.example.myapplication.database.TaskDataBase.SpecialDayTaskDB;
+import com.example.myapplication.model.tasks.SpecialDayTask;
 import com.example.myapplication.time.ShamsiName;
 
 import ir.hamsaa.persiandatepicker.PersianDatePickerDialog;
@@ -32,7 +32,7 @@ public class AddNormalTask extends AppCompatActivity {
 
     PersianDatePickerDialog picker;
 
-    private DeadLinedTaskDB db;
+    private SpecialDayTaskDB db;
     private EditText addTitle, addDescription;
     private TextView addDate;
     private Button addButton, dateButton;
@@ -40,7 +40,7 @@ public class AddNormalTask extends AppCompatActivity {
     private int deadDay,deadMonth ,deadYear;
     private boolean dateChosen = false;
 
-    private SpecialDay specialDay;
+    private SpecialDayTask specialDayTask;
 
 
     @Override
@@ -105,7 +105,7 @@ public class AddNormalTask extends AppCompatActivity {
 
 
 // database
-        db = new DeadLinedTaskDB(this);
+        db = new SpecialDayTaskDB(this);
         Log.d(TAG, "onCreate: database initialized");
 
         addButton.setOnClickListener(v -> {
@@ -115,24 +115,18 @@ public class AddNormalTask extends AppCompatActivity {
             checkBox.setText(addTitle.getText());
             checkBox.setChecked(false);
 
-            specialDay = new SpecialDay(
+            specialDayTask = new SpecialDayTask(
                     addTitle.getText().toString(),
                     addDescription.getText().toString(),
                     JalaliDateTime.Now());
 
 
             if(dateChosen){
-            Log.d(TAG, "onClick: title: " + specialDay.getTitle()
-                    + ", description: " + specialDay.getDescription());
+            Log.d(TAG, "onClick: title: " + specialDayTask.getTitle()
+                    + ", description: " + specialDayTask.getDescription());
 
 
-                db.insertRecord(specialDay.getTitle(),
-                        specialDay.getDescription(),
-                        specialDay.getIsDone(),
-                        specialDay.getDeadDate().getDay(),
-                        specialDay.getDeadDate().getMonth(),
-                        specialDay.getDeadDate().getYear()
-                        );
+                db.insertRecord(specialDayTask);
 
                 Log.d(TAG, "onClick: record inserted into database");
 

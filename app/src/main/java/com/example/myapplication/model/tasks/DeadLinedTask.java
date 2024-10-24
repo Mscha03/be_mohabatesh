@@ -5,7 +5,7 @@ import com.ali.uneversaldatetools.date.JalaliDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DeadLinedTask extends SpecialDay{
+public class DeadLinedTask extends SpecialDayTask {
 
     private List<SimpleTask> subTask = new ArrayList<>();
 

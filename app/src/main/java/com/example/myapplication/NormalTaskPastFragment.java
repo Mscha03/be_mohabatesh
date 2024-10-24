@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.database.GetAllTask;
-import com.example.myapplication.database.TaskDataBase.DeadLinedTaskDB;
+import com.example.myapplication.database.TaskDataBase.SpecialDayTaskDB;
 import com.example.myapplication.recadapter.TaskAdapter;
 
 
@@ -21,7 +21,7 @@ public class NormalTaskPastFragment extends Fragment {
     private static final String TAG = "NormalTaskActivity:PastFragment";
 
     RecyclerView pastRecyclerView;
-    DeadLinedTaskDB db;
+    SpecialDayTaskDB db;
 
 
     @Override
@@ -35,7 +35,7 @@ public class NormalTaskPastFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        db = new DeadLinedTaskDB(getActivity());
+        db = new SpecialDayTaskDB(getActivity());
         pastRecyclerView = view.findViewById(R.id.past_recycler_view);
         TaskAdapter taskAdapter = new TaskAdapter(GetAllTask.pastTasks(getActivity()), db);
         pastRecyclerView.setHasFixedSize(true);

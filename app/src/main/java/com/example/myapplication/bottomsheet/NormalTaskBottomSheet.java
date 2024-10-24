@@ -17,7 +17,7 @@ import androidx.annotation.Nullable;
 
 import com.example.myapplication.NormalTaskActivity;
 import com.example.myapplication.R;
-import com.example.myapplication.database.TaskDataBase.DeadLinedTaskDB;
+import com.example.myapplication.database.TaskDataBase.SpecialDayTaskDB;
 import com.example.myapplication.time.ShamsiName;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
@@ -28,7 +28,7 @@ import ir.hamsaa.persiandatepicker.api.PersianPickerListener;
 public class NormalTaskBottomSheet extends BottomSheetDialogFragment {
     private static final String TAG = "NormalTaskBottomSheet";
 
-    private DeadLinedTaskDB db;
+    private SpecialDayTaskDB db;
     private EditText editTitle, editDescription;
     private TextView dateText;
     private Button edit, dateButton;
@@ -103,7 +103,7 @@ public class NormalTaskBottomSheet extends BottomSheetDialogFragment {
         });
 
 
-        db = new DeadLinedTaskDB(v.getContext());
+        db = new SpecialDayTaskDB(v.getContext());
         Log.d(TAG, "onCreateView: database initialized");
 
         // update values

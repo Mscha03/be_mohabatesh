@@ -8,7 +8,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
-public class DeadLinedTaskDB extends SQLiteOpenHelper {
+import com.example.myapplication.model.tasks.SpecialDayTask;
+
+public class SpecialDayTaskDB extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "task_db";
     private static final int DB_VERSION = 1;
@@ -21,7 +23,7 @@ public class DeadLinedTaskDB extends SQLiteOpenHelper {
     private static final String DEADMONTH = "deadmonth";
     private static final String DEADYEAR = "deadyear";
 
-    public DeadLinedTaskDB(@Nullable Context context) {
+    public SpecialDayTaskDB(@Nullable Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 
@@ -46,17 +48,16 @@ public class DeadLinedTaskDB extends SQLiteOpenHelper {
     }
 
     // Create
-    public void insertRecord(
-            String name, String description,
-            int isDone, int deadDay, int deadMonth, int deadYear) {
+    public void insertRecord(SpecialDayTask specialDay) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(NAME_COL, name);
-        values.put(DESCRIPTION_COL, description);
-        values.put(ISDONE_COL, isDone);
-        values.put(DEADDAY, deadDay);
-        values.put(DEADMONTH, deadMonth);
-        values.put(DEADYEAR, deadYear);
+
+        values.put(NAME_COL, specialDay.getTitle());
+        values.put(DESCRIPTION_COL, specialDay.getDescription());
+        values.put(ISDONE_COL, specialDay.getIsDone());
+        values.put(DEADDAY, specialDay.getDeadDate().getDay());
+        values.put(DEADMONTH, specialDay.getDeadDate().getMonth());
+        values.put(DEADYEAR, specialDay.getDeadDate().getYear());
         db.insert(TABLE_NAME, null, values);
     }
 
