@@ -2,9 +2,7 @@ package com.example.myapplication;
 
 import static com.example.myapplication.interfaces.drawerNavigation.drawerNavigationHandler;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -20,14 +18,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.myapplication.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
-public class NormalTaskActivity extends AppCompatActivity {
+public class SpecialDayActivity extends AppCompatActivity {
 
-    private static final String TAG = "NormalTaskActivity";
+    private static final String TAG = "SpecialDayActivity";
 
     TextView appName;
 
@@ -42,8 +38,8 @@ public class NormalTaskActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_normal_task);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.normal_task_activity), (v, insets) -> {
+        setContentView(R.layout.activity_special_day_task);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.special_day_task_activity), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
@@ -81,7 +77,7 @@ public class NormalTaskActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(item -> {
 
             drawerNavigationHandler(
-                    item.getItemId(), NormalTaskActivity.this, R.id.main_nav_normal_task, drawerLayout );
+                    item.getItemId(), SpecialDayActivity.this, R.id.main_nav_special_day_task, drawerLayout );
 
             return false;
         });
@@ -93,32 +89,23 @@ public class NormalTaskActivity extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.normal_bottom_today);
         // Set the initial fragment
         if (savedInstanceState == null) {
-            loadFragment(new NormalTaskTodayFragment());
+            loadFragment(new SpecialDayTodayFragment());
         }
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
                     Fragment selectedFragment = null;
                     int itemId = item.getItemId();
                     if (itemId == R.id.normal_bottom_today) {
-                        selectedFragment = new NormalTaskTodayFragment();
+                        selectedFragment = new SpecialDayTodayFragment();
                     } else if (itemId == R.id.normal_bottom_future) {
-                        selectedFragment = new NormalTaskFutureFragment();
+                        selectedFragment = new SpecialDayFutureFragment();
                     } else if (itemId == R.id.normal_bottom_past) {
-                        selectedFragment = new NormalTaskPastFragment();
+                        selectedFragment = new SpecialDayPastFragment();
                     }
                     return loadFragment(selectedFragment);
                 }
         );
 
-
-        //fab
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(v -> {
-            Log.d(TAG, "onClick: FAB clicked, navigating to AddPeriodTask");
-            Intent intent = new Intent(this, AddNormalTask.class);
-            startActivity(intent);
-            this.finish();
-        });
 
     }
 

@@ -13,7 +13,7 @@ import android.widget.CheckBox;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myapplication.NormalTaskDetailActivity;
+import com.example.myapplication.SpecialDayDetailActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.database.TaskDataBase.SpecialDayTaskDB;
 import com.example.myapplication.model.tasks.SpecialDayTask;
@@ -68,10 +68,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
         holder.itemView.setOnClickListener(v -> {
             Log.d(TAG, "onClick: item clicked with ID " + model.getId());
-            Intent intent = new Intent(v.getContext(), NormalTaskDetailActivity.class);
+            Intent intent = new Intent(v.getContext(), SpecialDayDetailActivity.class);
             intent.putExtra("task", model.getId());
             v.getContext().startActivity(intent);
-            Log.d(TAG, "onClick: started PeriodicTaskDetailActivity activity for ID " + model.getId());
+            Log.d(TAG, "onClick: started HabitsDetailActivity activity for ID " + model.getId());
         });
     }
 

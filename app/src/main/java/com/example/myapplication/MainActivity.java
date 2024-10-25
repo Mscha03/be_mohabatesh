@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import static com.example.myapplication.interfaces.drawerNavigation.drawerNavigationHandler;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageButton;
@@ -20,7 +21,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ali.uneversaldatetools.date.JalaliDateTime;
-import com.example.myapplication.bottomsheet.MainBottomSheet;
 import com.example.myapplication.database.GetUndoneTask;
 import com.example.myapplication.database.TaskDataBase.HabitDB;
 import com.example.myapplication.database.TaskDataBase.SimpleTaskDB;
@@ -144,9 +144,9 @@ public class MainActivity extends AppCompatActivity {
         //fab
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(v -> {
-            MainBottomSheet mainBottomSheet = new MainBottomSheet();
-            mainBottomSheet.show(getSupportFragmentManager(), "mainBottomSheet");
-            Log.d(TAG, "onClick: showing TaskListBottomSheet C");
+            Intent intent = new Intent(this, AddTask.class);
+            startActivity(intent);
+            Log.d(TAG, "onClick: showing ADD TASK Activity");
         });
 
 

@@ -98,13 +98,6 @@ public class SimpleTaskActivity extends AppCompatActivity {
         dailyRecyclerView.setAdapter(dailyAdapter);
         Log.d(TAG, "onCreate: daily tasks recycler view set up");
 
-        //fab
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(v -> {
-            Log.d(TAG, "onClick: FAB clicked, navigating to AddPeriodTask");
-            Intent intent = new Intent(this, AddSimpleTask.class);
-            startActivity(intent);
-            this.finish();
-        });
+
     }
 }

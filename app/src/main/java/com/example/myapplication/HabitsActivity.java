@@ -27,7 +27,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 
-public class PeriodicTasksActivity extends AppCompatActivity {
+public class HabitsActivity extends AppCompatActivity {
 
     private static final String TAG = "PeriodicTaskActivity";
 
@@ -83,7 +83,7 @@ public class PeriodicTasksActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(item -> {
 
             drawerNavigationHandler(
-                    item.getItemId(), PeriodicTasksActivity.this, R.id.main_nav_periodic_task, drawerLayout );
+                    item.getItemId(), HabitsActivity.this, R.id.main_nav_habits, drawerLayout );
 
             return false;
         });
@@ -112,14 +112,7 @@ public class PeriodicTasksActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: monthly tasks recycler view set up");
 
 
-        //fab
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(v -> {
-            Log.d(TAG, "onClick: FAB clicked, navigating to AddPeriodTask");
-            Intent intent = new Intent(this, AddPeriodTask.class);
-            startActivity(intent);
-            this.finish();
-        });
+
 
     }
 

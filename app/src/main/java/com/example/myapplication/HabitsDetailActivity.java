@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,19 +16,22 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
-import com.example.myapplication.bottomsheet.NormalTaskBottomSheet;
-import com.example.myapplication.database.TaskDataBase.SpecialDayTaskDB;
-import com.example.myapplication.time.ShamsiName;
+import com.example.myapplication.bottomsheet.HabitsBottomSheet;
+import com.example.myapplication.chartadapter.HistroyChartAdapter;
+import com.example.myapplication.database.TaskDataBase.HabitDB;
+import com.example.myapplication.model.Period;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Description;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-public class NormalTaskDetailActivity extends AppCompatActivity {
+public class HabitsDetailActivity extends AppCompatActivity {
 
-    private static final String TAG = "NormalTaskDetailActivity";
+    private static final String TAG = "HabitsDetailActivity";
 
     private ImageButton edit, delete;
-    private TextView title, description, date;
-    private LinearLayout layout;
-    private SpecialDayTaskDB db;
+    private TextView title, description, period;
+    private HabitDB db;
+    private PieChart pieChart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,49 +39,60 @@ public class NormalTaskDetailActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: started");
 
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_normal_task_detail);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        setContentView(R.layout.activity_periodic_task_detail);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.edit_delete_layout), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
         // initials
-        layout = findViewById(R.id.main);
         edit = findViewById(R.id.edit_button_edit_activity);
         delete = findViewById(R.id.delete_button_edit_activity);
         title = findViewById(R.id.task_title_edit_activity);
         description = findViewById(R.id.task_description_edit_activity);
-        date = findViewById(R.id.date_text_edit_activity);
-        db = new SpecialDayTaskDB(this);
+        period = findViewById(R.id.period_text_edit_activity);
+        db = new HabitDB(this);
         Log.d(TAG, "onCreate: views initialized");
 
         int id = getIntent().getIntExtra("task", 0);
         Log.d(TAG, "onCreate: received task ID: " + id);
 
         Cursor cursor = db.getRecord(id);
-        String[] detail = new String[7];
-        detail[0] = String.valueOf(id);
-        detail[1] = cursor.getString(1);
-        detail[2] = cursor.getString(2);
-        detail[3] = String.valueOf(cursor.getInt(4));
-        detail[4] = String.valueOf(cursor.getInt(5));
-        detail[5] = String.valueOf(cursor.getInt(6));
+        String[] detail = new String[4];
+        detail[0] = cursor.getString(1);
+        detail[1] = cursor.getString(2);
+        detail[2] = cursor.getString(3);
+        detail[3] = String.valueOf(id);
 
-        Log.d(TAG, "onCreate: received data:" +
-                " id:" + detail[0] +
-                " title:" + detail[1] +
-                " description:" + detail[2] +
-                " dead day:" + detail[3] +
-                " dead month:" + detail[4] +
-                " dead year:" + detail[5]);
+        title.setText(detail[0]);
+        description.setText(detail[1]);
+        String period = "";
+        if (detail[2].equals(Period.daily.toString())){
+            period = getString(R.string.period_daily);
+        }else if (detail[2].equals(Period.weekly.toString())){
+            period = getString(R.string.period_weekly);
+        }else if (detail[2].equals(Period.monthly.toString())){
+            period = getString(R.string.period_monthly);
+        }
+        this.period.setText(period);
+        Log.d(TAG, "onCreate: task details set - Title: " + detail[0] + ", Description: " + detail[1] + ", Period: " + detail[2]);
 
-        title.setText(detail[1]);
-        description.setText(detail[2]);
-        String s = detail[3] + " " + ShamsiName.getMonthName(Integer.parseInt(detail[4]),this) + " " + detail[5];
-        date.setText(s);
 
-        Log.d(TAG, "onCreate: task details set");
+        // chart
+        HistroyChartAdapter histroyChartAdapter = new HistroyChartAdapter();
+        pieChart = findViewById(R.id.detail_pie_chart);
+        pieChart.notifyDataSetChanged();
+        pieChart.setData(null);
+        pieChart.setData(histroyChartAdapter.pieChartEntry(this, id));
+        pieChart.notifyDataSetChanged();
+
+
+        Description description = new Description();
+//        description.setText(getString(R.string.history_chart_description));
+        description.setText(" ");
+        pieChart.setDescription(description);
+
 
         delete.setOnClickListener(v -> {
             Log.d(TAG, "onClick: delete button clicked");
@@ -92,7 +105,7 @@ public class NormalTaskDetailActivity extends AppCompatActivity {
                         Toast.makeText(this, R.string.delete_task_toast, Toast.LENGTH_SHORT).show();
                         Log.i(TAG, "onClick: task deleted");
 
-                        Intent intent = new Intent(this, NormalTaskActivity.class);
+                        Intent intent = new Intent(this, HabitsActivity.class);
                         startActivity(intent);
                         finish();
                         Log.d(TAG, "onClick: navigating to PeriodicTaskActivity");
@@ -110,22 +123,20 @@ public class NormalTaskDetailActivity extends AppCompatActivity {
             Fragment fragment = new Fragment();
             fragment.setArguments(bundle);
 
-            NormalTaskBottomSheet normalTaskBottomSheet = new NormalTaskBottomSheet();
-            normalTaskBottomSheet.setArguments(bundle);
-            normalTaskBottomSheet.show(getSupportFragmentManager(), "ModalBottomSheet");
-            Log.d(TAG, "onClick: showing PeriodTaskBottomSheet");
-
+            HabitsBottomSheet habitsBottomSheet = new HabitsBottomSheet();
+            habitsBottomSheet.setArguments(bundle);
+            habitsBottomSheet.show(getSupportFragmentManager(), "ModalBottomSheet");
+            Log.d(TAG, "onClick: showing HabitsBottomSheet");
         });
 
         getOnBackPressedDispatcher().addCallback(new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
                 Log.d(TAG, "handleOnBackPressed: back pressed, navigating to PeriodicTaskActivity");
-                Intent intent = new Intent(NormalTaskDetailActivity.this, NormalTaskActivity.class);
+                Intent intent = new Intent(HabitsDetailActivity.this, HabitsActivity.class);
                 startActivity(intent);
                 finish();
             }
         });
-
     }
 }

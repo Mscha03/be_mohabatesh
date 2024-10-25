@@ -20,7 +20,7 @@ import com.example.myapplication.database.TaskDataBase.SimpleTaskDB;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 public class SimpleTaskBottomSheet extends BottomSheetDialogFragment {
-    private static final String TAG = "NormalTaskBottomSheet";
+    private static final String TAG = "SpecialDayBottomSheet";
 
     private SimpleTaskDB db;
     private EditText editTitle, editDescription;

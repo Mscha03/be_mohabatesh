@@ -70,7 +70,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
             Intent intent = new Intent(v.getContext(), SimpleTaskDetailActivity.class);
             intent.putExtra("task", model.getId());
             v.getContext().startActivity(intent);
-            Log.d(TAG, "onClick: started PeriodicTaskDetailActivity activity for ID " + model.getId());
+            Log.d(TAG, "onClick: started HabitsDetailActivity activity for ID " + model.getId());
         });
     }
 

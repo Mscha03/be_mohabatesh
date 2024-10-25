@@ -15,6 +15,9 @@ android {
         versionName = "4.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary = true
+        }
     }
 
     buildTypes {
@@ -40,6 +43,11 @@ android {
     kotlinOptions{
         jvmTarget = "1.8"
     }
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
 }
 
 dependencies {
@@ -51,6 +59,9 @@ dependencies {
     implementation ("androidx.compose.ui:ui-graphics")
     implementation(libs.navigation.fragment.ktx)
     implementation(libs.navigation.ui.ktx)
+    implementation(libs.lifecycle.runtime.ktx)
+    androidTestImplementation(platform(libs.compose.bom))
+    androidTestImplementation(libs.ui.test.junit4)
     debugImplementation("androidx.compose.ui:ui-tooling")
     implementation ("androidx.compose.ui:ui-tooling-preview")
 
@@ -71,4 +82,5 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    debugImplementation(libs.ui.test.manifest)
 }

@@ -171,6 +171,7 @@ fun AddTaskMain(context: Context) {
 
                 // Show field depends on Task Type
                 when (selectedTaskType) {
+
                     TaskType.SIMPLE -> {
                         // No field
                     }
@@ -270,7 +271,9 @@ fun AddTaskMain(context: Context) {
                                 Toast.makeText(context, "Task Added", Toast.LENGTH_SHORT).show()
                             }
 
-                            TaskType.HABIT -> TODO()
+                            TaskType.HABIT -> {
+
+                            }
                         }
                     }
                 ) { Text(text = "Add Task") }
@@ -418,7 +421,7 @@ fun MonthDaySelector(
 }
 
 @Composable
-fun TitleScreenTextFiled() {
+private fun TitleScreenTextFiled() {
     // Title
     Text(
         modifier = Modifier.padding(10.dp),

@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ali.uneversaldatetools.date.JalaliDateTime;
-import com.example.myapplication.PeriodicTaskDetailActivity;
+import com.example.myapplication.HabitsDetailActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.customwidget.MultiStateCheckBox;
 import com.example.myapplication.database.TaskDataBase.HabitDB;
@@ -89,10 +89,10 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.ViewHolder
 
         holder.itemView.setOnClickListener(v -> {
             Log.d(TAG, "onClick: item clicked with ID " + model.getId());
-            Intent intent = new Intent(v.getContext(), PeriodicTaskDetailActivity.class);
+            Intent intent = new Intent(v.getContext(), HabitsDetailActivity.class);
             intent.putExtra("task", model.getId());
             v.getContext().startActivity(intent);
-            Log.d(TAG, "onClick: started PeriodicTaskDetailActivity activity for ID " + model.getId());
+            Log.d(TAG, "onClick: started HabitsDetailActivity activity for ID " + model.getId());
         });
     }
 

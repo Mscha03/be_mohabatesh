@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import com.example.myapplication.NormalTaskActivity;
+import com.example.myapplication.SpecialDayActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.database.TaskDataBase.SpecialDayTaskDB;
 import com.example.myapplication.time.ShamsiName;
@@ -25,8 +25,8 @@ import ir.hamsaa.persiandatepicker.PersianDatePickerDialog;
 import ir.hamsaa.persiandatepicker.api.PersianPickerDate;
 import ir.hamsaa.persiandatepicker.api.PersianPickerListener;
 
-public class NormalTaskBottomSheet extends BottomSheetDialogFragment {
-    private static final String TAG = "NormalTaskBottomSheet";
+public class SpecialDayBottomSheet extends BottomSheetDialogFragment {
+    private static final String TAG = "SpecialDayBottomSheet";
 
     private SpecialDayTaskDB db;
     private EditText editTitle, editDescription;
@@ -129,7 +129,7 @@ public class NormalTaskBottomSheet extends BottomSheetDialogFragment {
             Log.i(TAG, "onClick: edit successful");
 
 
-            Intent intent = new Intent(v.getContext(), NormalTaskActivity.class);
+            Intent intent = new Intent(v.getContext(), SpecialDayActivity.class);
             startActivity(intent);
             Log.d(TAG, "onClick: navigating to PeriodicTaskActivity");
 

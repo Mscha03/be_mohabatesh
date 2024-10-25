@@ -17,8 +17,8 @@ import com.example.myapplication.database.TaskDataBase.SpecialDayTaskDB;
 import com.example.myapplication.recadapter.TaskAdapter;
 
 
-public class NormalTaskPastFragment extends Fragment {
-    private static final String TAG = "NormalTaskActivity:PastFragment";
+public class SpecialDayPastFragment extends Fragment {
+    private static final String TAG = "SpecialDayActivity:PastFragment";
 
     RecyclerView pastRecyclerView;
     SpecialDayTaskDB db;

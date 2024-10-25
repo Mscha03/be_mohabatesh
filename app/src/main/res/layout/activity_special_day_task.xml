@@ -2,10 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/normal_task_activity"
+    android:id="@+id/special_day_task_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NormalTaskActivity">
+    tools:context=".SpecialDayActivity">
 
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/normal_task_nav_drawer"

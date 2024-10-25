@@ -16,15 +16,15 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import com.example.myapplication.model.Period;
-import com.example.myapplication.PeriodicTasksActivity;
+import com.example.myapplication.HabitsActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.database.TaskDataBase.HabitDB;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 
-public class PeriodTaskBottomSheet extends BottomSheetDialogFragment {
+public class HabitsBottomSheet extends BottomSheetDialogFragment {
 
-    private static final String TAG = "PeriodTaskBottomSheet";
+    private static final String TAG = "HabitsBottomSheet";
 
 
     private HabitDB db;
@@ -114,7 +114,7 @@ public class PeriodTaskBottomSheet extends BottomSheetDialogFragment {
             Log.i(TAG, "onClick: edit successful");
 
 
-            Intent intent = new Intent(v.getContext(), PeriodicTasksActivity.class);
+            Intent intent = new Intent(v.getContext(), HabitsActivity.class);
             startActivity(intent);
             Log.d(TAG, "onClick: navigating to PeriodicTaskActivity");
 

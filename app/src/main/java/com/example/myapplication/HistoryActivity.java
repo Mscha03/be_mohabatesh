@@ -116,15 +116,6 @@ public class HistoryActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: monthly tasks recycler view set up");
 
 
-        //fab
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(v -> {
-            Log.d(TAG, "onClick: FAB clicked, navigating to AddPeriodTask");
-            Intent intent = new Intent(this, AddPeriodTask.class);
-            startActivity(intent);
-            this.finish();
-        });
-
     }
 
 }

@@ -1,6 +1,5 @@
 package com.example.myapplication;
 
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,17 +17,17 @@ import com.example.myapplication.database.TaskDataBase.SpecialDayTaskDB;
 import com.example.myapplication.recadapter.TaskAdapter;
 
 
-public class NormalTaskTodayFragment extends Fragment {
-    private static final String TAG = "NormalTaskActivity:TodayFragment";
+public class SpecialDayFutureFragment extends Fragment {
+    private static final String TAG = "SpecialDayActivity:FutureFragment";
 
-    RecyclerView todayRecyclerView;
+    RecyclerView futureRecyclerView;
     SpecialDayTaskDB db;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_normal_task_today, container, false);
+        return inflater.inflate(R.layout.fragment_normal_task_future, container, false);
     }
 
     @Override
@@ -36,15 +35,13 @@ public class NormalTaskTodayFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         db = new SpecialDayTaskDB(getActivity());
-        todayRecyclerView = view.findViewById(R.id.today_recycler_view);
-        TaskAdapter taskAdapter = new TaskAdapter(GetAllTask.todayTasks(getActivity()), db);
-        todayRecyclerView.setHasFixedSize(true);
-        todayRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        todayRecyclerView.setAdapter(taskAdapter);
+        futureRecyclerView = view.findViewById(R.id.future_recycler_view);
+        TaskAdapter taskAdapter = new TaskAdapter(GetAllTask.futureTasks(getActivity()), db);
+        futureRecyclerView.setHasFixedSize(true);
+        futureRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        futureRecyclerView.setAdapter(taskAdapter);
         Log.d(TAG, "onViewCreated: daily tasks recycler view set up");
 
 
-
     }
-
 }

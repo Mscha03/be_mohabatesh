@@ -159,6 +159,8 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+    <string name="title_activity_dead_lined_task">DeadLinedTaskActivity</string>
+    <string name="main_nav_special_day_task_title">Special Day Task</string>
 
 
 </resources>

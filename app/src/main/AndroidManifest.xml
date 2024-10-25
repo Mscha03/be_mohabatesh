@@ -12,9 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
-        <activity
-            android:name=".AddTask"
-            android:exported="false" />
 
         <service
             android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
@@ -26,53 +23,44 @@
         </service>
 
         <activity
-            android:name=".SettingActivity"
+            android:name=".DeadLinedTaskActivity"
             android:exported="false"
-            android:noHistory="true" />
+            android:label="@string/title_activity_dead_lined_task"
+            android:theme="@style/Theme.MyApplication" />
+        <activity
+            android:name=".AddTask"
+            android:exported="false" />
+        <activity
+            android:name=".SettingActivity"
+            android:exported="false" />
         <activity
             android:name=".HistoryDetailActivity"
-            android:exported="false"
-            android:noHistory="true" />
+            android:exported="false" />
         <activity
             android:name=".SimpleTaskDetailActivity"
-            android:exported="false"
-            android:noHistory="true" />
-        <activity
-            android:name=".AddSimpleTask"
-            android:exported="false"
-            android:noHistory="true" />
+            android:exported="false" />
         <activity
             android:name=".SimpleTaskActivity"
-            android:exported="false"
-            android:noHistory="true" />
+            android:exported="false" />
         <activity
-            android:name=".NormalTaskDetailActivity"
-            android:exported="false"
-            android:noHistory="true" />
-        <activity
-            android:name=".AddNormalTask"
-            android:exported="false"
-            android:noHistory="true" />
+            android:name=".SpecialDayDetailActivity"
+            android:exported="false" />
         <activity
             android:name=".ContactUsActivity"
-            android:exported="false"
-            android:noHistory="true" />
+            android:exported="false" />
         <activity
             android:name=".AboutUsActivity"
-            android:exported="false"
-            android:noHistory="true" />
+            android:exported="false" />
         <activity
             android:name=".HistoryActivity"
-            android:exported="false"
-            android:noHistory="true" />
+            android:exported="false" />
         <activity
-            android:name=".NormalTaskActivity"
-            android:exported="false"
-            android:noHistory="true" />
+            android:name=".SpecialDayActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:noHistory="true">
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -80,17 +68,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".PeriodicTaskDetailActivity"
+            android:name=".HabitsDetailActivity"
             android:exported="false"
-            android:noHistory="true" />
+             />
         <activity
-            android:name=".AddPeriodTask"
+            android:name=".HabitsActivity"
             android:exported="false"
-            android:noHistory="true" />
-        <activity
-            android:name=".PeriodicTasksActivity"
-            android:exported="false"
-            android:noHistory="true" />
+             />
     </application>
 
 </manifest>

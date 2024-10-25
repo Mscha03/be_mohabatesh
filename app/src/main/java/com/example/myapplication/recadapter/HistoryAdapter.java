@@ -49,7 +49,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
             intent.putExtra("taskId", model.getId());
             intent.putExtra("taskName", model.getTitle());
             v.getContext().startActivity(intent);
-            Log.d(TAG, "onClick: started PeriodicTaskDetailActivity activity for ID " + model.getId());
+            Log.d(TAG, "onClick: started HabitsDetailActivity activity for ID " + model.getId());
         });
     }
 
