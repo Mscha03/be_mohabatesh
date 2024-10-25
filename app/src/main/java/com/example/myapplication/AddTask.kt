@@ -80,8 +80,10 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.ali.uneversaldatetools.date.JalaliDateTime
 import com.example.myapplication.converter.BoolInt
+import com.example.myapplication.database.TaskDataBase.DeadLinedTaskDB
 import com.example.myapplication.database.TaskDataBase.SimpleTaskDB
 import com.example.myapplication.database.TaskDataBase.SpecialDayTaskDB
+import com.example.myapplication.model.tasks.DeadLinedTask
 import com.example.myapplication.model.tasks.SimpleTask
 import com.example.myapplication.model.tasks.SpecialDayTask
 import com.example.myapplication.model.tasks.TaskType
@@ -91,6 +93,7 @@ import com.gmail.hamedvakhide.compose_jalali_datepicker.JalaliDatePickerDialog
 
 var simpleDB: SimpleTaskDB? = null
 var specialDB: SpecialDayTaskDB? = null
+var deadLinedDB: DeadLinedTaskDB? = null
 
 class AddTask : AppCompatActivity() {
 
@@ -106,6 +109,7 @@ class AddTask : AppCompatActivity() {
 
         simpleDB = SimpleTaskDB(this)
         specialDB = SpecialDayTaskDB(this)
+        deadLinedDB = DeadLinedTaskDB(this)
 
         val composeView = findViewById<ComposeView>(R.id.composeView)
         composeView.setContent {
@@ -177,8 +181,19 @@ fun AddTaskMain(context: Context) {
 
                     TaskType.DEADLINED -> {
                         Column(modifier = Modifier.padding()) {
+                            val haveSubTask = remember { mutableStateOf(false) }
+
                             deadlinedDay = selectDeadLine()
-                            subTasksOfDeadlinedTask = addSubTaskForDeadlinedTask()
+
+                            Row (verticalAlignment = Alignment.CenterVertically){
+                                Checkbox(
+                                    checked = haveSubTask.value,
+                                    onCheckedChange = { haveSubTask.value = it })
+                                Text(text = "Have Sub Tasks")
+                            }
+                            if (haveSubTask.value) {
+                                subTasksOfDeadlinedTask = addSubTaskForDeadlinedTask()
+                            }
                         }
                     }
 
@@ -244,7 +259,15 @@ fun AddTaskMain(context: Context) {
                             }
 
                             TaskType.DEADLINED -> {
-
+                                addDeadLinedTask(
+                                    taskTitle,
+                                    taskDescription,
+                                    deadlinedDay!!,
+                                    subTasksOfDeadlinedTask
+                                )
+                                val intent = Intent(context, MainActivity::class.java)
+                                context.startActivity(intent)
+                                Toast.makeText(context, "Task Added", Toast.LENGTH_SHORT).show()
                             }
 
                             TaskType.HABIT -> TODO()
@@ -348,7 +371,6 @@ fun MonthlySelector() {
     }
 }
 
-
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun MonthDaySelector(
@@ -356,39 +378,7 @@ fun MonthDaySelector(
     onDaySelected: (Int) -> Unit,  // تابعی برای زمانی که کاربر یک روز را انتخاب یا حذف کند
 ) {
     // آرایه‌ای از روزهای هفته
-    val daysOfWeek = listOf(
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
-        11,
-        12,
-        13,
-        14,
-        15,
-        16,
-        17,
-        18,
-        19,
-        20,
-        21,
-        22,
-        23,
-        24,
-        25,
-        26,
-        27,
-        28,
-        29,
-        30,
-        31
-    )
+    val daysOfWeek = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31)
 
     FlowRow(
         modifier = Modifier.padding(vertical = 16.dp),
@@ -426,7 +416,6 @@ fun MonthDaySelector(
         }
     }
 }
-
 
 @Composable
 fun TitleScreenTextFiled() {
@@ -654,7 +643,6 @@ fun selectDeadLine(): JalaliDateTime {
     return specialDay
 }
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun selectHabitType(): HabitType {
@@ -710,8 +698,8 @@ fun addSimpleTask(title: String, description: String) {
 
 
 fun addSpecialTask(title: String, description: String, deadLine: JalaliDateTime) {
-    val deadlinedTask = SpecialDayTask(title, description, deadLine)
-    specialDB!!.insertRecord(deadlinedTask)
+    val specialDayTask = SpecialDayTask(title, description, deadLine)
+    specialDB!!.insertRecord(specialDayTask)
 }
 
 fun addDeadLinedTask(
@@ -720,5 +708,12 @@ fun addDeadLinedTask(
     deadLine: JalaliDateTime,
     subTasks: ArrayList<SimpleTask>){
 
+    val deadLinedTask = DeadLinedTask(title, description, deadLine)
+    deadLinedTask.subTask = subTasks
 
+    val taskId = deadLinedDB!!.insertRecord(deadLinedTask)
+
+    subTasks.forEach {
+        deadLinedDB!!.insertSubTask(it, taskId.toInt())
+    }
 }

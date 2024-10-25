@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 public class HabitDB extends SQLiteOpenHelper {
@@ -38,7 +40,7 @@ public class HabitDB extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onCreate(SQLiteDatabase db) {
+    public void onCreate(@NonNull SQLiteDatabase db) {
         String createRoutineTable =
                 "CREATE TABLE " + ROUTINE_TABLE_NAME + " ( "
                         + ROUTINE_ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -67,7 +69,7 @@ public class HabitDB extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    public void onUpgrade(@NonNull SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + ROUTINE_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + DAYS_TABLE_NAME);
         onCreate(db);
