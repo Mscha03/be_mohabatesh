@@ -2,7 +2,6 @@ package com.example.myapplication;
 
 import static com.example.myapplication.interfaces.drawerNavigation.drawerNavigationHandler;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageButton;
@@ -20,9 +19,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.database.GetAllTask;
-import com.example.myapplication.database.TaskDataBase.HabitDB;
+import com.example.myapplication.database.taskDataBase.habits.DailyHabitDB;
 import com.example.myapplication.recadapter.HistoryAdapter;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 
@@ -32,7 +30,7 @@ public class HistoryActivity extends AppCompatActivity {
 
     private static final String TAG = "PeriodicTaskActivity";
 
-    public static HabitDB db;
+    public static DailyHabitDB db;
 
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -89,7 +87,7 @@ public class HistoryActivity extends AppCompatActivity {
             return false;
         });
 
-        db = new HabitDB(this);
+        db = new DailyHabitDB(this);
 
         RecyclerView dailyRecyclerView = findViewById(R.id.today_recycler_view);
         GridLayoutManager dailyGridLayoutManager = new GridLayoutManager(this, 3);

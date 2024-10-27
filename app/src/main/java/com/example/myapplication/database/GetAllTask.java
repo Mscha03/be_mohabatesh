@@ -7,9 +7,9 @@ import android.widget.CheckBox;
 
 import com.ali.uneversaldatetools.date.JalaliDateTime;
 import com.example.myapplication.converter.BoolInt;
-import com.example.myapplication.database.TaskDataBase.HabitDB;
-import com.example.myapplication.database.TaskDataBase.SimpleTaskDB;
-import com.example.myapplication.database.TaskDataBase.SpecialDayTaskDB;
+import com.example.myapplication.database.taskDataBase.habits.DailyHabitDB;
+import com.example.myapplication.database.taskDataBase.SimpleTaskDB;
+import com.example.myapplication.database.taskDataBase.SpecialDayTaskDB;
 import com.example.myapplication.model.Period;
 import com.example.myapplication.model.tasks.SpecialDayTask;
 import com.example.myapplication.model.tasks.habits.Habit;
@@ -34,7 +34,7 @@ public class GetAllTask implements AddInformationForHistory{
     static SpecialDayTask[] pastModels;
 
     // periodic task
-    static HabitDB habitDB;
+    static DailyHabitDB dailyHabitDB;
     static ArrayList<Habit> dailyTasks;
     static ArrayList<Habit> weeklyTasks;
     static ArrayList<Habit> monthlyTasks;
@@ -160,14 +160,14 @@ public class GetAllTask implements AddInformationForHistory{
     }
 
     private static void getPeriodicTasks(Context context) {
-        habitDB = new HabitDB(context);
+        dailyHabitDB = new DailyHabitDB(context);
         Log.d(TAG, "onCreate: database initialized");
 
         dailyTasks = new ArrayList<>();
         weeklyTasks = new ArrayList<>();
         monthlyTasks = new ArrayList<>();
 
-        Cursor cursor = habitDB.getAllRecords(HabitDB.ROUTINE_TABLE_NAME);
+        Cursor cursor = dailyHabitDB.getAllRecords(DailyHabitDB.ROUTINE_TABLE_NAME);
 
         if (cursor.moveToFirst()) {
             Log.d(TAG, "onCreate: fetching tasks from database");
@@ -190,7 +190,7 @@ public class GetAllTask implements AddInformationForHistory{
                 int year = jalaliDateTime.getYear();
 
                 if (dbYear != year){
-                    AddInformationForHistory.addDays(dbPeriod, id, habitDB);
+                    AddInformationForHistory.addDays(dbPeriod, id, dailyHabitDB);
                 }
 
                 switch (dbPeriod) {
@@ -202,8 +202,7 @@ public class GetAllTask implements AddInformationForHistory{
                                         title,
                                         description,
                                         PeriodicCheckBoxReset.checkDay(id, day, week, month,year, context),
-                                        new WithWeekJalaliDateTime(year, month,week, day),
-                                        Period.daily
+                                        new WithWeekJalaliDateTime(year, month,week, day)
                                         ));
                         break;
 
@@ -216,8 +215,7 @@ public class GetAllTask implements AddInformationForHistory{
                                         title,
                                         description,
                                         PeriodicCheckBoxReset.checkDay(id, day, week, month,year, context),
-                                        new WithWeekJalaliDateTime(year, month,week, day),
-                                        Period.weekly
+                                        new WithWeekJalaliDateTime(year, month,week, day)
                                 ));      break;
 
                     case "monthly":
@@ -229,8 +227,7 @@ public class GetAllTask implements AddInformationForHistory{
                                         title,
                                         description,
                                         PeriodicCheckBoxReset.checkDay(id, day, week, month,year, context),
-                                        new WithWeekJalaliDateTime(year, month,week, day),
-                                        Period.monthly
+                                        new WithWeekJalaliDateTime(year, month,week, day)
                                 ));
                         break;
                     default:

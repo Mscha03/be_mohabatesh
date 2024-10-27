@@ -5,29 +5,31 @@ import androidx.annotation.NonNull;
 import com.example.myapplication.model.Period;
 import com.example.myapplication.time.WithWeekJalaliDateTime;
 
+import java.util.ArrayList;
+
 public class MonthlyWeek extends Habit{
-    int dayOfMonth;
+    ArrayList<Integer> daysOfMonth;
 
-    public MonthlyWeek(int id, @NonNull String title, @NonNull String description, int isDone, WithWeekJalaliDateTime createDate, int dayOfMonth) {
-        super(id, title, description, isDone, createDate, Period.monthly);
-        this.dayOfMonth = dayOfMonth;
+    public MonthlyWeek(int id, @NonNull String title, @NonNull String description, int isDone, WithWeekJalaliDateTime createDate, ArrayList<Integer> daysOfMonth) {
+        super(id, title, description, isDone, createDate);
+        this.daysOfMonth = daysOfMonth;
     }
 
-    public MonthlyWeek(String title, String description, int isDone, WithWeekJalaliDateTime createDate, int dayOfMonth) {
-        super(title, description, isDone, createDate, Period.monthly);
-        this.dayOfMonth = dayOfMonth;
+    public MonthlyWeek(String title, String description, int isDone, WithWeekJalaliDateTime createDate, ArrayList<Integer> daysOfMonth) {
+        super(title, description, isDone, createDate);
+        this.daysOfMonth = daysOfMonth;
     }
 
-    public MonthlyWeek(String title, String description, WithWeekJalaliDateTime createDate, int dayOfMonth) {
-        super(title, description, createDate, Period.monthly);
-        this.dayOfMonth = dayOfMonth;
+    public MonthlyWeek(String title, String description, WithWeekJalaliDateTime createDate, ArrayList<Integer> daysOfMonth) {
+        super(title, description, createDate);
+        this.daysOfMonth = daysOfMonth;
     }
 
-    public int getDayOfMonth() {
-        return dayOfMonth;
+    public ArrayList<Integer> getDaysOfMonth() {
+        return daysOfMonth;
     }
 
-    public void setDayOfMonth(int dayOfMonth) {
-        this.dayOfMonth = dayOfMonth;
+    public void setDaysOfMonth(ArrayList<Integer> daysOfMonth) {
+        this.daysOfMonth = daysOfMonth;
     }
 }

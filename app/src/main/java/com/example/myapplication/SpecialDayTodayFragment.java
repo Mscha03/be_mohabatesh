@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.database.GetAllTask;
-import com.example.myapplication.database.TaskDataBase.SpecialDayTaskDB;
+import com.example.myapplication.database.taskDataBase.SpecialDayTaskDB;
 import com.example.myapplication.recadapter.TaskAdapter;
 
 

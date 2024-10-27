@@ -5,7 +5,7 @@ import android.database.Cursor;
 import android.util.Log;
 
 import com.ali.uneversaldatetools.date.JalaliDateTime;
-import com.example.myapplication.database.TaskDataBase.HabitDB;
+import com.example.myapplication.database.taskDataBase.habits.DailyHabitDB;
 import com.example.myapplication.model.HabitHistoryItemModel;
 import com.example.myapplication.model.Period;
 
@@ -17,7 +17,7 @@ public class GetDates {
 
     private static final String TAG = "GetDates";
 
-    static HabitDB habitDB;
+    static DailyHabitDB dailyHabitDB;
     static ArrayList<HabitHistoryItemModel> tasksHistory;
     static HabitHistoryItemModel[] taskModels;
 
@@ -49,14 +49,14 @@ public class GetDates {
 
 
     private void getDailyDates(Context context, int routineId) {
-        habitDB = new HabitDB(context);
+        dailyHabitDB = new DailyHabitDB(context);
         Log.d(TAG, "onCreate: database initialized");
 
         tasksHistory = new ArrayList<>();
 
 
-        Cursor routineCursor = habitDB.getRecord(routineId);
-        Cursor dayscursor = habitDB.getHistory(routineId);
+        Cursor routineCursor = dailyHabitDB.getRecord(routineId);
+        Cursor dayscursor = dailyHabitDB.getHistory(routineId);
 
         int tDay = routineCursor.getInt(4);
         int tWeek = routineCursor.getInt(5);

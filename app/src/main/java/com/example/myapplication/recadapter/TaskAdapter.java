@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.SpecialDayDetailActivity;
 import com.example.myapplication.R;
-import com.example.myapplication.database.TaskDataBase.SpecialDayTaskDB;
+import com.example.myapplication.database.taskDataBase.SpecialDayTaskDB;
 import com.example.myapplication.model.tasks.SpecialDayTask;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {

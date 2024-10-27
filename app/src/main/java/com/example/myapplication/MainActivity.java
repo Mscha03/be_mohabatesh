@@ -22,9 +22,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ali.uneversaldatetools.date.JalaliDateTime;
 import com.example.myapplication.database.GetUndoneTask;
-import com.example.myapplication.database.TaskDataBase.HabitDB;
-import com.example.myapplication.database.TaskDataBase.SimpleTaskDB;
-import com.example.myapplication.database.TaskDataBase.SpecialDayTaskDB;
+import com.example.myapplication.database.taskDataBase.habits.DailyHabitDB;
+import com.example.myapplication.database.taskDataBase.SimpleTaskDB;
+import com.example.myapplication.database.taskDataBase.SpecialDayTaskDB;
 import com.example.myapplication.recadapter.PeriodAdapter;
 import com.example.myapplication.recadapter.SimpleAdapter;
 import com.example.myapplication.recadapter.TaskAdapter;
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
     RecyclerView timedRecyclerView, periodicRecyclerView, simpleRecyclerView;
     SpecialDayTaskDB specialDayTaskDB;
-    HabitDB habitDB;
+    DailyHabitDB dailyHabitDB;
     SimpleTaskDB simpleTaskDB;
 
 
@@ -91,30 +91,30 @@ public class MainActivity extends AppCompatActivity {
         drawerToggle.syncState();
         navigationView.bringToFront();
 
-        // load undone work from data base
-        specialDayTaskDB = new SpecialDayTaskDB(this);
-        timedRecyclerView = findViewById(R.id.timed_activities_recycler);
-        TaskAdapter timedAdapter = new TaskAdapter(GetUndoneTask.todayTasks(this), specialDayTaskDB);
-        timedRecyclerView.setHasFixedSize(true);
-        timedRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        timedRecyclerView.setAdapter(timedAdapter);
-        Log.d(TAG, "onViewCreated: timed tasks recycler view set up");
-
-        habitDB = new HabitDB(this);
-        periodicRecyclerView = findViewById(R.id.periodic_activities_recycler);
-        PeriodAdapter periodAdapter = new PeriodAdapter(GetUndoneTask.allRoutineTasks(this), habitDB);
-        periodicRecyclerView.setHasFixedSize(true);
-        periodicRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        periodicRecyclerView.setAdapter(periodAdapter);
-        Log.d(TAG, "onViewCreated: timed tasks recycler view set up");
-
-        simpleTaskDB = new SimpleTaskDB(this);
-        simpleRecyclerView = findViewById(R.id.simple_activities_recycler);
-        SimpleAdapter simpleAdapter = new SimpleAdapter(GetUndoneTask.simpleTasks(this), simpleTaskDB);
-        simpleRecyclerView.setHasFixedSize(true);
-        simpleRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        simpleRecyclerView.setAdapter(simpleAdapter);
-        Log.d(TAG, "onViewCreated: timed tasks recycler view set up");
+//        // load undone work from data base
+//        specialDayTaskDB = new SpecialDayTaskDB(this);
+//        timedRecyclerView = findViewById(R.id.timed_activities_recycler);
+//        TaskAdapter timedAdapter = new TaskAdapter(GetUndoneTask.todayTasks(this), specialDayTaskDB);
+//        timedRecyclerView.setHasFixedSize(true);
+//        timedRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        timedRecyclerView.setAdapter(timedAdapter);
+//        Log.d(TAG, "onViewCreated: timed tasks recycler view set up");
+//
+//        dailyHabitDB = new DailyHabitDB(this);
+//        periodicRecyclerView = findViewById(R.id.periodic_activities_recycler);
+//        PeriodAdapter periodAdapter = new PeriodAdapter(GetUndoneTask.allRoutineTasks(this), dailyHabitDB);
+//        periodicRecyclerView.setHasFixedSize(true);
+//        periodicRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        periodicRecyclerView.setAdapter(periodAdapter);
+//        Log.d(TAG, "onViewCreated: timed tasks recycler view set up");
+//
+//        simpleTaskDB = new SimpleTaskDB(this);
+//        simpleRecyclerView = findViewById(R.id.simple_activities_recycler);
+//        SimpleAdapter simpleAdapter = new SimpleAdapter(GetUndoneTask.simpleTasks(this), simpleTaskDB);
+//        simpleRecyclerView.setHasFixedSize(true);
+//        simpleRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        simpleRecyclerView.setAdapter(simpleAdapter);
+//        Log.d(TAG, "onViewCreated: timed tasks recycler view set up");
 
 
         getOnBackPressedDispatcher().addCallback(new OnBackPressedCallback(true) {

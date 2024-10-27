@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.SimpleTaskDetailActivity;
-import com.example.myapplication.database.TaskDataBase.SimpleTaskDB;
+import com.example.myapplication.database.taskDataBase.SimpleTaskDB;
 import com.example.myapplication.model.tasks.SimpleTask;
 
 

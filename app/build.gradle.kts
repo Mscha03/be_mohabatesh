@@ -83,4 +83,7 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     debugImplementation(libs.ui.test.manifest)
+
+    implementation ("io.github.vanpra.compose-material-dialogs:datetime:0.8.1-rc")
+
 }

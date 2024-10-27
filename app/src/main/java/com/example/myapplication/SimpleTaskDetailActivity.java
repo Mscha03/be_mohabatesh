@@ -14,7 +14,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import com.example.myapplication.bottomsheet.SimpleTaskBottomSheet;
-import com.example.myapplication.database.TaskDataBase.SimpleTaskDB;
+import com.example.myapplication.database.taskDataBase.SimpleTaskDB;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class SimpleTaskDetailActivity extends AppCompatActivity {

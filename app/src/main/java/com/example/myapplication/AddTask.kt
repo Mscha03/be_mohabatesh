@@ -3,13 +3,13 @@ package com.example.myapplication
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.widget.CheckBox
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -20,7 +20,6 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -28,8 +27,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -37,7 +34,6 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.rounded.Clear
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
@@ -50,53 +46,59 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
-import androidx.compose.ui.input.nestedscroll.NestedScrollSource
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.ali.uneversaldatetools.date.JalaliDateTime
-import com.example.myapplication.converter.BoolInt
-import com.example.myapplication.database.TaskDataBase.DeadLinedTaskDB
-import com.example.myapplication.database.TaskDataBase.SimpleTaskDB
-import com.example.myapplication.database.TaskDataBase.SpecialDayTaskDB
+import com.example.myapplication.database.AddInformationForHistory
+import com.example.myapplication.database.AddInformationForHistory.getPersianWeekOfYear
+import com.example.myapplication.database.taskDataBase.DeadLinedTaskDB
+import com.example.myapplication.database.taskDataBase.SimpleTaskDB
+import com.example.myapplication.database.taskDataBase.SpecialDayTaskDB
+import com.example.myapplication.database.taskDataBase.habits.DailyHabitDB
+import com.example.myapplication.database.taskDataBase.habits.MonthlyHabitDB
+import com.example.myapplication.database.taskDataBase.habits.WeeklyHabitDB
 import com.example.myapplication.model.tasks.DeadLinedTask
 import com.example.myapplication.model.tasks.SimpleTask
 import com.example.myapplication.model.tasks.SpecialDayTask
 import com.example.myapplication.model.tasks.TaskType
 import com.example.myapplication.model.tasks.habits.HabitType
 import com.example.myapplication.time.ShamsiName
+import com.example.myapplication.time.WithWeekJalaliDateTime
 import com.gmail.hamedvakhide.compose_jalali_datepicker.JalaliDatePickerDialog
+import com.vanpra.composematerialdialogs.MaterialDialog
+import com.vanpra.composematerialdialogs.datetime.time.timepicker
+import com.vanpra.composematerialdialogs.rememberMaterialDialogState
+import ir.huri.jcal.JalaliCalendar
+import java.time.LocalTime
+import java.util.Calendar
 
 var simpleDB: SimpleTaskDB? = null
 var specialDB: SpecialDayTaskDB? = null
 var deadLinedDB: DeadLinedTaskDB? = null
 
+var dailyHabitDB: DailyHabitDB? = null
+var weeklyHabitDB: WeeklyHabitDB? = null
+var monthlyHabitDB: MonthlyHabitDB? = null
+
 class AddTask : AppCompatActivity() {
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -111,6 +113,10 @@ class AddTask : AppCompatActivity() {
         specialDB = SpecialDayTaskDB(this)
         deadLinedDB = DeadLinedTaskDB(this)
 
+        dailyHabitDB = DailyHabitDB(this)
+        weeklyHabitDB = WeeklyHabitDB(this)
+        monthlyHabitDB = MonthlyHabitDB(this)
+
         val composeView = findViewById<ComposeView>(R.id.composeView)
         composeView.setContent {
             AddTaskMain(this)
@@ -118,20 +124,27 @@ class AddTask : AppCompatActivity() {
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AddTaskMain(context: Context) {
 
     var taskTitle = ""
     var taskDescription = ""
-    var selectedTaskType = TaskType.SIMPLE
+    var selectedTaskType = TaskType.HABIT
     var specialDay: JalaliDateTime? = null
     var deadlinedDay: JalaliDateTime? = null
     var subTasksOfDeadlinedTask = ArrayList<SimpleTask>()
+
+    var selectedWeeklyHabitDays = ArrayList<Int>()
+    var selectedMonthlyHabitDays = ArrayList<Int>()
 
     var expandedHabitType by remember { mutableStateOf(false) }
     var selectedHabitType: HabitType? = null
     val scrollState = rememberScrollState()
 
+    var haveAlarm by remember { mutableStateOf(false) }
+    val currentTime = Calendar.getInstance()
+    var time = LocalTime.now()
 
     // UI
     Column(
@@ -161,7 +174,6 @@ fun AddTaskMain(context: Context) {
                 verticalArrangement = Arrangement.spacedBy(1.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
                 taskTitle = taskTitleTextFiled()
 
                 taskDescription = taskDescription()
@@ -186,7 +198,7 @@ fun AddTaskMain(context: Context) {
 
                             deadlinedDay = selectDeadLine()
 
-                            Row (verticalAlignment = Alignment.CenterVertically){
+                            Row(verticalAlignment = Alignment.CenterVertically) {
                                 Checkbox(
                                     checked = haveSubTask.value,
                                     onCheckedChange = { haveSubTask.value = it })
@@ -215,11 +227,11 @@ fun AddTaskMain(context: Context) {
                             }
 
                             HabitType.WEEKLY -> {
-                                WeeklySelector()
+                                selectedWeeklyHabitDays = weeklySelector()
                             }
 
                             HabitType.MONTHLY -> {
-                                MonthlySelector()
+                                selectedMonthlyHabitDays = monthlySelector()
                             }
 
                             null -> {}
@@ -229,6 +241,18 @@ fun AddTaskMain(context: Context) {
 
                 }
 
+                Row (
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(1.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ){
+                    Checkbox(checked = haveAlarm, onCheckedChange = { haveAlarm = it })
+                    Text(text = "Add Alarm")
+                }
+
+                if (haveAlarm) {
+                    time = selectTime()
+                }
                 // Add Button
                 Button(modifier = Modifier
                     .fillMaxWidth()
@@ -272,6 +296,51 @@ fun AddTaskMain(context: Context) {
                             }
 
                             TaskType.HABIT -> {
+                                val date = JalaliDateTime.Now()
+                                when (selectedHabitType) {
+                                    HabitType.DAILY -> {
+                                        addDailyHabit(
+                                            taskTitle,
+                                            taskDescription,
+                                            WithWeekJalaliDateTime(
+                                                date.year, date.month, getPersianWeekOfYear(JalaliCalendar()), date.day
+                                            )
+                                        )
+                                        val intent = Intent(context, MainActivity::class.java)
+                                        context.startActivity(intent)
+                                        Toast.makeText(context, "Task Added", Toast.LENGTH_SHORT).show()
+                                    }
+
+                                    HabitType.WEEKLY -> {
+                                        addWeeklyHabit(
+                                            taskTitle,
+                                            taskDescription,
+                                            WithWeekJalaliDateTime(
+                                                date.year, date.month, getPersianWeekOfYear(JalaliCalendar()), date.day
+                                            ),
+                                            selectedWeeklyHabitDays
+                                        )
+                                        val intent = Intent(context, MainActivity::class.java)
+                                        context.startActivity(intent)
+                                        Toast.makeText(context, "Task Added", Toast.LENGTH_SHORT).show()
+                                    }
+
+                                    HabitType.MONTHLY -> {
+                                        addMonthlyHabit(
+                                            taskTitle,
+                                            taskDescription,
+                                            WithWeekJalaliDateTime(
+                                                date.year, date.month, getPersianWeekOfYear(JalaliCalendar()), date.day
+                                            ),
+                                            selectedMonthlyHabitDays
+                                        )
+                                        val intent = Intent(context, MainActivity::class.java)
+                                        context.startActivity(intent)
+                                        Toast.makeText(context, "Task Added", Toast.LENGTH_SHORT).show()
+                                    }
+
+                                    null -> {}
+                                }
 
                             }
                         }
@@ -292,19 +361,39 @@ fun ShowItem() {
 
 
 @Composable
-fun WeeklySelector() {
+fun weeklySelector(): ArrayList<Int> {
     // وضعیت روزهای انتخاب شده
     var selectedDays by remember { mutableStateOf(listOf<String>()) }
+    var selectedDaysInt by remember { mutableStateOf(listOf<Int>()) }
 
     Column {
         WeekDaySelector(selectedDays = selectedDays) { day ->
             // تغییر وضعیت انتخاب یک روز
-            selectedDays = if (selectedDays.contains(day)) {
-                selectedDays - day  // حذف روز
+            if (selectedDays.contains(day)) {
+                selectedDays = selectedDays - day // حذف روز
+                selectedDaysInt = selectedDaysInt - dayStrToInt(day)
             } else {
-                selectedDays + day  // اضافه کردن روز
+                selectedDays = selectedDays + day  // اضافه کردن روز
+                selectedDaysInt = selectedDaysInt + dayStrToInt(day)
+
             }
         }
+    }
+
+
+    return ArrayList(selectedDaysInt)
+}
+
+fun dayStrToInt(day: String): Int {
+    return when (day) {
+        "Sat" -> 1
+        "Sun" -> 2
+        "Mon" -> 3
+        "Tue" -> 4
+        "Wen" -> 5
+        "Thu" -> 6
+        "Fri" -> 7
+        else -> -1
     }
 }
 
@@ -351,13 +440,14 @@ fun WeekDaySelector(
                     color = if (isSelected) Color.White else Color.Black
                 )  // رنگ متن برای حالت انتخاب شده و نشده
             }
+            Spacer(modifier = Modifier.size(2.dp))
         }
     }
 }
 
 
 @Composable
-fun MonthlySelector() {
+fun monthlySelector(): ArrayList<Int> {
     // وضعیت روزهای انتخاب شده
     var selectedDays by remember { mutableStateOf(listOf<Int>()) }
 
@@ -372,6 +462,8 @@ fun MonthlySelector() {
         }
 
     }
+
+    return ArrayList(selectedDays)
 }
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -381,7 +473,39 @@ fun MonthDaySelector(
     onDaySelected: (Int) -> Unit,  // تابعی برای زمانی که کاربر یک روز را انتخاب یا حذف کند
 ) {
     // آرایه‌ای از روزهای هفته
-    val daysOfWeek = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31)
+    val daysOfWeek = listOf(
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31
+    )
 
     FlowRow(
         modifier = Modifier.padding(vertical = 16.dp),
@@ -468,7 +592,7 @@ fun taskDescription(): String {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun selectTaskType(): TaskType {
-    var selectedTaskType by remember { mutableStateOf(TaskType.SIMPLE) }
+    var selectedTaskType by remember { mutableStateOf(TaskType.HABIT) }
     var expandedTaskType by remember { mutableStateOf(false) }
 
 
@@ -514,9 +638,9 @@ fun selectTaskType(): TaskType {
 @SuppressLint("MutableCollectionMutableState")
 @Composable
 fun addSubTaskForDeadlinedTask(): ArrayList<SimpleTask> {
-    val subTaskTitles = remember { mutableStateListOf("sub task")}
+    val subTaskTitles = remember { mutableStateListOf("sub task") }
 
-    Column (
+    Column(
         modifier = Modifier
             .fillMaxWidth()
             .background(
@@ -524,13 +648,14 @@ fun addSubTaskForDeadlinedTask(): ArrayList<SimpleTask> {
                 shape = RoundedCornerShape(10.dp)
             ),
         horizontalAlignment = Alignment.CenterHorizontally,
-    ){
+    ) {
         Text(
             text = "sub Tasks",
-            modifier = Modifier.padding(start = 25.dp, top = 15.dp))
+            modifier = Modifier.padding(start = 25.dp, top = 15.dp)
+        )
         LazyColumn(
             modifier = Modifier
-                .height((subTaskTitles.size*50).dp)
+                .height((subTaskTitles.size * 50).dp)
         ) {
             items(subTaskTitles.size) { index ->
 
@@ -542,7 +667,7 @@ fun addSubTaskForDeadlinedTask(): ArrayList<SimpleTask> {
                     Checkbox(
                         checked = false,
                         onCheckedChange = {},
-                        )
+                    )
                     Column(modifier = Modifier.padding(10.dp)) {
                         BasicTextField(value = subTaskTitles[index],
                             onValueChange = {
@@ -585,7 +710,7 @@ fun addSubTaskForDeadlinedTask(): ArrayList<SimpleTask> {
 
     val subTasks = ArrayList<SimpleTask>()
 
-    subTaskTitles.forEach{ item -> subTasks.add(SimpleTask(item,""))}
+    subTaskTitles.forEach { item -> subTasks.add(SimpleTask(item, "")) }
 
     return subTasks
 }
@@ -649,7 +774,7 @@ fun selectDeadLine(): JalaliDateTime {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun selectHabitType(): HabitType {
-    var selectedHabitType by remember { mutableStateOf(HabitType.DAILY) }
+    var selectedHabitType by remember { mutableStateOf(HabitType.MONTHLY) }
     var expandedTaskType by remember { mutableStateOf(false) }
 
 
@@ -709,7 +834,8 @@ fun addDeadLinedTask(
     title: String,
     description: String,
     deadLine: JalaliDateTime,
-    subTasks: ArrayList<SimpleTask>){
+    subTasks: ArrayList<SimpleTask>
+) {
 
     val deadLinedTask = DeadLinedTask(title, description, deadLine)
     deadLinedTask.subTask = subTasks
@@ -720,3 +846,101 @@ fun addDeadLinedTask(
         deadLinedDB!!.insertSubTask(it, taskId.toInt())
     }
 }
+
+fun addDailyHabit(
+    title: String,
+    description: String,
+    createDate: WithWeekJalaliDateTime,
+) {
+    val id = dailyHabitDB!!.insertRecord(
+        title, description, createDate.day, createDate.week, createDate.month, createDate.year
+    )
+
+    AddInformationForHistory.addForDaily(id.toInt(), dailyHabitDB, createDate)
+}
+
+fun addWeeklyHabit(
+    title: String,
+    description: String,
+    createDate: WithWeekJalaliDateTime,
+    daysOfWeek: ArrayList<Int>
+) {
+    val id = weeklyHabitDB!!.insertRecord(
+        title, description, createDate.day, createDate.week, createDate.month, createDate.year
+    )
+    AddInformationForHistory.addForWeekly(id.toInt(), weeklyHabitDB, createDate, daysOfWeek)
+}
+
+fun addMonthlyHabit(
+    title: String,
+    description: String,
+    createDate: WithWeekJalaliDateTime,
+    daysOfMonth: ArrayList<Int>
+) {
+    val id = monthlyHabitDB!!.insertRecord(
+        title, description, createDate.day, createDate.week, createDate.month, createDate.year
+    )
+    AddInformationForHistory.addForMonthly(id.toInt(), monthlyHabitDB, createDate, daysOfMonth)
+}
+
+
+@RequiresApi(Build.VERSION_CODES.O)
+@Composable
+fun selectTime(): LocalTime? {
+    var time by remember { mutableStateOf(LocalTime.now()) }
+    val timeDialogState = rememberMaterialDialogState()
+
+    Row(
+        modifier = Modifier
+            .padding()
+    ) {
+
+        // Text field show date
+        OutlinedTextField(
+            modifier = Modifier
+                .width(200.dp)
+                .padding(vertical = 6.dp),
+            value = "${time.hour}:${time.minute}",
+            onValueChange = {},
+            readOnly = true,
+        )
+
+        // button select date
+        Button(
+            shape = RoundedCornerShape(6.dp),
+            modifier = Modifier
+                .padding(5.dp)
+                .width(200.dp),
+            onClick = {
+                timeDialogState.show()
+            }
+        ) {
+            Text("Choose Time")
+        }
+
+    }
+
+
+    MaterialDialog(
+        dialogState = timeDialogState,
+        buttons = {
+            positiveButton(text = "Ok") {
+
+            }
+            negativeButton(text = "Cancel")
+        },
+        shape = RoundedCornerShape(30.dp),
+        backgroundColor = Color.White,
+    ) {
+        timepicker(
+            title = "Pick a time",
+        ) {
+            time = it
+        }
+    }
+
+
+    return time
+}
+
+

@@ -13,7 +13,7 @@ import com.ali.uneversaldatetools.date.JalaliDateTime;
 import com.example.myapplication.HabitsDetailActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.customwidget.MultiStateCheckBox;
-import com.example.myapplication.database.TaskDataBase.HabitDB;
+import com.example.myapplication.database.taskDataBase.habits.DailyHabitDB;
 import com.example.myapplication.model.Period;
 import com.example.myapplication.model.tasks.habits.Habit;
 
@@ -23,7 +23,7 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.ViewHolder
     private static final String TAG = "PeriodAdapter";
 
     private final Habit[] listdata;
-    private final HabitDB db;
+    private final DailyHabitDB db;
 
     static Calendar calendar = Calendar.getInstance();
     static JalaliDateTime jalaliDateTime = JalaliDateTime.Now();
@@ -33,7 +33,7 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.ViewHolder
     private static int month;
     private static int year;
 
-    public PeriodAdapter(Habit[] listdata, HabitDB db) {
+    public PeriodAdapter(Habit[] listdata, DailyHabitDB db) {
         this.listdata = listdata;
         this.db = db;
         Log.d(TAG, "PeriodAdapter: Adapter created with " + listdata.length + " items");
@@ -71,7 +71,7 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.ViewHolder
             int state = (holder.checkBox.getState() + 1) % 4;
             model.setIsDone(state);
 
-            zeroExtraNumbers(model.getPeriod());
+//            zeroExtraNumbers(model.getPeriod());
 
             db.updateDays(model.getId(),
                     model.getIsDone(),

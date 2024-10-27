@@ -16,7 +16,7 @@ import androidx.annotation.Nullable;
 
 import com.example.myapplication.R;
 import com.example.myapplication.SimpleTaskActivity;
-import com.example.myapplication.database.TaskDataBase.SimpleTaskDB;
+import com.example.myapplication.database.taskDataBase.SimpleTaskDB;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 public class SimpleTaskBottomSheet extends BottomSheetDialogFragment {

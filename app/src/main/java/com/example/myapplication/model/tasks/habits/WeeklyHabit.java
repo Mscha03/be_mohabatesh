@@ -5,30 +5,32 @@ import androidx.annotation.NonNull;
 import com.example.myapplication.model.Period;
 import com.example.myapplication.time.WithWeekJalaliDateTime;
 
+import java.util.ArrayList;
+
 public class WeeklyHabit extends Habit {
 
-    Integer dayOfWeek;
+    ArrayList<Integer> daysOfWeek;
 
-    public WeeklyHabit(int id, @NonNull String title, @NonNull String description, int isDone, WithWeekJalaliDateTime createDate, Integer dayOfWeek ) {
-        super(id, title, description, isDone, createDate, Period.weekly);
-        this.dayOfWeek = dayOfWeek;
+    public WeeklyHabit(int id, @NonNull String title, @NonNull String description, int isDone, WithWeekJalaliDateTime createDate, ArrayList<Integer> daysOfWeek) {
+        super(id, title, description, isDone, createDate);
+        this.daysOfWeek = daysOfWeek;
     }
 
-    public WeeklyHabit(String title, String description, int isDone, WithWeekJalaliDateTime createDate, Integer dayOfWeek) {
-        super(title, description, isDone, createDate, Period.weekly);
-        this.dayOfWeek = dayOfWeek;
+    public WeeklyHabit(String title, String description, int isDone, WithWeekJalaliDateTime createDate, ArrayList<Integer> daysOfWeek) {
+        super(title, description, isDone, createDate);
+        this.daysOfWeek = daysOfWeek;
     }
 
-    public WeeklyHabit(String title, String description, WithWeekJalaliDateTime createDate, Integer dayOfWeek) {
-        super(title, description, createDate, Period.weekly);
-        this.dayOfWeek = dayOfWeek;
+    public WeeklyHabit(String title, String description, WithWeekJalaliDateTime createDate, ArrayList<Integer> daysOfWeek) {
+        super(title, description, createDate);
+        this.daysOfWeek = daysOfWeek;
     }
 
-    public Integer getDayOfWeek() {
-        return dayOfWeek;
+    public ArrayList<Integer> getDaysOfWeek() {
+        return daysOfWeek;
     }
 
-    public void setDayOfWeek(Integer dayOfWeek) {
-        this.dayOfWeek = dayOfWeek;
+    public void setDaysOfWeek(ArrayList<Integer> daysOfWeek) {
+        this.daysOfWeek = daysOfWeek;
     }
 }

@@ -8,9 +8,9 @@ import android.util.Log;
 import android.widget.CheckBox;
 
 import com.ali.uneversaldatetools.date.JalaliDateTime;
-import com.example.myapplication.database.TaskDataBase.HabitDB;
-import com.example.myapplication.database.TaskDataBase.SimpleTaskDB;
-import com.example.myapplication.database.TaskDataBase.SpecialDayTaskDB;
+import com.example.myapplication.database.taskDataBase.habits.DailyHabitDB;
+import com.example.myapplication.database.taskDataBase.SimpleTaskDB;
+import com.example.myapplication.database.taskDataBase.SpecialDayTaskDB;
 import com.example.myapplication.model.Period;
 import com.example.myapplication.model.tasks.SpecialDayTask;
 import com.example.myapplication.model.tasks.habits.Habit;
@@ -34,7 +34,7 @@ public class GetUndoneTask {
     static SpecialDayTask[] pastModels;
 
     // periodic task
-    static HabitDB habitDB;
+    static DailyHabitDB dailyHabitDB;
     static ArrayList<Habit> dailyTasks;
     static ArrayList<Habit> weeklyTasks;
     static ArrayList<Habit> monthlyTasks;
@@ -195,13 +195,13 @@ public class GetUndoneTask {
     }
 
     private static void getPeriodicTasks(Context context) {
-        habitDB = new HabitDB(context);
+        dailyHabitDB = new DailyHabitDB(context);
         Log.d(TAG, "onCreate: database initialized");
         dailyTasks = new ArrayList<>();
         weeklyTasks = new ArrayList<>();
         monthlyTasks = new ArrayList<>();
 
-        Cursor cursor = habitDB.getAllRecords(HabitDB.ROUTINE_TABLE_NAME);
+        Cursor cursor = dailyHabitDB.getAllRecords(DailyHabitDB.ROUTINE_TABLE_NAME);
         if (cursor.moveToFirst()) {
             Log.d(TAG, "onCreate: fetching tasks from database");
 
@@ -254,13 +254,12 @@ public class GetUndoneTask {
                                 cursor.getInt(cursor.getColumnIndexOrThrow("year")),
                                 cursor.getInt(cursor.getColumnIndexOrThrow("month")),
                                 cursor.getInt(cursor.getColumnIndexOrThrow("week")),
-                                cursor.getInt(cursor.getColumnIndexOrThrow("day"))),
-                        period);
+                                cursor.getInt(cursor.getColumnIndexOrThrow("day"))));
 
                 Log.d(TAG, "onCreate: periodicModel created:" +
                         " title: " + periodicModel.getTitle() +
                         " descreption: " + periodicModel.getDescription() +
-                        " period: " + periodicModel.getPeriod().toString() +
+                        " period: " + periodicModel.toString() +
                         " id: " + periodicModel.getId() +
                         " day: " + periodicModel.getCreateDate().getDay() +
                         " month: " + periodicModel.getCreateDate().getMonth() +

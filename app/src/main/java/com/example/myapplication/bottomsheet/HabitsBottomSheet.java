@@ -18,7 +18,7 @@ import androidx.annotation.Nullable;
 import com.example.myapplication.model.Period;
 import com.example.myapplication.HabitsActivity;
 import com.example.myapplication.R;
-import com.example.myapplication.database.TaskDataBase.HabitDB;
+import com.example.myapplication.database.taskDataBase.habits.DailyHabitDB;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 
@@ -27,7 +27,7 @@ public class HabitsBottomSheet extends BottomSheetDialogFragment {
     private static final String TAG = "HabitsBottomSheet";
 
 
-    private HabitDB db;
+    private DailyHabitDB db;
     private EditText editTitle, editDescription;
     AutoCompleteTextView editPeriod;
     private Button editButton;
@@ -73,7 +73,7 @@ public class HabitsBottomSheet extends BottomSheetDialogFragment {
         Log.d(TAG, "onCreateView: dropdown menu created");
 
 
-        db = new HabitDB(v.getContext());
+        db = new DailyHabitDB(v.getContext());
         Log.d(TAG, "onCreateView: database initialized");
 
 
@@ -106,7 +106,7 @@ public class HabitsBottomSheet extends BottomSheetDialogFragment {
             Log.d(TAG, "onClick: current values - year = " + year);
 
 
-            db.updateRecord(id, title, description, period, day, week, month, year);
+            db.updateRecord(id, title, description, day, week, month, year);
             Log.d(TAG, "onClick: record updated");
 
             Toast.makeText(v.getContext(), getString(R.string.edit_successfully),

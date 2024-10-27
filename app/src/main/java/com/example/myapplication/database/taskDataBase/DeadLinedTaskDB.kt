@@ -1,4 +1,4 @@
-package com.example.myapplication.database.TaskDataBase
+package com.example.myapplication.database.taskDataBase
 
 import android.content.ContentValues
 import android.content.Context
@@ -15,6 +15,7 @@ const val TABLE_NAME = "deadlined"
 const val ID_COL = "id"
 const val NAME_COL = "name"
 const val DESCRIPTION_COL = "description"
+const val ISDONE_COL = "isdone"
 const val DAY = "day"
 const val MONTH = "month"
 const val YEAR = "year"
@@ -35,6 +36,7 @@ class DeadLinedTaskDB(context: Context) :
                 "$ID_COL INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "$NAME_COL TEXT, " +
                 "$DESCRIPTION_COL TEXT, " +
+                "$ISDONE_COL INTEGER, "+
                 "$DAY INTEGER, " +
                 "$MONTH INTEGER, " +
                 "$YEAR INTEGER)"
@@ -63,6 +65,7 @@ class DeadLinedTaskDB(context: Context) :
         val values = ContentValues()
         values.put(NAME_COL, task.title)
         values.put(DESCRIPTION_COL, task.description)
+        values.put(ISDONE_COL, task.isDone)
         values.put(DAY, task.deadDate.day)
         values.put(MONTH, task.deadDate.month)
         values.put(YEAR, task.deadDate.year)
@@ -85,6 +88,11 @@ class DeadLinedTaskDB(context: Context) :
     fun getAllRecords(): Cursor {
         val db = this.readableDatabase
         return db.query(TABLE_NAME, null, null, null, null, null, null)
+    }
+
+    fun getAllSubTask(id: Int): Cursor {
+        val db = this.readableDatabase
+        return db.query(SUB_TASK_TABLE_NAME, null, "$SUB_TASK_DEADLINED_ID = ?", arrayOf(id.toString()), null, null, null)
     }
 
     fun getRecord(id: Int): Cursor {
@@ -110,6 +118,7 @@ class DeadLinedTaskDB(context: Context) :
         val values = ContentValues()
         values.put(NAME_COL, task.title)
         values.put(DESCRIPTION_COL, task.description)
+        values.put(ISDONE_COL, task.isDone)
         values.put(DAY, task.deadDate.day)
         values.put(MONTH, task.deadDate.month)
         values.put(YEAR, task.deadDate.year)

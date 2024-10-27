@@ -5,7 +5,7 @@ import android.util.Log;
 import androidx.core.content.ContextCompat;
 import com.example.myapplication.R;
 import com.example.myapplication.database.GetDates;
-import com.example.myapplication.database.TaskDataBase.HabitDB;
+import com.example.myapplication.database.taskDataBase.habits.DailyHabitDB;
 import com.example.myapplication.model.HabitHistoryItemModel;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -17,10 +17,10 @@ import java.util.List;
 public class HistroyChartAdapter {
     private static final String TAG = "History";
      List<PieEntry> entries;
-    static HabitDB db;
+    static DailyHabitDB db;
 
     public PieData pieChartEntry(Context context, int id) {
-        db = new HabitDB(context);
+        db = new DailyHabitDB(context);
         entries = new ArrayList<>();
         Log.d(TAG, "pieChartEntry: database initialized");
 
