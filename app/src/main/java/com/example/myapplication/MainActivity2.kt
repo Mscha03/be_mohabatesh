@@ -13,6 +13,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,6 +28,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -34,6 +36,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetState
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -46,6 +49,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
@@ -319,6 +323,9 @@ private fun ShowSimpleTaskBox( simpleArrayList: ArrayList<SimpleTask>) {
     val isSheetOpen = remember { mutableStateOf(false) }
     var simpleTask by remember { mutableStateOf(SimpleTask("","")) }
 
+    val showDeleteDialog = remember { mutableStateOf(false) }
+
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -344,9 +351,17 @@ private fun ShowSimpleTaskBox( simpleArrayList: ArrayList<SimpleTask>) {
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(16.dp))
                         .background(Color.White)
-                        .clickable {
-                            simpleTask = simpleArrayList[index]
-                            isSheetOpen.value = true
+                        .pointerInput(Unit) {
+                            detectTapGestures(
+                                onTap = {
+                                    simpleTask = simpleArrayList[index]
+                                    isSheetOpen.value = true
+                                },
+                                onLongPress = {
+                                    simpleTask = simpleArrayList[index]
+                                    showDeleteDialog.value = true
+                                }
+                            )
                         },
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -380,6 +395,10 @@ private fun ShowSimpleTaskBox( simpleArrayList: ArrayList<SimpleTask>) {
 
     if (isSheetOpen.value) {
         EditSimpleTask(state = sheetState, isSheetOpen = isSheetOpen, simpleTask = simpleTask)
+    }
+
+    if (showDeleteDialog.value) {
+        DeleteTaskDialog(showDeleteDialog = showDeleteDialog, id = simpleTask.id)
     }
 
 
@@ -422,5 +441,34 @@ fun EditSimpleTask(state: SheetState, isSheetOpen: MutableState<Boolean>, simple
         }
     }
 
+}
 
+@Composable
+fun DeleteTaskDialog( showDeleteDialog: MutableState<Boolean>, id:Int) {
+    val context = LocalContext.current;
+    if (showDeleteDialog.value) {
+        AlertDialog(
+            onDismissRequest = { showDeleteDialog.value = false },
+            title = { Text(text = "Will you delete task?") },
+            text = { Text("Deleting task.") },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        showDeleteDialog.value = false
+                        simpleTaskDB!!.deleteRecord(id)
+                        context.startActivity(Intent(context, MainActivity2::class.java))
+                    }
+                ) {
+                    Text("Yes")
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = { showDeleteDialog.value = false }
+                ) {
+                    Text("No")
+                }
+            }
+        )
+    }
 }

@@ -1,5 +1,7 @@
 package com.example.myapplication;
 
+import static com.example.myapplication.MainActivity2Kt.EditSimpleTask;
+
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;

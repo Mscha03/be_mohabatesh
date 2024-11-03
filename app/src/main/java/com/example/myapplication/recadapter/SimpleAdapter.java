@@ -56,11 +56,12 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
         holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             Log.d(TAG, "onCheckedChanged: checkbox with text " + model.getTitle() + " changed to " + isChecked);
             model.setIsDone(boolToInt(isChecked));
-            db.updateRecord(
+            SimpleTask simpleTask = new SimpleTask(
                     model.getId(),
                     model.getTitle(),
                     model.getDescription(),
                     model.getIsDone());
+            db.updateRecord(simpleTask);
 
             Log.d(TAG, "onCheckedChanged: updated record in database for ID " + model.getId());
         });

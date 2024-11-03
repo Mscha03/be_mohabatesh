@@ -67,15 +67,13 @@ public class SimpleTaskDB extends SQLiteOpenHelper {
     }
 
     // Update
-    public void updateRecord(
-            int id, String name, String description,
-            int isDone) {
+    public void updateRecord(SimpleTask simpleTask) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(NAME_COL, name);
-        values.put(DESCRIPTION_COL, description);
-        values.put(ISDONE_COL, isDone);
-        db.update(TABLE_NAME, values, ID_COL + " = ?", new String[]{String.valueOf(id)});
+        values.put(NAME_COL, simpleTask.getTitle());
+        values.put(DESCRIPTION_COL, simpleTask.getDescription());
+        values.put(ISDONE_COL, simpleTask.getIsDone());
+        db.update(TABLE_NAME, values, ID_COL + " = ?", new String[]{String.valueOf(simpleTask.getId())});
         db.close();
     }
 

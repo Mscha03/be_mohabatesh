@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import com.example.myapplication.R;
 import com.example.myapplication.SimpleTaskActivity;
 import com.example.myapplication.database.taskDataBase.SimpleTaskDB;
+import com.example.myapplication.model.tasks.SimpleTask;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 public class SimpleTaskBottomSheet extends BottomSheetDialogFragment {
@@ -72,7 +73,8 @@ public class SimpleTaskBottomSheet extends BottomSheetDialogFragment {
             Cursor cursor = db.getRecord(id);
             int isDone = cursor.getInt(cursor.getColumnIndexOrThrow("isdone"));
 
-            db.updateRecord(id, title, description, isDone);
+            SimpleTask simpleTask = new SimpleTask(id, title, description, isDone);
+            db.updateRecord(simpleTask);
             Log.d(TAG, "onClick: record updated");
 
             Toast.makeText(v.getContext(), getString(R.string.edit_successfully),

@@ -267,7 +267,7 @@ fun AddTaskMain(context: Context) {
                                     taskTitle,
                                     taskDescription
                                 )
-                                val intent = Intent(context, MainActivity::class.java)
+                                val intent = Intent(context, MainActivity2::class.java)
                                 context.startActivity(intent)
                                 Toast.makeText(context, "Task Added", Toast.LENGTH_SHORT).show()
                             }
@@ -278,7 +278,7 @@ fun AddTaskMain(context: Context) {
                                     taskDescription,
                                     specialDay!!
                                 )
-                                val intent = Intent(context, MainActivity::class.java)
+                                val intent = Intent(context, MainActivity2::class.java)
                                 context.startActivity(intent)
                                 Toast.makeText(context, "Task Added", Toast.LENGTH_SHORT).show()
                             }
@@ -290,7 +290,7 @@ fun AddTaskMain(context: Context) {
                                     deadlinedDay!!,
                                     subTasksOfDeadlinedTask
                                 )
-                                val intent = Intent(context, MainActivity::class.java)
+                                val intent = Intent(context, MainActivity2::class.java)
                                 context.startActivity(intent)
                                 Toast.makeText(context, "Task Added", Toast.LENGTH_SHORT).show()
                             }
@@ -306,7 +306,7 @@ fun AddTaskMain(context: Context) {
                                                 date.year, date.month, getPersianWeekOfYear(JalaliCalendar()), date.day
                                             )
                                         )
-                                        val intent = Intent(context, MainActivity::class.java)
+                                        val intent = Intent(context, MainActivity2::class.java)
                                         context.startActivity(intent)
                                         Toast.makeText(context, "Task Added", Toast.LENGTH_SHORT).show()
                                     }
@@ -320,7 +320,7 @@ fun AddTaskMain(context: Context) {
                                             ),
                                             selectedWeeklyHabitDays
                                         )
-                                        val intent = Intent(context, MainActivity::class.java)
+                                        val intent = Intent(context, MainActivity2::class.java)
                                         context.startActivity(intent)
                                         Toast.makeText(context, "Task Added", Toast.LENGTH_SHORT).show()
                                     }
@@ -334,7 +334,7 @@ fun AddTaskMain(context: Context) {
                                             ),
                                             selectedMonthlyHabitDays
                                         )
-                                        val intent = Intent(context, MainActivity::class.java)
+                                        val intent = Intent(context, MainActivity2::class.java)
                                         context.startActivity(intent)
                                         Toast.makeText(context, "Task Added", Toast.LENGTH_SHORT).show()
                                     }
