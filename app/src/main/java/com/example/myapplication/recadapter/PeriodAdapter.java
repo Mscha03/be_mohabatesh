@@ -15,14 +15,14 @@ import com.example.myapplication.R;
 import com.example.myapplication.customwidget.MultiStateCheckBox;
 import com.example.myapplication.database.taskDataBase.habits.DailyHabitDB;
 import com.example.myapplication.model.Period;
-import com.example.myapplication.model.tasks.habits.Habit;
+import com.example.myapplication.model.tasks.habits.DailyHabit;
 
 import java.util.Calendar;
 
 public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.ViewHolder> {
     private static final String TAG = "PeriodAdapter";
 
-    private final Habit[] listdata;
+    private final DailyHabit[] listdata;
     private final DailyHabitDB db;
 
     static Calendar calendar = Calendar.getInstance();
@@ -33,7 +33,7 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.ViewHolder
     private static int month;
     private static int year;
 
-    public PeriodAdapter(Habit[] listdata, DailyHabitDB db) {
+    public PeriodAdapter(DailyHabit[] listdata, DailyHabitDB db) {
         this.listdata = listdata;
         this.db = db;
         Log.d(TAG, "PeriodAdapter: Adapter created with " + listdata.length + " items");
@@ -56,7 +56,7 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.ViewHolder
         Log.d(TAG, "onBindViewHolder: binding view holder at position " + position);
 
 
-        Habit model = listdata[position];
+        DailyHabit model = listdata[position];
         Log.d(TAG, "onBindViewHolder: model ID " + model.getId() + ", description: " + model.getDescription());
 
         holder.checkBox.setOnCheckedChangeListener(null);

@@ -105,7 +105,6 @@ class SettingActivity : AppCompatActivity() {
             }
         })
 
-
         navigationView.setNavigationItemSelectedListener { item: MenuItem ->
             val itemId = item.itemId
             drawerNavigation.drawerNavigationHandler(

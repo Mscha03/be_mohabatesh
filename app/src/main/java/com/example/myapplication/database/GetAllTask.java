@@ -10,9 +10,8 @@ import com.example.myapplication.converter.BoolInt;
 import com.example.myapplication.database.taskDataBase.habits.DailyHabitDB;
 import com.example.myapplication.database.taskDataBase.SimpleTaskDB;
 import com.example.myapplication.database.taskDataBase.SpecialDayTaskDB;
-import com.example.myapplication.model.Period;
 import com.example.myapplication.model.tasks.SpecialDayTask;
-import com.example.myapplication.model.tasks.habits.Habit;
+import com.example.myapplication.model.tasks.habits.DailyHabit;
 import com.example.myapplication.model.tasks.SimpleTask;
 import com.example.myapplication.time.PeriodicCheckBoxReset;
 import com.example.myapplication.time.WithWeekJalaliDateTime;
@@ -35,12 +34,12 @@ public class GetAllTask implements AddInformationForHistory{
 
     // periodic task
     static DailyHabitDB dailyHabitDB;
-    static ArrayList<Habit> dailyTasks;
-    static ArrayList<Habit> weeklyTasks;
-    static ArrayList<Habit> monthlyTasks;
-    static Habit[] dailyModels;
-    static Habit[] weeklyModels;
-    static Habit[] monthlyModels;
+    static ArrayList<DailyHabit> dailyTasks;
+    static ArrayList<DailyHabit> weeklyTasks;
+    static ArrayList<DailyHabit> monthlyTasks;
+    static DailyHabit[] dailyModels;
+    static DailyHabit[] weeklyModels;
+    static DailyHabit[] monthlyModels;
 
     // simple task
     static SimpleTaskDB simpleTaskDB;
@@ -63,17 +62,17 @@ public class GetAllTask implements AddInformationForHistory{
     }
 
 
-    public static Habit[] dailyTasks(Context context) {
+    public static DailyHabit[] dailyTasks(Context context) {
         getPeriodicTasks(context);
         return dailyModels;
     }
 
-    public static Habit[] weeklyTasks(Context context) {
+    public static DailyHabit[] weeklyTasks(Context context) {
         getPeriodicTasks(context);
         return weeklyModels;
     }
 
-    public static Habit[] monthlyTasks(Context context) {
+    public static DailyHabit[] monthlyTasks(Context context) {
         getPeriodicTasks(context);
         return monthlyModels;
     }
@@ -167,7 +166,7 @@ public class GetAllTask implements AddInformationForHistory{
         weeklyTasks = new ArrayList<>();
         monthlyTasks = new ArrayList<>();
 
-        Cursor cursor = dailyHabitDB.getAllRecords(DailyHabitDB.ROUTINE_TABLE_NAME);
+        Cursor cursor = dailyHabitDB.getAllHabit();
 
         if (cursor.moveToFirst()) {
             Log.d(TAG, "onCreate: fetching tasks from database");
@@ -197,7 +196,7 @@ public class GetAllTask implements AddInformationForHistory{
                     case "daily":
                         week = 0;
                         dailyTasks.add(
-                                new Habit(
+                                new DailyHabit(
                                         id,
                                         title,
                                         description,
@@ -210,7 +209,7 @@ public class GetAllTask implements AddInformationForHistory{
                         day = 0;
                         month = 0;
                         dailyTasks.add(
-                                new Habit(
+                                new DailyHabit(
                                         id,
                                         title,
                                         description,
@@ -222,7 +221,7 @@ public class GetAllTask implements AddInformationForHistory{
                         day = 0;
                         week = 0;
                         dailyTasks.add(
-                                new Habit(
+                                new DailyHabit(
                                         id,
                                         title,
                                         description,
@@ -242,9 +241,9 @@ public class GetAllTask implements AddInformationForHistory{
         }
         cursor.close();
 
-        dailyModels = new Habit[dailyTasks.size()];
-        weeklyModels = new Habit[weeklyTasks.size()];
-        monthlyModels = new Habit[monthlyTasks.size()];
+        dailyModels = new DailyHabit[dailyTasks.size()];
+        weeklyModels = new DailyHabit[weeklyTasks.size()];
+        monthlyModels = new DailyHabit[monthlyTasks.size()];
 
         for (int i = 0; i < dailyTasks.size(); i++) {
             dailyModels[i] = dailyTasks.get(i);

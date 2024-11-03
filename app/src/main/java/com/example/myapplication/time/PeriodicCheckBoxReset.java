@@ -12,7 +12,7 @@ public class PeriodicCheckBoxReset {
     public static int checkDay(int routineId, int changeDay, int changeWeek, int changeMonth, int changeYear, Context context) {
 
         db = new DailyHabitDB(context);
-        Cursor cursor = db.getDays(routineId, changeDay, changeWeek, changeMonth, changeYear);
+        Cursor cursor = db.getDays(routineId, changeDay, changeMonth, changeYear);
         int check = 0;
         if (cursor.moveToFirst()) {
             Log.d(TAG, "checkDay: fetching tasks from database");

@@ -2,12 +2,11 @@ package com.example.myapplication.model.tasks.habits;
 
 import androidx.annotation.NonNull;
 
-import com.example.myapplication.model.Period;
 import com.example.myapplication.time.WithWeekJalaliDateTime;
 
 import java.util.ArrayList;
 
-public class WeeklyHabit extends Habit {
+public class WeeklyHabit extends DailyHabit {
 
     ArrayList<Integer> daysOfWeek;
 

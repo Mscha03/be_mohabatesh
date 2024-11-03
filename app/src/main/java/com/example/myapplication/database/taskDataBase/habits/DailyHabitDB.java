@@ -132,13 +132,38 @@ public class DailyHabitDB extends SQLiteOpenHelper {
     }
 
     // Read
-    public Cursor getAllRecords(String table_name) {
+    public Cursor getAllHabit() {
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.query(table_name, null, null, null, null, null, null);
+        return db.query(ROUTINE_TABLE_NAME, null, null, null, null, null, null);
     }
 
+    public Cursor getAllDays(int id){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(
+                DAYS_TABLE_NAME,
+                null,
+                DAYS_ROUTINE_TABLE_ID + " = ?", new String[]{String.valueOf(id)},
+                null,null,null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+        return cursor;
+    }
 
-    public Cursor getRecord(int id) {
+    public Cursor getAllReminder(int routineId){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(
+                REMINDER_TABLE_NAME,
+                null,
+                REMINDER_ROUTINE_TABLE_ID + " = ?", new String[]{String.valueOf(routineId)},
+                null, null, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+        return cursor;
+    }
+
+    public Cursor getHabit(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(ROUTINE_TABLE_NAME, null, ROUTINE_ID_COL + " = ?", new String[]{String.valueOf(id)}, null, null, null);
         if (cursor != null) {
@@ -147,13 +172,13 @@ public class DailyHabitDB extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public Cursor getDays(int routineId, int day, int week, int month, int year) {
+    public Cursor getDays(int routineId, int day, int month, int year) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(DAYS_TABLE_NAME, null,
                 DAYS_ROUTINE_TABLE_ID + " = ?" + " AND "
-                        + DAYS_DAY + " = ?" + " AND "+ DAYS_Week + " = ?" + " AND "
+                        + DAYS_DAY + " = ?" + " AND "
                         + DAYS_MONTH + " = ?" + " AND "+ DAYS_YEAR + " = ?",
-                new String[]{String.valueOf(routineId), String.valueOf(day), String.valueOf(week), String.valueOf(month), String.valueOf(year)}
+                new String[]{String.valueOf(routineId), String.valueOf(day), String.valueOf(month), String.valueOf(year)}
                 , null, null, null);
         if (cursor != null) {
             cursor.moveToFirst();
@@ -161,23 +186,11 @@ public class DailyHabitDB extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public Cursor getReminder(int routineId){
+    public Cursor getReminder(int routineId, int id){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(REMINDER_TABLE_NAME, null,
-                REMINDER_ROUTINE_TABLE_ID + " = ?",
-                new String[]{String.valueOf(routineId)},
-                null,null,null);
-        if (cursor != null) {
-            cursor.moveToFirst();
-        }
-        return cursor;
-    }
-
-    public Cursor getHistory(int routineId){
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(DAYS_TABLE_NAME, null,
-                DAYS_ROUTINE_TABLE_ID + " = ?",
-                new String[]{String.valueOf(routineId)},
+                REMINDER_ROUTINE_TABLE_ID + " = ?" + " AND " + REMINDER_ROUTINE_TABLE_ID + " = ? ",
+                new String[]{String.valueOf(routineId), String.valueOf(id)},
                 null,null,null);
         if (cursor != null) {
             cursor.moveToFirst();
@@ -246,7 +259,6 @@ public class DailyHabitDB extends SQLiteOpenHelper {
         db.delete(DAYS_TABLE_NAME,
                 REMINDER_ROUTINE_TABLE_ID+ " = ?", new String[]{String.valueOf(routine_id)});
     }
-
 
 }
 

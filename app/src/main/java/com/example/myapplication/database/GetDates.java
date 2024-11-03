@@ -8,10 +8,13 @@ import com.ali.uneversaldatetools.date.JalaliDateTime;
 import com.example.myapplication.database.taskDataBase.habits.DailyHabitDB;
 import com.example.myapplication.model.HabitHistoryItemModel;
 import com.example.myapplication.model.Period;
+import com.example.myapplication.time.WithWeekJalaliDateTime;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import ir.huri.jcal.JalaliCalendar;
 
 public class GetDates {
 
@@ -55,8 +58,9 @@ public class GetDates {
         tasksHistory = new ArrayList<>();
 
 
-        Cursor routineCursor = dailyHabitDB.getRecord(routineId);
-        Cursor dayscursor = dailyHabitDB.getHistory(routineId);
+        Cursor routineCursor = dailyHabitDB.getHabit(routineId);
+        JalaliCalendar today = new JalaliCalendar();
+        Cursor dayscursor = dailyHabitDB.getDays(routineId, today.getDay(), today.getMonth(), today.getYear());
 
         int tDay = routineCursor.getInt(4);
         int tWeek = routineCursor.getInt(5);

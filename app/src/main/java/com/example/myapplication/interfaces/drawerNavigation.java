@@ -9,6 +9,7 @@ import com.example.myapplication.ContactUsActivity;
 import com.example.myapplication.DeadLinedTaskActivity;
 import com.example.myapplication.HistoryActivity;
 import com.example.myapplication.MainActivity;
+import com.example.myapplication.MainActivity2;
 import com.example.myapplication.SpecialDayActivity;
 import com.example.myapplication.HabitsActivity;
 import com.example.myapplication.R;
@@ -21,7 +22,7 @@ public interface drawerNavigation {
             drawerLayout.closeDrawer(GravityCompat.START);
 
         } else if (itemId == R.id.main_nav_home) {
-            Intent intent = new Intent(packageContext, MainActivity.class);
+            Intent intent = new Intent(packageContext, MainActivity2.class);
             packageContext.startActivity(intent);
 
         } else if (itemId == R.id.main_nav_habits) {

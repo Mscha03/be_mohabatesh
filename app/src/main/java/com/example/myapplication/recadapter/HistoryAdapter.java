@@ -12,14 +12,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.HistoryDetailActivity;
 import com.example.myapplication.R;
-import com.example.myapplication.model.tasks.habits.Habit;
+import com.example.myapplication.model.tasks.habits.DailyHabit;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder> {
     private static final String TAG = "PeriodAdapter";
 
-    private final Habit[] listdata;
+    private final DailyHabit[] listdata;
 
-    public HistoryAdapter(Habit[] listdata) {
+    public HistoryAdapter(DailyHabit[] listdata) {
         this.listdata = listdata;
         Log.d(TAG, "PeriodAdapter: Adapter created with " + listdata.length + " items");
     }
@@ -37,7 +37,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder: binding view holder at position " + position);
 
-        Habit model = listdata[position];
+        DailyHabit model = listdata[position];
         Log.d(TAG, "onBindViewHolder: model ID " + model.getId() + ", description: " + model.getDescription());
 
         holder.checkBox.setText(model.getTitle());

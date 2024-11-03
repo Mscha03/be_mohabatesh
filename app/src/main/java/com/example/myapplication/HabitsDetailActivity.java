@@ -58,7 +58,7 @@ public class HabitsDetailActivity extends AppCompatActivity {
         int id = getIntent().getIntExtra("task", 0);
         Log.d(TAG, "onCreate: received task ID: " + id);
 
-        Cursor cursor = db.getRecord(id);
+        Cursor cursor = db.getHabit(id);
         String[] detail = new String[4];
         detail[0] = cursor.getString(1);
         detail[1] = cursor.getString(2);

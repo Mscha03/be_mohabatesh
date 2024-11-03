@@ -50,7 +50,7 @@ import com.example.myapplication.database.taskDataBase.DeadLinedTaskDB
 import com.example.myapplication.model.tasks.DeadLinedTask
 import com.example.myapplication.model.tasks.SimpleTask
 
-var deadLinedTaskDB: DeadLinedTaskDB? = null
+private var deadLinedTaskDB: DeadLinedTaskDB? = null
 
 class DeadLinedTaskActivity : AppCompatActivity() {
 
@@ -76,7 +76,7 @@ class DeadLinedTaskActivity : AppCompatActivity() {
 
 @Preview(showBackground = true)
 @Composable
-fun DeadLinedTaskDetailPreview() {
+fun TaskCard() {
 }
 
 @Composable

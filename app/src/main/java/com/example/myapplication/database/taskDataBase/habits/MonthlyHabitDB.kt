@@ -125,28 +125,52 @@ class MonthlyHabitDB(context: Context) : SQLiteOpenHelper(context, DB_NAME, null
     }
 
     // Read
-    fun getAllRecords(): Cursor {
+    fun getAllHabit(): Cursor {
         val db = this.readableDatabase
         return db.query(ROUTINE_TABLE_NAME, null, null, null, null, null, null)
     }
+
+    fun getAllMonth(routineId: Int): Cursor? {
+        val db = this.readableDatabase
+        val cursor = db.query(
+            DAYS_TABLE_NAME,
+            null,
+            "$DAYS_ROUTINE_TABLE_ID = ?", arrayOf(routineId.toString()),
+            null, null, null
+        )
+        cursor?.moveToFirst()
+        return cursor
+    }
+
+    fun getAllReminder(routineId: Int): Cursor? {
+        val db = this.readableDatabase
+        val cursor = db.query(
+            REMINDER_TABLE_NAME,
+            null,
+            "$REMINDER_ROUTINE_ID_COL = ?", arrayOf(routineId.toString()),
+            null, null, null
+        )
+        cursor?.moveToFirst()
+        return cursor
+    }
+
 
     fun getRecord(id: Int): Cursor {
         val db = this.readableDatabase
         return db.query(ROUTINE_TABLE_NAME, null, "$ROUTINE_ID_COL = ?", arrayOf(id.toString()), null, null, null)
     }
 
-    fun getDays(routineId: Int): Cursor {
+    fun getWeek(routineId: Int, week: Int, year: Int): Cursor {
         val db = this.readableDatabase
         return db.query(DAYS_TABLE_NAME, null,
-            "$DAYS_ROUTINE_TABLE_ID = ?", arrayOf(routineId.toString()), null, null, null
+            "$DAYS_ROUTINE_TABLE_ID = ? AND $DAYS_WEEK = ? AND $DAYS_YEAR " , arrayOf(routineId.toString(), week.toString(),year.toString()), null, null, null
         )
     }
 
-    fun getReminder(routineId: Int): Cursor {
+    fun getReminder(routineId: Int, id: Int): Cursor {
         val db = this.readableDatabase
-        return db.query(REMINDER_TABLE_NAME, null, "$REMINDER_ROUTINE_ID_COL = ?", arrayOf(routineId.toString()), null, null, null
+        return db.query(REMINDER_TABLE_NAME, null, "$REMINDER_ID_COL = ? AND $REMINDER_ROUTINE_ID_COL = ?", arrayOf(id.toString(), routineId.toString()), null, null, null
         )
-
     }
 
     fun updateRecord(

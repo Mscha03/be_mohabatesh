@@ -88,13 +88,13 @@ import ir.huri.jcal.JalaliCalendar
 import java.time.LocalTime
 import java.util.Calendar
 
-var simpleDB: SimpleTaskDB? = null
-var specialDB: SpecialDayTaskDB? = null
-var deadLinedDB: DeadLinedTaskDB? = null
+private var simpleDB: SimpleTaskDB? = null
+private var specialDB: SpecialDayTaskDB? = null
+private var deadLinedDB: DeadLinedTaskDB? = null
 
-var dailyHabitDB: DailyHabitDB? = null
-var weeklyHabitDB: WeeklyHabitDB? = null
-var monthlyHabitDB: MonthlyHabitDB? = null
+private var dailyHabitDB: DailyHabitDB? = null
+private var weeklyHabitDB: WeeklyHabitDB? = null
+private var monthlyHabitDB: MonthlyHabitDB? = null
 
 class AddTask : AppCompatActivity() {
 
@@ -355,8 +355,8 @@ fun AddTaskMain(context: Context) {
 
 @Preview(showBackground = true)
 @Composable
-fun ShowItem() {
-    selectHabitType()
+private fun ShowItem() {
+    addSubTaskForDeadlinedTask()
 }
 
 
@@ -556,8 +556,8 @@ private fun TitleScreenTextFiled() {
 }
 
 @Composable
-fun taskTitleTextFiled(): String {
-    var taskTitle by remember { mutableStateOf("") }
+fun taskTitleTextFiled(defaultText: String = ""): String {
+    var taskTitle by remember { mutableStateOf(defaultText) }
 
     // Task Title
     OutlinedTextField(
@@ -573,9 +573,9 @@ fun taskTitleTextFiled(): String {
 }
 
 @Composable
-fun taskDescription(): String {
+fun taskDescription(defaultText: String = ""): String {
     // Task Description
-    var taskDescription by remember { mutableStateOf("") }
+    var taskDescription by remember { mutableStateOf(defaultText) }
 
     OutlinedTextField(
         value = taskDescription,
@@ -592,7 +592,7 @@ fun taskDescription(): String {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun selectTaskType(): TaskType {
-    var selectedTaskType by remember { mutableStateOf(TaskType.HABIT) }
+    var selectedTaskType by remember { mutableStateOf(TaskType.SIMPLE) }
     var expandedTaskType by remember { mutableStateOf(false) }
 
 
@@ -774,7 +774,7 @@ fun selectDeadLine(): JalaliDateTime {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun selectHabitType(): HabitType {
-    var selectedHabitType by remember { mutableStateOf(HabitType.MONTHLY) }
+    var selectedHabitType by remember { mutableStateOf(HabitType.DAILY) }
     var expandedTaskType by remember { mutableStateOf(false) }
 
 
@@ -852,7 +852,7 @@ fun addDailyHabit(
     description: String,
     createDate: WithWeekJalaliDateTime,
 ) {
-    val id = dailyHabitDB!!.insertRecord(
+     val id = dailyHabitDB!!.insertRecord(
         title, description, createDate.day, createDate.week, createDate.month, createDate.year
     )
 

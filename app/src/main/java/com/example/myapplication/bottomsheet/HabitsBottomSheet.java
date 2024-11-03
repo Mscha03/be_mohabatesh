@@ -97,7 +97,7 @@ public class HabitsBottomSheet extends BottomSheetDialogFragment {
             Log.d(TAG, "onClick: updating record with ID " + id);
 
 
-            Cursor cursor = db.getRecord(id);
+            Cursor cursor = db.getHabit(id);
             int day = cursor.getInt(cursor.getColumnIndexOrThrow("day"));
             int week = cursor.getInt(cursor.getColumnIndexOrThrow("week"));
             int month = cursor.getInt(cursor.getColumnIndexOrThrow("month"));
